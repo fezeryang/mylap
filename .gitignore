@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.omo/
+.codegraph
+evidence/
+ratio/evidence/
+**/.img2threejs/
+
+.DS_Store
+*.tsbuildinfo
+*:Zone.Identifier
+
+# GitHub rejects regular Git blobs larger than 100 MB; keep these local until Git LFS is available.
+ratio/futuristic_radio_8K.png
+phone/neon_cyberpunk_flagship_smartphone_5200.png

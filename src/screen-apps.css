@@ -1,0 +1,443 @@
+.css3d-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.model-screen {
+  --screen-type-xs: 12px;
+  --screen-type-sm: 13px;
+  --screen-type-md: 14px;
+  --screen-type-lg: 16px;
+  --screen-space-1: 4px;
+  --screen-space-2: 8px;
+  --screen-space-3: 12px;
+  --screen-space-4: 16px;
+  --screen-space-5: 20px;
+  --screen-space-6: 24px;
+  --screen-border-width: 1px;
+  --screen-radius-sm: 4px;
+  --screen-radius-lg: 16px;
+  --screen-focus-width: 3px;
+  --screen-grid-size: 28px;
+  --screen-workspace-toolbar: 42px;
+  --screen-workspace-footer: 30px;
+  --screen-workspace-console: 148px;
+  --screen-workspace-sidebar: 190px;
+  --screen-workspace-inspector: 295px;
+  --screen-wing-header: 54px;
+  --screen-wing-footer: 52px;
+  --screen-structure-status: 40px;
+  --screen-structure-actions: 64px;
+  overflow: hidden;
+  border: var(--screen-border-width) solid color-mix(in srgb, var(--lavender-0) 48%, transparent);
+  border-radius: var(--screen-radius-lg);
+  background: var(--glass-0);
+  color: var(--pearl-0);
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  pointer-events: auto;
+  transition:
+    opacity 240ms ease-in-out,
+    filter 240ms ease-in-out;
+}
+
+.model-screen[data-active-asset="true"] {
+  border-color: color-mix(in srgb, var(--cyan-0) 78%, var(--violet-0));
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--cyan-0) 32%, transparent));
+}
+
+.model-screen[data-focused="true"] {
+  outline: var(--screen-focus-width) solid var(--cyan-0);
+  outline-offset: -6px;
+}
+
+.model-screen[data-powered="false"],
+.model-screen[data-visible="false"] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.screen-app {
+  --screen-grid: color-mix(in srgb, var(--violet-0) 18%, transparent);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(var(--screen-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--screen-grid) 1px, transparent 1px), var(--glass-0);
+  background-size: var(--screen-grid-size) var(--screen-grid-size);
+  color: var(--pearl-0);
+}
+
+.screen-app[data-active="false"] {
+  filter: saturate(0.72) brightness(0.82);
+}
+
+.screen-brand {
+  color: var(--pearl-1);
+  font-size: var(--screen-type-lg);
+  letter-spacing: 0.08em;
+}
+
+.screen-overline {
+  color: var(--cyan-0);
+  font-size: var(--screen-type-xs);
+  letter-spacing: 0.12em;
+}
+
+.screen-chip {
+  padding: var(--screen-space-1) var(--screen-space-2);
+  border: var(--screen-border-width) solid color-mix(in srgb, var(--cyan-0) 60%, transparent);
+  border-radius: var(--screen-radius-sm);
+  color: var(--cyan-0);
+  font-size: var(--screen-type-xs);
+}
+
+.screen-app--workspace {
+  display: grid;
+  grid-template-rows: var(--screen-workspace-toolbar) 1fr var(--screen-workspace-footer);
+}
+
+.workspace-toolbar,
+.wing-header {
+  display: flex;
+  align-items: center;
+  gap: var(--screen-space-6);
+  padding: 0 var(--screen-space-5);
+  border-bottom: var(--screen-border-width) solid
+    color-mix(in srgb, var(--lavender-0) 40%, transparent);
+  background: color-mix(in srgb, var(--glass-1) 82%, transparent);
+}
+
+.workspace-menu {
+  flex: 1;
+  color: var(--lavender-0);
+  font-size: var(--screen-type-xs);
+  letter-spacing: 0.06em;
+}
+
+.workspace-layout {
+  display: grid;
+  min-height: 0;
+  grid-template:
+    minmax(0, 1fr) var(--screen-workspace-console) /
+    var(--screen-workspace-sidebar) minmax(0, 1fr) var(--screen-workspace-inspector);
+}
+
+.workspace-sidebar {
+  display: flex;
+  grid-row: 1 / 3;
+  flex-direction: column;
+  gap: var(--screen-space-3);
+  padding: var(--screen-space-5) var(--screen-space-4);
+  border-right: var(--screen-border-width) solid
+    color-mix(in srgb, var(--lavender-0) 28%, transparent);
+  background: color-mix(in srgb, var(--glass-0) 86%, transparent);
+}
+
+.file {
+  padding-left: var(--screen-space-2);
+  color: color-mix(in srgb, var(--cyan-0) 68%, var(--pearl-0));
+  font-size: var(--screen-type-sm);
+}
+
+.file--hot {
+  color: var(--magenta-0);
+}
+
+.workspace-viewport {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  place-items: center;
+}
+
+.workspace-infinity {
+  width: min(82%, 640px);
+  overflow: visible;
+  filter: drop-shadow(0 0 24px color-mix(in srgb, var(--violet-0) 48%, transparent));
+}
+
+.workspace-infinity path {
+  stroke: var(--cyan-0);
+  stroke-width: 52px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.viewport-caption {
+  position: absolute;
+  right: var(--screen-space-5);
+  bottom: var(--screen-space-3);
+  margin: 0;
+  color: var(--lavender-0);
+  font-size: var(--screen-type-xs);
+}
+
+.workspace-inspector {
+  display: grid;
+  grid-row: 1 / 3;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--screen-space-3);
+  padding: var(--screen-space-4);
+  border-left: var(--screen-border-width) solid
+    color-mix(in srgb, var(--lavender-0) 28%, transparent);
+}
+
+.screen-panel {
+  min-height: 112px;
+  padding: var(--screen-space-3);
+  border: var(--screen-border-width) solid color-mix(in srgb, var(--lavender-0) 38%, transparent);
+  background: color-mix(in srgb, var(--glass-1) 64%, transparent);
+}
+
+.screen-panel--0,
+.screen-panel--3 {
+  grid-column: 1 / 3;
+}
+
+.panel-signal {
+  height: 64px;
+  margin-top: var(--screen-space-3);
+  background: linear-gradient(
+    135deg,
+    transparent 32%,
+    var(--violet-0) 34% 36%,
+    transparent 38% 58%,
+    var(--cyan-0) 60% 62%,
+    transparent 64%
+  );
+  opacity: 0.8;
+}
+
+.workspace-terminal {
+  display: grid;
+  gap: var(--screen-space-2);
+  padding: var(--screen-space-3) var(--screen-space-4);
+  border-top: var(--screen-border-width) solid
+    color-mix(in srgb, var(--lavender-0) 32%, transparent);
+  background: color-mix(in srgb, var(--glass-0) 90%, transparent);
+}
+
+.terminal-output {
+  margin: 0;
+  color: var(--cyan-0);
+  font-size: var(--screen-type-xs);
+}
+
+.terminal-form {
+  display: flex;
+  gap: var(--screen-space-2);
+}
+
+.terminal-prompt {
+  color: var(--magenta-0);
+}
+
+.terminal-input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  border-bottom: var(--screen-border-width) solid var(--violet-0);
+  outline: 0;
+  background: transparent;
+  color: var(--pearl-1);
+  font: inherit;
+  font-size: var(--screen-type-xs);
+}
+
+.workspace-metrics,
+.wing-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 var(--screen-space-4);
+  border-top: var(--screen-border-width) solid
+    color-mix(in srgb, var(--lavender-0) 32%, transparent);
+  color: var(--cyan-0);
+  font-size: var(--screen-type-xs);
+}
+
+.screen-app--telemetry,
+.screen-app--structure {
+  display: grid;
+  grid-template-rows: var(--screen-wing-header) 1fr var(--screen-wing-footer);
+}
+
+.wing-header {
+  justify-content: space-between;
+  gap: var(--screen-space-3);
+}
+
+.status-pip {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--success-0);
+  box-shadow: 0 0 16px var(--success-0);
+}
+
+.telemetry-layout,
+.structure-layout {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: 42% 58%;
+  align-items: center;
+}
+
+.telemetry-metrics,
+.structure-channels {
+  display: grid;
+  gap: var(--screen-space-4);
+  padding: var(--screen-space-6);
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: var(--screen-space-2);
+  font-size: var(--screen-type-md);
+}
+
+.metric-label {
+  color: var(--lavender-0);
+}
+
+.metric-value {
+  color: var(--pearl-1);
+}
+
+.metric-track,
+.metric-fill,
+.channel-fill {
+  display: block;
+  height: 8px;
+}
+
+.metric-track {
+  grid-column: 1 / 3;
+  background: color-mix(in srgb, var(--glass-1) 80%, transparent);
+}
+
+.metric-fill {
+  width: var(--metric-fill, 40%);
+  background: linear-gradient(90deg, var(--cyan-0), var(--violet-0));
+}
+
+.telemetry-radar {
+  position: relative;
+  width: 320px;
+  aspect-ratio: 1;
+  border: 2px solid var(--cyan-0);
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    transparent 0 38px,
+    color-mix(in srgb, var(--cyan-0) 38%, transparent) 40px
+  );
+  box-shadow: 0 0 24px color-mix(in srgb, var(--cyan-0) 24%, transparent);
+}
+
+.radar-core,
+.radar-sweep {
+  position: absolute;
+  inset: 40%;
+  border-radius: 50%;
+  background: var(--violet-0);
+}
+
+.radar-sweep {
+  inset: 50% 8% 49% 50%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--cyan-0), transparent);
+  animation: radar-sweep 4s linear infinite;
+}
+
+@keyframes radar-sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.screen-app--structure {
+  grid-template-rows:
+    var(--screen-wing-header) 1fr var(--screen-structure-status)
+    var(--screen-structure-actions);
+}
+
+.structure-layout {
+  grid-template-columns: 66% 34%;
+}
+
+.structure-viewport {
+  padding: var(--screen-space-5);
+}
+
+.structure-wireframe {
+  width: 100%;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--violet-0) 56%, transparent));
+}
+
+.structure-wireframe path {
+  stroke: var(--cyan-0);
+  stroke-width: 4px;
+}
+
+.channel-row {
+  display: grid;
+  gap: var(--screen-space-2);
+}
+
+.channel-label {
+  color: var(--lavender-0);
+  font-size: var(--screen-type-xs);
+}
+
+.channel-fill {
+  width: var(--channel-fill, 50%);
+  background: linear-gradient(90deg, var(--violet-0), var(--cyan-0));
+}
+
+.structure-status {
+  margin: 0;
+  padding: var(--screen-space-2) var(--screen-space-6);
+  color: var(--cyan-0);
+  font-size: var(--screen-type-xs);
+}
+
+.structure-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--screen-space-2);
+  padding: var(--screen-space-2) var(--screen-space-5);
+}
+
+.screen-action {
+  border: var(--screen-border-width) solid var(--violet-0);
+  border-radius: var(--screen-radius-sm);
+  background: var(--glass-1);
+  color: var(--pearl-1);
+  font:
+    700 var(--screen-type-xs) / 1 "IBM Plex Mono",
+    monospace;
+}
+
+.screen-action[aria-pressed="true"] {
+  background: linear-gradient(110deg, var(--violet-0), var(--cyan-0));
+  color: var(--glass-0);
+}
+
+.screen-action:focus-visible,
+.terminal-input:focus-visible {
+  outline: var(--screen-focus-width) solid var(--cyan-0);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radar-sweep {
+    animation: none;
+    opacity: 0.7;
+  }
+}

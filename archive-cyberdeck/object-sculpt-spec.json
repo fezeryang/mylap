@@ -1,0 +1,4555 @@
+{
+  "targetName": "Modular Cyberdeck Laptop",
+  "targetId": "modular-cyberdeck-laptop",
+  "schemaVersion": "2.1",
+  "sourceImage": "/home/fezer/projects/todou/laptop.png",
+  "suitability": "conditional",
+  "scores": {
+    "object_isolation": 3,
+    "silhouette_readability": 3,
+    "depth_inference": 2,
+    "primitive_decomposition": 3,
+    "material_procedurality": 3,
+    "occlusion_risk": 2,
+    "interaction_fit": 3
+  },
+  "terminologyProfile": {
+    "domain": "real-time procedural Three.js asset",
+    "geometryTerms": [
+      "silhouette",
+      "topology",
+      "primitive",
+      "bevel",
+      "chamfer",
+      "pivot",
+      "socket"
+    ],
+    "materialTerms": [
+      "albedo",
+      "roughness",
+      "metalness",
+      "normal",
+      "ambient occlusion",
+      "clearcoat",
+      "emissive"
+    ],
+    "lightingTerms": [
+      "key light",
+      "fill light",
+      "rim light",
+      "contact shadow"
+    ],
+    "descriptionRule": "Use measurable 3D graphics terms."
+  },
+  "referenceCamera": {
+    "solved": true,
+    "fovDegrees": 32,
+    "aspect": 1.5,
+    "orientation": {
+      "yaw": -27,
+      "pitch": 22,
+      "roll": 0
+    },
+    "positionHint": [
+      12.8,
+      10.2,
+      15.8
+    ],
+    "note": "Orthographic-like three-quarter product framing estimated from chassis edge convergence."
+  },
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "rugged modular cyberdeck laptop",
+      "primaryDomain": "object",
+      "formLanguage": [
+        "hard-surface",
+        "mechanical",
+        "geometric"
+      ],
+      "structureKind": [
+        "articulated assembly",
+        "layered shell",
+        "repeated modules"
+      ],
+      "motionPotential": [
+        "hinged",
+        "detachable",
+        "explodable",
+        "clickable"
+      ],
+      "materialFamilies": [
+        "painted metal",
+        "anodized metal",
+        "plastic",
+        "rubber",
+        "screen glass",
+        "emissive acrylic"
+      ],
+      "notes": "Three-display articulated computer with armored shells and dense repeated controls."
+    },
+    "complexity": {
+      "tier": "ultra-complex",
+      "scores": {
+        "silhouetteComplexity": 3,
+        "componentCount": 3,
+        "hierarchyDepth": 3,
+        "repetitionDensity": 3,
+        "materialLayerCount": 3,
+        "localDetailDensity": 3,
+        "occlusionRisk": 2,
+        "actionReadinessNeed": 3
+      },
+      "estimatedCounts": {
+        "macroComponents": 6,
+        "mesoComponents": 24,
+        "microFeatureGroups": 18,
+        "materialLayers": 8,
+        "repetitionSystems": 7
+      },
+      "reasoning": [
+        "Three displays interrupt the silhouette.",
+        "Keyboard, vents, fasteners, light rails and UI graphics are dense repeated systems.",
+        "Eight distinct PBR roles are visible."
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "ultra-complex",
+      "minimumComponentLevels": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Visible articulation and repetition require a deep hierarchy."
+    },
+    "unknownsToResolveBeforeImplementation": [],
+    "detailInventory": {
+      "scanMethod": "grid-3x3",
+      "targetMinDetails": 16,
+      "details": [
+        {
+          "id": "lid-bevel",
+          "kind": "bevel",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "main-lid-shell.edge-chamfer"
+          }
+        },
+        {
+          "id": "camera-pill",
+          "kind": "hole",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "camera-module.sensor-pill"
+          }
+        },
+        {
+          "id": "lid-light-rails",
+          "kind": "emissive",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "emissive-accent.lid-rails"
+          }
+        },
+        {
+          "id": "screen-infinity",
+          "kind": "decal",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "main-screen-ui.infinity-ribbon"
+          }
+        },
+        {
+          "id": "screen-panels",
+          "kind": "linework",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "main-screen-ui.editor-panels"
+          }
+        },
+        {
+          "id": "left-radar",
+          "kind": "decal",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "left-screen-ui.radar"
+          }
+        },
+        {
+          "id": "right-wireframe",
+          "kind": "decal",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "right-screen-ui.wireframe"
+          }
+        },
+        {
+          "id": "keyboard-grid",
+          "kind": "ridge",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "keyboard-module.keycap-grid"
+          }
+        },
+        {
+          "id": "keyboard-color-zones",
+          "kind": "decal",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "keycap-plastic.color-zones"
+          }
+        },
+        {
+          "id": "hinge-barrels",
+          "kind": "ridge",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "main-hinge.paired-barrels"
+          }
+        },
+        {
+          "id": "vent-banks",
+          "kind": "hole",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "upper-deck.vent-arrays"
+          }
+        },
+        {
+          "id": "encoder-ring",
+          "kind": "emissive",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "rotary-encoder.luminous-ring"
+          }
+        },
+        {
+          "id": "handle-grip",
+          "kind": "ridge",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "carry-handle.ribbed-grip"
+          }
+        },
+        {
+          "id": "handle-lights",
+          "kind": "emissive",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "emissive-accent.handle-caps"
+          }
+        },
+        {
+          "id": "fastener-clusters",
+          "kind": "fastener",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "fastener-system.perimeter-screws"
+          }
+        },
+        {
+          "id": "front-io",
+          "kind": "hole",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "lower-chassis.front-io"
+          }
+        },
+        {
+          "id": "wing-armor",
+          "kind": "bevel",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "wing-shells.octagonal-bevel"
+          }
+        },
+        {
+          "id": "shell-specular-rim",
+          "kind": "gloss",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "pearl-shell.cool-rim"
+          }
+        }
+      ]
+    }
+  },
+  "qualityContract": {
+    "qualityBar": "ultra-complex",
+    "definitionOfDone": [
+      "Preserve the three-display silhouette, armored white chassis, pastel mechanical keyboard, front carry handle, rotary control, perimeter lighting, and distinct technical screen interfaces.",
+      "Remain volumetric from four cardinal views and expose separately clickable and explodable major assemblies."
+    ],
+    "minimumSpecDepth": {
+      "macroComponents": 5,
+      "mesoComponents": 16,
+      "microFeatureGroups": 8,
+      "materialLayers": 8,
+      "repetitionSystems": 5,
+      "reviewViewpoints": 5
+    },
+    "featureGroups": [
+      {
+        "id": "three-display-silhouette",
+        "name": "Three-display articulated silhouette",
+        "required": true,
+        "qualityCriteria": [
+          "Main lid and two canted wing displays retain reference proportions and negative spaces."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "generic single-screen laptop"
+        ]
+      },
+      {
+        "id": "armored-chassis",
+        "name": "Layered armored chassis",
+        "required": true,
+        "qualityCriteria": [
+          "White chamfered shell, dark seams, corner armor and handle read as separate volumes."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "flat slab silhouette"
+        ]
+      },
+      {
+        "id": "control-density",
+        "name": "Keyboard and control density",
+        "required": true,
+        "qualityCriteria": [
+          "Individually raised multicolor keys, encoder, nav keys and vent arrays remain legible."
+        ],
+        "evidenceRefs": [
+          "keyboard-zone"
+        ],
+        "failureModes": [
+          "keyboard texture plane"
+        ]
+      },
+      {
+        "id": "technical-displays",
+        "name": "Three technical display systems",
+        "required": true,
+        "qualityCriteria": [
+          "Infinity editor, radar telemetry and wireframe analysis UIs remain distinct."
+        ],
+        "evidenceRefs": [
+          "screen-zones"
+        ],
+        "failureModes": [
+          "identical or blank screens"
+        ]
+      },
+      {
+        "id": "pbr-lighting",
+        "name": "Pearl metal and emissive look development",
+        "required": true,
+        "qualityCriteria": [
+          "Cool-white clearcoat, navy glass and cyan-violet-magenta bloom reproduce the reference value range."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "flat plastic material"
+        ]
+      }
+    ],
+    "visualDeltaChecks": [
+      "three-display silhouette delta",
+      "keyboard density delta",
+      "handle and encoder placement delta",
+      "screen motif delta",
+      "pearl-metal and emissive response delta"
+    ],
+    "antiShallowSpecRules": [
+      "No fused one-mesh assembly.",
+      "No texture-plane keyboard.",
+      "No flat side-screen cards without backing shells."
+    ],
+    "mustNotDo": [
+      "Do not claim hidden underside geometry is reference-exact.",
+      "Do not alias albedo into roughness or normal channels.",
+      "Do not remove named parts to meet performance targets."
+    ]
+  },
+  "qualityTargets": {
+    "targetFidelity": 0.78,
+    "mustMatch": [
+      "three-display silhouette",
+      "armored white shell",
+      "pastel mechanical keyboard",
+      "three distinct screen UIs",
+      "handle, hinges and rotary encoder",
+      "cyan-violet-magenta light rails"
+    ],
+    "niceToHave": [
+      "exact tiny key legends",
+      "unseen underside port fidelity"
+    ],
+    "fpsTarget": 60,
+    "reviewViewpoints": [
+      "reference-three-quarter",
+      "front",
+      "right",
+      "rear",
+      "left"
+    ]
+  },
+  "selfCorrectLoop": {
+    "enabled": true,
+    "visualAcceptance": {
+      "reviewer": "ai-vision",
+      "threshold": 0.7,
+      "comparisonArtifactRequired": true,
+      "layerScoresRequired": true,
+      "codePixelDiffIsAcceptanceAuthority": false,
+      "requiredLayerScores": [
+        "silhouetteProportion",
+        "componentStructure",
+        "formDetail",
+        "materialSurface",
+        "lightingCamera"
+      ],
+      "featureReviewPolicy": {
+        "enabled": true,
+        "maxCriticalFeaturesPerPass": 5,
+        "maxImportantFeaturesPerPass": 3
+      }
+    },
+    "allowedActions": [
+      "continue",
+      "refine-spec",
+      "refine-code",
+      "request-input",
+      "stop"
+    ]
+  },
+  "featureReviewTargets": [
+    {
+      "id": "three-display-silhouette",
+      "name": "Main lid plus two canted wing displays",
+      "tier": "critical",
+      "passIds": [
+        "blockout",
+        "structural-pass"
+      ],
+      "minimumScore": 0.8,
+      "mustPass": true,
+      "componentRefs": [
+        "main-display-assembly",
+        "left-display-assembly",
+        "right-display-assembly"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "keyboard-controls",
+      "name": "Pastel mechanical keyboard and right control cluster",
+      "tier": "critical",
+      "passIds": [
+        "form-refinement"
+      ],
+      "minimumScore": 0.78,
+      "mustPass": true,
+      "componentRefs": [
+        "keyboard-module",
+        "rotary-encoder",
+        "navigation-cluster"
+      ],
+      "evidenceRefs": [
+        "keyboard-zone"
+      ]
+    },
+    {
+      "id": "screen-identity",
+      "name": "Infinity editor, radar and engineering UI motifs",
+      "tier": "critical",
+      "passIds": [
+        "material-pass",
+        "surface-pass"
+      ],
+      "minimumScore": 0.76,
+      "mustPass": true,
+      "componentRefs": [
+        "main-screen",
+        "left-screen",
+        "right-screen"
+      ],
+      "evidenceRefs": [
+        "screen-zones"
+      ]
+    },
+    {
+      "id": "pearl-emissive-response",
+      "name": "Pearl shell, dark glass and RGB practical lighting",
+      "tier": "critical",
+      "passIds": [
+        "lighting-pass"
+      ],
+      "minimumScore": 0.75,
+      "mustPass": true,
+      "componentRefs": [
+        "lower-chassis",
+        "main-lid-shell",
+        "light-rail-system"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "action-assembly",
+      "name": "Clickable and explodable mechanical hierarchy",
+      "tier": "important",
+      "passIds": [
+        "interaction-pass"
+      ],
+      "minimumScore": 0.68,
+      "mustPass": false,
+      "componentRefs": [
+        "cyberdeck-root"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    }
+  ],
+  "coordinateFrame": {
+    "front": "negative Z",
+    "up": "positive Y",
+    "right": "positive X",
+    "scaleReference": "base width 10.8 world units"
+  },
+  "silhouette": {
+    "boundingShape": "shallow beveled base, upright main lid, two canted auxiliary wings and projected front handle",
+    "aspectRatios": [
+      "base 10.8:6.35:0.64",
+      "lid 9.8:6.15:0.48",
+      "wing 4.15:3.25:0.34"
+    ],
+    "symmetry": "approximately bilateral with asymmetric controls and wing UIs",
+    "dominantCurves": [
+      "chamfered octagonal frame corners",
+      "cylindrical hinge barrels",
+      "rounded handle grip"
+    ],
+    "negativeSpaces": [
+      "gaps below side wings",
+      "handle opening",
+      "lid-to-base hinge gaps"
+    ],
+    "landmarks": [
+      "main screen center",
+      "paired hinges",
+      "rotary encoder",
+      "front handle"
+    ]
+  },
+  "viewEvidence": [
+    {
+      "id": "full-object",
+      "view": "primary",
+      "imageRegion": {
+        "x": 0,
+        "y": 0,
+        "width": 1,
+        "height": 1,
+        "units": "normalized"
+      },
+      "observations": [
+        "three-display silhouette",
+        "white armored shell",
+        "dark studio background"
+      ],
+      "confidence": 0.97
+    },
+    {
+      "id": "keyboard-zone",
+      "view": "primary",
+      "imageRegion": {
+        "x": 0.2,
+        "y": 0.48,
+        "width": 0.5,
+        "height": 0.34,
+        "units": "normalized"
+      },
+      "observations": [
+        "six key rows",
+        "pastel color grouping",
+        "encoder and nav keys"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "id": "screen-zones",
+      "view": "primary",
+      "imageRegion": {
+        "x": 0.02,
+        "y": 0.05,
+        "width": 0.96,
+        "height": 0.82,
+        "units": "normalized"
+      },
+      "observations": [
+        "three distinct emissive technical UIs"
+      ],
+      "confidence": 0.96
+    }
+  ],
+  "componentTree": [
+    {
+      "id": "cyberdeck-root",
+      "name": "Cyberdeck root",
+      "level": "macro",
+      "role": "root",
+      "importance": 1,
+      "confidence": 1,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Semantic root for the full independently transformable assembly.",
+      "parent": null,
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.01,
+          0.01,
+          0.01
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(220, 216, 238, 1)",
+        "secondaryAlbedo": "rgba(151, 153, 222, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.88
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "lower-chassis",
+      "name": "Lower chassis assembly",
+      "level": "macro",
+      "role": "body",
+      "importance": 1,
+      "confidence": 0.98,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Shallow rigid enclosure with planar faces and broad chamfers.",
+      "parent": "cyberdeck-root",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          10.8,
+          0.64,
+          6.35
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(224, 220, 239, 1)",
+        "secondaryAlbedo": "rgba(151, 153, 222, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": [
+        {
+          "id": "lower-chassis.front-io",
+          "kind": "hole"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "main-display-assembly",
+      "name": "Main display assembly",
+      "level": "macro",
+      "role": "panel",
+      "importance": 1,
+      "confidence": 0.97,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid framed display panel with independent hinge pivot.",
+      "parent": "cyberdeck-root",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          0,
+          3.65,
+          2.78
+        ],
+        "rotation": [
+          -0.08,
+          0,
+          0
+        ],
+        "scale": [
+          9.8,
+          6.15,
+          0.48
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(224, 220, 239, 1)",
+        "secondaryAlbedo": "rgba(110, 113, 196, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "left-display-assembly",
+      "name": "Left auxiliary display panel",
+      "level": "macro",
+      "role": "panel",
+      "importance": 0.9,
+      "confidence": 0.91,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid octagonal wing display with its own backing volume.",
+      "parent": "cyberdeck-root",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          -7.0,
+          1.1,
+          0.15
+        ],
+        "rotation": [
+          -0.28,
+          0.46,
+          0.16
+        ],
+        "scale": [
+          4.15,
+          3.25,
+          0.34
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211, 209, 235, 1)",
+        "secondaryAlbedo": "rgba(89, 95, 178, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.85
+      },
+      "localFeatures": [
+        {
+          "id": "wing-shells.octagonal-bevel",
+          "kind": "bevel"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "right-display-assembly",
+      "name": "Right auxiliary display panel",
+      "level": "macro",
+      "role": "panel",
+      "importance": 0.9,
+      "confidence": 0.91,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid octagonal wing display with its own backing volume.",
+      "parent": "cyberdeck-root",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          7.0,
+          0.8,
+          0.15
+        ],
+        "rotation": [
+          -0.28,
+          -0.46,
+          -0.16
+        ],
+        "scale": [
+          4.15,
+          3.25,
+          0.34
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211, 209, 235, 1)",
+        "secondaryAlbedo": "rgba(89, 95, 178, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.85
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "carry-assembly",
+      "name": "Front grip assembly",
+      "level": "macro",
+      "role": "grip",
+      "importance": 0.85,
+      "confidence": 0.95,
+      "primitive": "capsule",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Cylindrical rubber grip suspended between two rigid mounting blocks.",
+      "parent": "lower-chassis",
+      "attachment": {
+        "parentId": "lower-chassis",
+        "parentSocket": "front-handle-socket",
+        "localStart": [
+          -2.2,
+          0,
+          0
+        ],
+        "localEnd": [
+          2.2,
+          0,
+          0
+        ],
+        "contactType": "socket",
+        "overlap": 0.08,
+        "gapTolerance": 0.02
+      },
+      "material": "rubber",
+      "transform": {
+        "position": [
+          0,
+          -0.55,
+          -3.85
+        ],
+        "rotation": [
+          0,
+          0,
+          1.57
+        ],
+        "scale": [
+          0.5,
+          4.4,
+          0.5
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(34, 35, 52, 1)",
+        "secondaryAlbedo": "rgba(77, 75, 112, 1)",
+        "materialClass": "rubber",
+        "materialClassConfidence": 0.92
+      },
+      "localFeatures": [
+        {
+          "id": "carry-handle.ribbed-grip",
+          "kind": "ridge"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "upper-deck",
+      "name": "Upper keyboard deck",
+      "level": "meso",
+      "role": "deck",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid recessed palm deck inset into the lower shell.",
+      "parent": "lower-chassis",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          0,
+          0.42,
+          -0.25
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          9.9,
+          0.22,
+          5.45
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(224, 220, 239, 1)",
+        "secondaryAlbedo": "rgba(151, 153, 222, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": [
+        {
+          "id": "upper-deck.vent-arrays",
+          "kind": "hole"
+        }
+      ]
+    },
+    {
+      "id": "keyboard-module",
+      "name": "Keyboard module",
+      "level": "meso",
+      "role": "controls",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Recessed rigid key tray containing repeated raised caps.",
+      "parent": "upper-deck",
+      "material": "dark-polymer",
+      "transform": {
+        "position": [
+          -0.7,
+          0.24,
+          -0.55
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          7.65,
+          0.18,
+          3.45
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(20, 27, 60, 1)",
+        "secondaryAlbedo": "rgba(44, 54, 105, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.95
+      },
+      "localFeatures": [
+        {
+          "id": "keyboard-module.keycap-grid",
+          "kind": "ridge"
+        }
+      ]
+    },
+    {
+      "id": "rotary-encoder",
+      "name": "Rotary encoder",
+      "level": "meso",
+      "role": "control",
+      "primitive": "cylinder",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Concentric machined cylindrical knob and luminous ring.",
+      "parent": "upper-deck",
+      "attachment": {
+        "parentId": "upper-deck",
+        "parentSocket": "encoder-well",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.28,
+          0
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.08,
+        "gapTolerance": 0.01
+      },
+      "material": "brushed-metal",
+      "transform": {
+        "position": [
+          4.05,
+          0.45,
+          0.55
+        ],
+        "rotation": [
+          1.57,
+          0,
+          0
+        ],
+        "scale": [
+          0.62,
+          0.28,
+          0.62
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(36, 37, 60, 1)",
+        "secondaryAlbedo": "rgba(118, 87, 255, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.92
+      },
+      "localFeatures": [
+        {
+          "id": "rotary-encoder.luminous-ring",
+          "kind": "emissive"
+        }
+      ]
+    },
+    {
+      "id": "navigation-cluster",
+      "name": "Navigation key cluster",
+      "level": "meso",
+      "role": "controls",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Four discrete raised caps in a recessed rigid well.",
+      "parent": "upper-deck",
+      "material": "dark-polymer",
+      "transform": {
+        "position": [
+          4.15,
+          0.35,
+          -1.75
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1.45,
+          0.18,
+          1.35
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(77, 70, 166, 1)",
+        "secondaryAlbedo": "rgba(224, 220, 239, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.94
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "main-lid-shell",
+      "name": "Main lid shell",
+      "level": "meso",
+      "role": "shell",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Thick beveled backing shell surrounding the screen opening.",
+      "parent": "main-display-assembly",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(224, 220, 239, 1)",
+        "secondaryAlbedo": "rgba(151, 153, 222, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": [
+        {
+          "id": "main-lid-shell.edge-chamfer",
+          "kind": "bevel"
+        }
+      ]
+    },
+    {
+      "id": "main-screen",
+      "name": "Main editor screen",
+      "level": "meso",
+      "role": "display",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Canvas-textured display surface rides on the inner bezel.",
+      "parent": "main-display-assembly",
+      "material": "screen-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -0.27
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          8.95,
+          5.25,
+          1
+        ]
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "camera-module",
+      "name": "Camera module",
+      "level": "meso",
+      "role": "sensor",
+      "primitive": "capsule",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Raised dark pill with embedded optical aperture.",
+      "parent": "main-display-assembly",
+      "attachment": {
+        "parentId": "main-display-assembly",
+        "parentSocket": "top-camera-recess",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0,
+          0.22
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.04,
+        "gapTolerance": 0.01
+      },
+      "material": "dark-polymer",
+      "transform": {
+        "position": [
+          0,
+          2.72,
+          -0.34
+        ],
+        "rotation": [
+          0,
+          0,
+          1.57
+        ],
+        "scale": [
+          0.22,
+          1.05,
+          0.22
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(16, 22, 51, 1)",
+        "secondaryAlbedo": "rgba(118, 87, 255, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.94
+      },
+      "localFeatures": [
+        {
+          "id": "camera-module.sensor-pill",
+          "kind": "hole"
+        }
+      ]
+    },
+    {
+      "id": "main-hinge",
+      "name": "Main pivot barrels",
+      "level": "meso",
+      "role": "joint",
+      "primitive": "cylinder",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Two machined cylindrical barrels bridge lid and base.",
+      "parent": "main-display-assembly",
+      "attachment": {
+        "parentId": "main-display-assembly",
+        "parentSocket": "lid-bottom-socket",
+        "localStart": [
+          -3.6,
+          0,
+          0
+        ],
+        "localEnd": [
+          3.6,
+          0,
+          0
+        ],
+        "contactType": "socket",
+        "overlap": 0.1,
+        "gapTolerance": 0.02
+      },
+      "material": "anodized-armor",
+      "transform": {
+        "position": [
+          0,
+          -3.08,
+          0.2
+        ],
+        "rotation": [
+          0,
+          0,
+          1.57
+        ],
+        "scale": [
+          0.4,
+          7.2,
+          0.4
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(79, 81, 169, 1)",
+        "secondaryAlbedo": "rgba(151, 153, 222, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.94
+      },
+      "localFeatures": [
+        {
+          "id": "main-hinge.paired-barrels",
+          "kind": "ridge"
+        }
+      ]
+    },
+    {
+      "id": "left-wing-shell",
+      "name": "Left display backing shell",
+      "level": "meso",
+      "role": "shell",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Octagonal rigid backing and bezel volume.",
+      "parent": "left-display-assembly",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211, 209, 235, 1)",
+        "secondaryAlbedo": "rgba(89, 95, 178, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.86
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "left-screen",
+      "name": "Left telemetry screen",
+      "level": "meso",
+      "role": "display",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Canvas-textured telemetry surface on the wing bezel.",
+      "parent": "left-display-assembly",
+      "material": "screen-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -0.2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          3.55,
+          2.68,
+          1
+        ]
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "right-wing-shell",
+      "name": "Right display backing shell",
+      "level": "meso",
+      "role": "shell",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Octagonal rigid backing and bezel volume.",
+      "parent": "right-display-assembly",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211, 209, 235, 1)",
+        "secondaryAlbedo": "rgba(89, 95, 178, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.86
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "right-screen",
+      "name": "Right analysis screen",
+      "level": "meso",
+      "role": "display",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Canvas-textured analysis surface on the wing bezel.",
+      "parent": "right-display-assembly",
+      "material": "screen-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -0.2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          3.55,
+          2.68,
+          1
+        ]
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "left-wing-joint",
+      "name": "Left display joint",
+      "level": "meso",
+      "role": "joint",
+      "primitive": "cylinder",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Double-axis cylindrical socket attaches the wing to the base.",
+      "parent": "lower-chassis",
+      "attachment": {
+        "parentId": "lower-chassis",
+        "parentSocket": "left-side-socket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          -1.15,
+          0,
+          0
+        ],
+        "contactType": "socket",
+        "overlap": 0.08,
+        "gapTolerance": 0.02
+      },
+      "material": "anodized-armor",
+      "transform": {
+        "position": [
+          -5.55,
+          0.2,
+          0.25
+        ],
+        "rotation": [
+          0,
+          0,
+          1.57
+        ],
+        "scale": [
+          0.34,
+          1.15,
+          0.34
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(79, 81, 169, 1)",
+        "secondaryAlbedo": "rgba(151, 153, 222, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "right-wing-joint",
+      "name": "Right display joint",
+      "level": "meso",
+      "role": "joint",
+      "primitive": "cylinder",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Double-axis cylindrical socket attaches the wing to the base.",
+      "parent": "lower-chassis",
+      "attachment": {
+        "parentId": "lower-chassis",
+        "parentSocket": "right-side-socket",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          1.15,
+          0,
+          0
+        ],
+        "contactType": "socket",
+        "overlap": 0.08,
+        "gapTolerance": 0.02
+      },
+      "material": "anodized-armor",
+      "transform": {
+        "position": [
+          5.55,
+          0.2,
+          0.25
+        ],
+        "rotation": [
+          0,
+          0,
+          1.57
+        ],
+        "scale": [
+          0.34,
+          1.15,
+          0.34
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(79, 81, 169, 1)",
+        "secondaryAlbedo": "rgba(151, 153, 222, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "handle-left-mount",
+      "name": "Front grip left mount",
+      "level": "meso",
+      "role": "mount",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid armored bracket bolted to front chassis.",
+      "parent": "lower-chassis",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          -2.65,
+          -0.38,
+          -3.55
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.9,
+          0.7,
+          0.8
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211, 209, 235, 1)",
+        "secondaryAlbedo": "rgba(89, 95, 178, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.88
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "handle-right-mount",
+      "name": "Front grip right mount",
+      "level": "meso",
+      "role": "mount",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid armored bracket bolted to front chassis.",
+      "parent": "lower-chassis",
+      "material": "pearl-shell",
+      "transform": {
+        "position": [
+          2.65,
+          -0.38,
+          -3.55
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.9,
+          0.7,
+          0.8
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211, 209, 235, 1)",
+        "secondaryAlbedo": "rgba(89, 95, 178, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.88
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "front-bumper",
+      "name": "Front armored bumper",
+      "level": "meso",
+      "role": "armor",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Stepped rigid impact rail across the chassis front edge.",
+      "parent": "lower-chassis",
+      "material": "anodized-armor",
+      "transform": {
+        "position": [
+          0,
+          -0.25,
+          -3.25
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          7.5,
+          0.45,
+          0.42
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(117, 116, 177, 1)",
+        "secondaryAlbedo": "rgba(53, 62, 118, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "rear-vent-bank",
+      "name": "Rear vent bank",
+      "level": "meso",
+      "role": "vent",
+      "primitive": "box",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Repeated recessed slots interrupt the deck surface but not the macro outline.",
+      "parent": "upper-deck",
+      "material": "dark-polymer",
+      "transform": {
+        "position": [
+          0,
+          0.18,
+          2.15
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          5.8,
+          0.12,
+          0.55
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(28, 34, 68, 1)",
+        "secondaryAlbedo": "rgba(63, 70, 125, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "edge-armor-left",
+      "name": "Left edge armor",
+      "level": "meso",
+      "role": "armor",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid lateral bumper with stepped planar faces.",
+      "parent": "lower-chassis",
+      "material": "anodized-armor",
+      "transform": {
+        "position": [
+          -5.35,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.35,
+          0.72,
+          5.5
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(117, 116, 177, 1)",
+        "secondaryAlbedo": "rgba(53, 62, 118, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "edge-armor-right",
+      "name": "Right edge armor",
+      "level": "meso",
+      "role": "armor",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Rigid lateral bumper with stepped planar faces.",
+      "parent": "lower-chassis",
+      "material": "anodized-armor",
+      "transform": {
+        "position": [
+          5.35,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.35,
+          0.72,
+          5.5
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(117, 116, 177, 1)",
+        "secondaryAlbedo": "rgba(53, 62, 118, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "fastener-system",
+      "name": "Perimeter screw system",
+      "level": "micro",
+      "role": "hardware",
+      "primitive": "cylinder",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Countersunk circular heads repeat over shell corners and rims.",
+      "parent": "cyberdeck-root",
+      "attachment": {
+        "parentId": "cyberdeck-root",
+        "parentSocket": "shell-surfaces",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0.05,
+          0
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.02,
+        "gapTolerance": 0.005
+      },
+      "material": "brushed-metal",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.09,
+          0.05,
+          0.09
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(84, 87, 116, 1)",
+        "secondaryAlbedo": "rgba(190, 194, 220, 1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": [
+        {
+          "id": "fastener-system.perimeter-screws",
+          "kind": "fastener"
+        }
+      ]
+    },
+    {
+      "id": "light-rail-system",
+      "name": "Perimeter emissive rail system",
+      "level": "micro",
+      "role": "lighting",
+      "primitive": "box",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Thin luminous inserts sit proud of shell perimeter channels.",
+      "parent": "cyberdeck-root",
+      "material": "emissive-accent",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(52, 217, 255, 1)",
+        "secondaryAlbedo": "rgba(255, 85, 202, 1)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.82
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "keycap-system",
+      "name": "Mechanical keycap system",
+      "level": "micro",
+      "role": "controls",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Individually raised rigid caps repeat in staggered rows.",
+      "parent": "keyboard-module",
+      "material": "keycap-plastic",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.42,
+          0.16,
+          0.42
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(234, 232, 248, 1)",
+        "secondaryAlbedo": "rgba(106, 91, 193, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.95
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "vent-slot-system",
+      "name": "Vent slot system",
+      "level": "micro",
+      "role": "vent",
+      "primitive": "box",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Dark repeated slots form shallow recessed arrays.",
+      "parent": "rear-vent-bank",
+      "material": "dark-polymer",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.12,
+          0.08,
+          0.42
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(18, 24, 54, 1)",
+        "secondaryAlbedo": "rgba(47, 56, 102, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "main-screen-ui",
+      "name": "Main screen UI layer",
+      "level": "micro",
+      "role": "display",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Procedural CanvasTexture provides editor graphics and infinity ribbon.",
+      "parent": "main-screen",
+      "material": "screen-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "left-screen-ui",
+      "name": "Left screen UI layer",
+      "level": "micro",
+      "role": "display",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Procedural CanvasTexture provides radar and telemetry graphics.",
+      "parent": "left-screen",
+      "material": "screen-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "right-screen-ui",
+      "name": "Right screen UI layer",
+      "level": "micro",
+      "role": "display",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Procedural CanvasTexture provides wireframe analysis graphics.",
+      "parent": "right-screen",
+      "material": "screen-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "localFeatures": []
+    },
+    {
+      "id": "port-detail-system",
+      "name": "Port and latch detail system",
+      "level": "micro",
+      "role": "hardware",
+      "primitive": "box",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Small recessed ports and latches articulate chassis edges.",
+      "parent": "lower-chassis",
+      "material": "dark-polymer",
+      "transform": {
+        "position": [
+          0,
+          -0.3,
+          -3.22
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.42,
+          0.18,
+          0.12
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(18, 24, 54, 1)",
+        "secondaryAlbedo": "rgba(47, 56, 102, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": []
+    }
+  ],
+  "materials": [
+    {
+      "id": "pearl-shell",
+      "name": "Pearl white painted alloy",
+      "type": "physical",
+      "shaderModel": "MeshPhysicalMaterial",
+      "baseColor": "#ddd9ee",
+      "albedo": {
+        "dominant": "#ddd9ee",
+        "secondary": [
+          "#9799de",
+          "#f4f2ff"
+        ]
+      },
+      "colorVariation": {
+        "palette": [
+          "#ddd9ee",
+          "#9799de",
+          "#f4f2ff"
+        ],
+        "pattern": "cool edge modulation",
+        "amplitude": 0.08
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "generated object-space",
+        "texelDensityIntent": "stable 1024 px shell evidence"
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 1,
+          "amplitude": 0.06,
+          "role": "broad pearl modulation"
+        },
+        {
+          "id": "meso",
+          "frequency": 12,
+          "amplitude": 0.02,
+          "role": "paint orange peel"
+        },
+        {
+          "id": "micro",
+          "frequency": 64,
+          "amplitude": 0.008,
+          "role": "grazing highlight breakup"
+        }
+      ],
+      "roughness": {
+        "base": 0.27,
+        "variation": 0.08,
+        "map": "pearl-shell_roughness.png"
+      },
+      "metalness": {
+        "base": 0.42,
+        "variation": 0.05
+      },
+      "normal": {
+        "strength": 0.12,
+        "pattern": "pearl-shell_normal.png"
+      },
+      "ambientOcclusion": {
+        "map": "pearl-shell_ao.png",
+        "cavityStrength": 0.32
+      },
+      "clearcoat": 0.48,
+      "clearcoatRoughness": 0.18,
+      "localOverrides": [
+        {
+          "id": "pearl-shell.cool-rim",
+          "roughness": 0.18,
+          "clearcoat": 0.6,
+          "evidenceRef": "full-object"
+        }
+      ],
+      "referencePbr": {
+        "version": "1",
+        "sourceImage": "/home/fezer/projects/todou/laptop.png",
+        "extractor": "img2threejs",
+        "method": "single-image evidence extraction",
+        "verdict": "pass",
+        "usable": true,
+        "confidence": 0.86,
+        "estimatedFidelity": 0.86,
+        "targetThreshold": 0.7,
+        "hardLimit": "inference, not inverse rendering",
+        "maps": {
+          "albedo": {
+            "path": "/home/fezer/projects/todou/evidence/pbr-shell/pearl-shell_albedo.png",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "/home/fezer/projects/todou/evidence/pbr-shell/pearl-shell_roughness.png",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "/home/fezer/projects/todou/evidence/pbr-shell/pearl-shell_height.png",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "/home/fezer/projects/todou/evidence/pbr-shell/pearl-shell_normal.png",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "/home/fezer/projects/todou/evidence/pbr-shell/pearl-shell_ao.png",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "anodized-armor",
+      "name": "Lavender anodized armor",
+      "qualityTier": "utility",
+      "baseColor": "#7774b1",
+      "roughness": 0.22,
+      "metalness": 0.78,
+      "localOverrides": []
+    },
+    {
+      "id": "dark-polymer",
+      "name": "Blue black coated polymer",
+      "qualityTier": "utility",
+      "baseColor": "#121836",
+      "roughness": 0.34,
+      "metalness": 0.08,
+      "localOverrides": []
+    },
+    {
+      "id": "keycap-plastic",
+      "name": "Pastel PBT keycaps",
+      "qualityTier": "utility",
+      "baseColor": "#eae8f8",
+      "roughness": 0.38,
+      "metalness": 0,
+      "localOverrides": [
+        {
+          "id": "keycap-plastic.color-zones",
+          "palette": [
+            "#eae8f8",
+            "#6659be",
+            "#f58ac9",
+            "#50cfff"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "screen-glass",
+      "name": "Emissive screen glass",
+      "qualityTier": "utility",
+      "baseColor": "#07102b",
+      "roughness": 0.12,
+      "metalness": 0.05,
+      "clearcoat": 0.9,
+      "localOverrides": [
+        {
+          "id": "main-screen-ui.infinity-ribbon",
+          "emissive": "cyan-pink"
+        },
+        {
+          "id": "main-screen-ui.editor-panels",
+          "emissive": "blue-violet"
+        },
+        {
+          "id": "left-screen-ui.radar",
+          "emissive": "cyan"
+        },
+        {
+          "id": "right-screen-ui.wireframe",
+          "emissive": "cyan-violet"
+        }
+      ]
+    },
+    {
+      "id": "rubber",
+      "name": "Charcoal ribbed rubber",
+      "qualityTier": "utility",
+      "baseColor": "#252638",
+      "roughness": 0.68,
+      "metalness": 0,
+      "localOverrides": []
+    },
+    {
+      "id": "brushed-metal",
+      "name": "Brushed hardware metal",
+      "qualityTier": "utility",
+      "baseColor": "#6c7090",
+      "roughness": 0.27,
+      "metalness": 0.88,
+      "localOverrides": []
+    },
+    {
+      "id": "emissive-accent",
+      "name": "Cyan violet magenta light acrylic",
+      "qualityTier": "utility",
+      "baseColor": "#7657ff",
+      "roughness": 0.18,
+      "metalness": 0,
+      "localOverrides": [
+        {
+          "id": "emissive-accent.lid-rails",
+          "emissiveIntensity": 5
+        },
+        {
+          "id": "emissive-accent.handle-caps",
+          "emissiveIntensity": 4.5
+        }
+      ]
+    }
+  ],
+  "repetitionSystems": [
+    {
+      "id": "keycap-grid",
+      "parent": "keyboard-module",
+      "level": "micro",
+      "count": 67,
+      "primitive": "box",
+      "material": "keycap-plastic",
+      "instanceScale": [
+        0.42,
+        0.16,
+        0.42
+      ],
+      "placement": {
+        "mode": "grid",
+        "columns": 14,
+        "spacing": [
+          0.55,
+          0,
+          0.55
+        ]
+      },
+      "buildsGeometry": true
+    },
+    {
+      "id": "perimeter-screws",
+      "parent": "cyberdeck-root",
+      "level": "micro",
+      "count": 32,
+      "primitive": "cylinder",
+      "material": "brushed-metal",
+      "instanceScale": [
+        0.08,
+        0.04,
+        0.08
+      ],
+      "placement": {
+        "mode": "explicit"
+      },
+      "instances": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "buildsGeometry": true
+    },
+    {
+      "id": "rear-vent-slots",
+      "parent": "rear-vent-bank",
+      "level": "micro",
+      "count": 28,
+      "primitive": "box",
+      "material": "dark-polymer",
+      "instanceScale": [
+        0.12,
+        0.08,
+        0.42
+      ],
+      "placement": {
+        "mode": "linear",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "spacing": 0.2
+      },
+      "buildsGeometry": true
+    },
+    {
+      "id": "rgb-light-segments",
+      "parent": "light-rail-system",
+      "level": "micro",
+      "count": 18,
+      "primitive": "box",
+      "material": "emissive-accent",
+      "instanceScale": [
+        0.5,
+        0.05,
+        0.08
+      ],
+      "placement": {
+        "mode": "explicit"
+      },
+      "instances": [
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "buildsGeometry": true
+    },
+    {
+      "id": "handle-ribs",
+      "parent": "carry-assembly",
+      "level": "micro",
+      "count": 18,
+      "primitive": "torus",
+      "material": "rubber",
+      "instanceScale": [
+        0.28,
+        0.28,
+        0.06
+      ],
+      "placement": {
+        "mode": "linear",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "spacing": 0.18
+      },
+      "buildsGeometry": true
+    }
+  ],
+  "lookDevTargets": {
+    "qualityPriority": "reference-fidelity",
+    "materialPass": {
+      "minimumTextureResolution": 1024,
+      "independentMapChannels": [
+        "albedo",
+        "roughness",
+        "height",
+        "normal",
+        "ambient-occlusion"
+      ],
+      "referencePbrExtraction": {
+        "requiredWhenSourceImagePresent": true,
+        "targetThreshold": 0.7
+      }
+    },
+    "lightingPass": {
+      "requiredTerms": [
+        "key light",
+        "fill light",
+        "rim light",
+        "exposure",
+        "tone mapping",
+        "background",
+        "contact shadow"
+      ]
+    }
+  },
+  "lightingFromPhoto": [
+    "Cool area key light from upper front-left, intensity 4.2, soft shadow radius 5.",
+    "Violet area fill and rim from rear-right, intensity 2.4, cyan practical bounce from screen planes.",
+    "ACES filmic tone mapping, exposure 1.12, black-to-lavender radial background and soft violet contact shadow."
+  ],
+  "actionReadiness": {
+    "contract": "Every major assembly is a named pivot, clickable and explodable; hinge pivots and control sockets remain independently addressable.",
+    "defaultRigType": "action-ready-static-rig",
+    "rootMotionNode": "cyberdeck-root",
+    "requiredComponentFields": [
+      "id",
+      "parent",
+      "transform",
+      "action metadata"
+    ],
+    "transformChannels": [
+      "translate",
+      "rotate",
+      "scale",
+      "detach",
+      "visibility",
+      "material-state"
+    ],
+    "destructionPolicy": {
+      "defaultBreakable": false
+    }
+  },
+  "buildPasses": [
+    {
+      "id": "blockout",
+      "goal": "Lock three-display silhouette and macro proportions.",
+      "componentRefs": [
+        "lower-chassis",
+        "main-display-assembly",
+        "left-display-assembly",
+        "right-display-assembly",
+        "carry-assembly"
+      ],
+      "acceptance": [
+        "Reference silhouette remains recognizable without materials."
+      ]
+    },
+    {
+      "id": "structural-pass",
+      "goal": "Build independent shells, hinges, keyboard deck and control clusters.",
+      "componentRefs": [
+        "upper-deck",
+        "main-lid-shell",
+        "left-wing-shell",
+        "right-wing-shell",
+        "main-hinge",
+        "left-wing-joint",
+        "right-wing-joint"
+      ],
+      "acceptance": [
+        "No visible macro assembly is fused or floating."
+      ]
+    },
+    {
+      "id": "form-refinement",
+      "goal": "Add chamfers, keys, vents, screws, ports, mounts and encoder.",
+      "componentRefs": [
+        "keyboard-module",
+        "rotary-encoder",
+        "fastener-system",
+        "vent-slot-system"
+      ],
+      "acceptance": [
+        "Dense mechanical detail survives the reference camera distance."
+      ]
+    },
+    {
+      "id": "material-pass",
+      "goal": "Match pearl alloy, dark glass, pastel polymer and emissive accents.",
+      "componentRefs": [
+        "cyberdeck-root"
+      ],
+      "acceptance": [
+        "PBR response remains distinct under neutral light."
+      ]
+    },
+    {
+      "id": "surface-pass",
+      "goal": "Add edge highlights, ribbing, screen graphics and local roughness variation.",
+      "componentRefs": [
+        "cyberdeck-root"
+      ],
+      "acceptance": [
+        "Micro details remain tied to inventory evidence."
+      ]
+    },
+    {
+      "id": "lighting-pass",
+      "goal": "Match cool studio key, violet rim, bloom and contact shadow.",
+      "componentRefs": [
+        "cyberdeck-root"
+      ],
+      "acceptance": [
+        "Reference value range and material readability coexist."
+      ]
+    },
+    {
+      "id": "interaction-pass",
+      "goal": "Expose selection, explode and screen-power interactions.",
+      "componentRefs": [
+        "cyberdeck-root"
+      ],
+      "acceptance": [
+        "Picking and explosion share the same named part manifest."
+      ]
+    },
+    {
+      "id": "optimization-pass",
+      "goal": "Protect 60 FPS without removing identity geometry.",
+      "componentRefs": [
+        "cyberdeck-root"
+      ],
+      "acceptance": [
+        "Repeated details use instancing where practical."
+      ]
+    }
+  ],
+  "sculptPipeline": {
+    "passGateMode": "locked-sequential",
+    "passOrder": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass",
+      "surface-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "currentPass": "blockout",
+    "completedPasses": [],
+    "lastCompletedPass": "",
+    "blockedReason": "blockout requires browser evidence",
+    "nextRequiredEvidence": [
+      "reference-camera screenshot",
+      "comparison sheet",
+      "tier1 diagnostics",
+      "AI visual review"
+    ]
+  },
+  "proceduralStrategy": [
+    "BeveledBoxGeometry and extruded chamfered profiles for shells.",
+    "Instanced or repeated meshes for keys, vents and screws.",
+    "CanvasTexture for the three independent technical displays.",
+    "Named pivot groups for lid, wings, handle, encoder and shell assemblies."
+  ],
+  "animationAnchors": [
+    "main lid hinge pivot",
+    "left wing double-axis pivot",
+    "right wing double-axis pivot",
+    "rotary encoder axis",
+    "explosion center"
+  ],
+  "destructionAnchors": [
+    "main-lid seam",
+    "wing hinge sockets",
+    "keyboard tray seam",
+    "handle mounts"
+  ],
+  "performanceBudget": {
+    "qualityPriority": "reference-fidelity",
+    "targetTriangles": 180000,
+    "maxDrawCalls": 190,
+    "textureSize": 2048,
+    "fpsTarget": 60,
+    "optimizationPolicy": "Preserve identity geometry; instance repeated keys, slots and screws."
+  },
+  "lodPlan": [
+    {
+      "tier": "near",
+      "distance": 0,
+      "strategy": "full hierarchy and UI textures"
+    },
+    {
+      "tier": "far",
+      "distance": 28,
+      "strategy": "hide legends and micro fasteners, preserve three-display silhouette"
+    }
+  ],
+  "assumptions": [
+    "Hidden underside and rear ports use functional symmetry-based inference.",
+    "Wing rear shells and hinge interiors are approximate.",
+    "Keyboard legends are representative rather than literal."
+  ],
+  "risks": [
+    "Single-view perspective may bias wing angle and lid depth.",
+    "Whole-object PBR extraction mixes material regions; scalar PBR values and manual visual review remain authoritative."
+  ],
+  "visualEvidence": [],
+  "reviewHistory": [],
+  "tier1Results": [
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.5153,
+        "aspectRatioDelta": 0.0275,
+        "scaleDelta": 0.066,
+        "bilateralSymmetryError": 0.3445,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 37.74,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 12.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.22
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.22
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.73
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.73
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.03
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.22
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.0
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.22
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.24
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.56
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.73
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.73
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.56
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.56
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.73
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.73
+            },
+            {
+              "componentId": null,
+              "deltaE": 15.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.84
+            },
+            {
+              "componentId": null,
+              "deltaE": 15.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 15.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 29.25
+            },
+            {
+              "componentId": null,
+              "deltaE": 37.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.82
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.515 is below threshold 0.85",
+        "blockout requires --map-stripped-render evidence"
+      ],
+      "maskWarnings": [],
+      "renderHash": "4d0dbcbc1c7d0ad2",
+      "passId": "blockout"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.6121,
+        "aspectRatioDelta": 0.0318,
+        "scaleDelta": 0.0708,
+        "bilateralSymmetryError": 0.2592,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 37.98,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 11.11
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.23
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.88
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.08
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.09
+            },
+            {
+              "componentId": null,
+              "deltaE": 37.98
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.04
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.04
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.612 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "1b11c029ff3906df",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.5768,
+        "aspectRatioDelta": 0.1536,
+        "scaleDelta": 0.1013,
+        "bilateralSymmetryError": 0.1549,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 50.46,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 41.49
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.36
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.5
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 50.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 47.26
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.85
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.85
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.577 is below threshold 0.85",
+        "aspect-ratio delta 0.154 exceeds threshold 0.05",
+        "scale delta 0.101 exceeds threshold 0.08"
+      ],
+      "maskWarnings": [],
+      "renderHash": "24e35c519fbd07df",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.6067,
+        "aspectRatioDelta": 0.0427,
+        "scaleDelta": 0.0057,
+        "bilateralSymmetryError": 0.114,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 48.46,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 37.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.36
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.36
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.06
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.06
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.36
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 3.57
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.57
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.36
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.06
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.06
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.06
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.06
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.65
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.1
+            },
+            {
+              "componentId": null,
+              "deltaE": 48.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.56
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.11
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.11
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.607 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "d92cb27f73980369",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.5968,
+        "aspectRatioDelta": 0.023,
+        "scaleDelta": 0.0134,
+        "bilateralSymmetryError": 0.2365,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 42.16,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 26.0
+            },
+            {
+              "componentId": null,
+              "deltaE": 27.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 27.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.17
+            },
+            {
+              "componentId": null,
+              "deltaE": 27.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.24
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.35
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 27.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.12
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.12
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.12
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 42.16
+            },
+            {
+              "componentId": null,
+              "deltaE": 31.58
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.69
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.597 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "4222234756c67f2d",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.6519,
+        "aspectRatioDelta": 0.0631,
+        "scaleDelta": 0.0248,
+        "bilateralSymmetryError": 0.2199,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 42.92,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 27.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 28.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 28.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 28.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.22
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 28.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.49
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.13
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.13
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.13
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.76
+            },
+            {
+              "componentId": null,
+              "deltaE": 42.92
+            },
+            {
+              "componentId": null,
+              "deltaE": 32.89
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.7
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.652 is below threshold 0.85",
+        "aspect-ratio delta 0.063 exceeds threshold 0.05"
+      ],
+      "maskWarnings": [],
+      "renderHash": "1ad44c27bbbc3b11",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.6505,
+        "aspectRatioDelta": 0.0318,
+        "scaleDelta": 0.0708,
+        "bilateralSymmetryError": 0.2854,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 41.8,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 24.22
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.33
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 15.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.63
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.52
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.87
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.58
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.87
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.87
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.98
+            },
+            {
+              "componentId": null,
+              "deltaE": 41.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 29.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.34
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.34
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.651 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "0df8838e35f98d6c",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.596,
+        "aspectRatioDelta": 0.0318,
+        "scaleDelta": 0.0708,
+        "bilateralSymmetryError": 0.318,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 41.74,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 24.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.58
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.58
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.58
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.26
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.58
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 26.03
+            },
+            {
+              "componentId": null,
+              "deltaE": 41.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 29.7
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.69
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.596 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "94ff10547fc2ad11",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.6856,
+        "aspectRatioDelta": 0.0006,
+        "scaleDelta": 0.0373,
+        "bilateralSymmetryError": 0.2112,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 41.82,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 24.14
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.66
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.66
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.31
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.92
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.31
+            },
+            {
+              "componentId": null,
+              "deltaE": 25.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.66
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.66
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.66
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.66
+            },
+            {
+              "componentId": null,
+              "deltaE": 26.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 26.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 26.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 15.35
+            },
+            {
+              "componentId": null,
+              "deltaE": 41.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 29.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.61
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.61
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.686 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "161a5f74bc301a6d",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.674,
+        "aspectRatioDelta": 0.0318,
+        "scaleDelta": 0.0708,
+        "bilateralSymmetryError": 0.3324,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 38.59,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 10.87
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.83
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.83
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.35
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.83
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.03
+            },
+            {
+              "componentId": null,
+              "deltaE": 3.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.77
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.83
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.68
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.13
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.68
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.68
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.15
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.59
+            },
+            {
+              "componentId": null,
+              "deltaE": 15.64
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.53
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.53
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.674 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "63a374d33810b96d",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.7488,
+        "aspectRatioDelta": 0.1788,
+        "scaleDelta": 0.0918,
+        "bilateralSymmetryError": 0.2291,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 39.78,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 8.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.62
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.1
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 3.52
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.42
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.42
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.42
+            },
+            {
+              "componentId": null,
+              "deltaE": 29.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.78
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.28
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.749 is below threshold 0.85",
+        "aspect-ratio delta 0.179 exceeds threshold 0.05",
+        "scale delta 0.092 exceeds threshold 0.08"
+      ],
+      "maskWarnings": [],
+      "renderHash": "d6b49e834111cb81",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.7477,
+        "aspectRatioDelta": 0.1567,
+        "scaleDelta": 0.1248,
+        "bilateralSymmetryError": 0.2235,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 39.61,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 8.77
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.07
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.07
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.49
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.07
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.07
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.07
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.07
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.53
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.53
+            },
+            {
+              "componentId": null,
+              "deltaE": 24.53
+            },
+            {
+              "componentId": null,
+              "deltaE": 30.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.61
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.4
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.12
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.12
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.748 is below threshold 0.85",
+        "aspect-ratio delta 0.157 exceeds threshold 0.05",
+        "scale delta 0.125 exceeds threshold 0.08"
+      ],
+      "maskWarnings": [],
+      "renderHash": "d4eeea92dcd361bd",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.7334,
+        "aspectRatioDelta": 0.1399,
+        "scaleDelta": 0.0487,
+        "bilateralSymmetryError": 0.2359,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 38.98,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 7.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.94
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.26
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.26
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.26
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.3
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.3
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.3
+            },
+            {
+              "componentId": null,
+              "deltaE": 27.08
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.98
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.74
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.733 is below threshold 0.85",
+        "aspect-ratio delta 0.140 exceeds threshold 0.05"
+      ],
+      "maskWarnings": [],
+      "renderHash": "fe6dfc0d86d079cb",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.7453,
+        "aspectRatioDelta": 0.1615,
+        "scaleDelta": 0.0726,
+        "bilateralSymmetryError": 0.2386,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 38.5,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 12.33
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.35
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.35
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.23
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.35
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.66
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.53
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.23
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.35
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.9
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.5
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.5
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.5
+            },
+            {
+              "componentId": null,
+              "deltaE": 27.13
+            },
+            {
+              "componentId": null,
+              "deltaE": 38.5
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.43
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.745 is below threshold 0.85",
+        "aspect-ratio delta 0.162 exceeds threshold 0.05"
+      ],
+      "maskWarnings": [],
+      "renderHash": "0aae5b84b9ed787b",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.7457,
+        "aspectRatioDelta": 0.1485,
+        "scaleDelta": 0.0583,
+        "bilateralSymmetryError": 0.2364,
+        "colorDelta": {
+          "checked": 28,
+          "maxDeltaE": 39.28,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 4.04
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.89
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.89
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.2
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.2
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.89
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.24
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.37
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.89
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.78
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.2
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.2
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.2
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.2
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.81
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.746 is below threshold 0.85",
+        "aspect-ratio delta 0.148 exceeds threshold 0.05"
+      ],
+      "maskWarnings": [],
+      "renderHash": "8d1152b2ce6dccd4",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/renders/screen-off.png"
+    }
+  ]
+}

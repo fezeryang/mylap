@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="可扩展的多资产三屏 Cyberdeck 三维工作台。" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><rect width=%2216%22 height=%2216%22 rx=%223%22 fill=%22%2307102b%22/><path d=%22M3 8h10M8 3v10%22 stroke=%22%2334d9ff%22/></svg>" />
+    <title>TODŌU // Cyberdeck Reconstruction</title>
+  </head>
+  <body>
+    <main id="app" aria-label="模块化科幻笔记本三维模型查看器">
+      <canvas id="scene" aria-label="可旋转、缩放和拾取部件的三维科幻笔记本模型"></canvas>
+      <section class="hud hud--identity" aria-labelledby="viewer-title">
+        <p class="overline">PROCEDURAL OBJECT // 01</p>
+        <h1 id="viewer-title">TODŌU CYBERDECK</h1>
+        <p class="hud__meta">THREE-DISPLAY FIELD SYSTEM</p>
+      </section>
+      <section class="hud hud--status" aria-label="渲染状态" aria-live="polite">
+        <span class="status-dot" aria-hidden="true"></span>
+        <div>
+          <p class="overline">RENDER STATUS</p>
+          <p id="status-text">INITIALIZING GEOMETRY</p>
+        </div>
+      </section>
+      <section class="hud hud--inspector" aria-labelledby="part-title">
+        <p class="overline">SELECTED COMPONENT</p>
+        <h2 id="part-title">CYBERDECK ROOT</h2>
+        <p id="part-meta" class="hud__meta">CLICK A NAMED PART TO INSPECT</p>
+      </section>
+      <nav class="control-dock" aria-label="三维模型控制">
+        <button id="reset-view" class="control" type="button">RESET VIEW</button>
+        <button id="auto-rotate" class="control" type="button" aria-pressed="false">AUTO ROTATE</button>
+        <button id="screen-power" class="control control--cyan" type="button" aria-pressed="true">SCREENS ON</button>
+        <label class="explode-control" for="explode-range">
+          <span>EXPLODE</span>
+          <input id="explode-range" type="range" min="0" max="1" step="0.01" value="0" />
+        </label>
+      </nav>
+      <p class="interaction-hint">DRAG TO ORBIT · CLICK SCREEN TO TYPE · KEYBOARD MIRRORS ACTIVE ASSET · ESC TO RELEASE</p>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

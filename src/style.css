@@ -1,0 +1,293 @@
+:root {
+  color-scheme: dark;
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --studio-0: #03040a;
+  --studio-1: #141329;
+  --glass-0: #07102b;
+  --glass-1: #14214a;
+  --pearl-0: #ddd9ee;
+  --pearl-1: #f4f2ff;
+  --lavender-0: #9799de;
+  --violet-0: #7657ff;
+  --cyan-0: #34d9ff;
+  --magenta-0: #ff55ca;
+  --success-0: #55f2bc;
+  --warning-0: #ffc76d;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  background: var(--studio-0);
+  color: var(--pearl-0);
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--studio-0);
+}
+
+#app {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      circle at 62% 24%,
+      color-mix(in srgb, var(--lavender-0) 34%, transparent),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 45% 64%,
+      color-mix(in srgb, var(--violet-0) 12%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(135deg, var(--studio-0), var(--studio-1));
+}
+
+#scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  outline: none;
+}
+
+.hud,
+.control-dock {
+  border: 1px solid color-mix(in srgb, var(--lavender-0) 36%, transparent);
+  background: color-mix(in srgb, var(--glass-0) 78%, transparent);
+  box-shadow:
+    inset 0 1px color-mix(in srgb, var(--pearl-1) 12%, transparent),
+    0 0 28px color-mix(in srgb, var(--violet-0) 9%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.hud {
+  position: absolute;
+  z-index: 2;
+  padding: var(--space-3) var(--space-4);
+  pointer-events: none;
+}
+
+.hud--identity {
+  top: var(--space-6);
+  left: var(--space-6);
+}
+.hud--status {
+  top: var(--space-6);
+  right: var(--space-6);
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+.hud--inspector {
+  right: var(--space-6);
+  bottom: 112px;
+  min-width: 238px;
+  text-align: right;
+}
+
+.overline,
+.hud h1,
+.hud h2,
+.hud__meta,
+#status-text {
+  margin: 0;
+}
+
+.overline {
+  color: var(--cyan-0);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.hud h1,
+.hud h2 {
+  margin-top: var(--space-1);
+  color: var(--pearl-1);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+}
+
+.hud h2 {
+  font-size: 0.875rem;
+}
+
+.hud__meta,
+#status-text {
+  margin-top: var(--space-1);
+  color: var(--lavender-0);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.status-dot {
+  width: var(--space-2);
+  height: var(--space-2);
+  border-radius: 50%;
+  background: var(--success-0);
+  box-shadow: 0 0 16px var(--success-0);
+}
+
+.control-dock {
+  position: absolute;
+  z-index: 3;
+  bottom: var(--space-6);
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: calc(100% - 48px);
+  padding: var(--space-2);
+  transform: translateX(-50%);
+}
+
+.control,
+.explode-control {
+  min-height: 40px;
+  border: 1px solid color-mix(in srgb, var(--lavender-0) 38%, transparent);
+  border-radius: var(--space-1);
+  color: var(--pearl-0);
+  background: color-mix(in srgb, var(--glass-1) 82%, transparent);
+  font:
+    700 0.6875rem / 1 "IBM Plex Mono",
+    "SFMono-Regular",
+    Consolas,
+    monospace;
+  letter-spacing: 0.06em;
+}
+
+.control {
+  padding: 0 var(--space-3);
+  cursor: pointer;
+  transition:
+    transform 120ms ease-out,
+    filter 120ms ease-out,
+    opacity 120ms ease-out;
+}
+
+.control:hover {
+  filter: brightness(1.24);
+}
+.control:active {
+  transform: translateY(1px) scale(0.98);
+}
+.control[aria-pressed="true"] {
+  border-color: var(--violet-0);
+  background: linear-gradient(110deg, var(--violet-0), var(--magenta-0));
+  color: var(--pearl-1);
+}
+.control--cyan[aria-pressed="true"] {
+  background: linear-gradient(110deg, var(--cyan-0), var(--violet-0));
+  color: var(--glass-0);
+}
+.control:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--cyan-0);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 var(--space-1) color-mix(in srgb, var(--violet-0) 45%, transparent);
+}
+
+.explode-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+}
+
+input[type="range"] {
+  width: 112px;
+  accent-color: var(--cyan-0);
+}
+
+.interaction-hint {
+  position: absolute;
+  bottom: 82px;
+  left: 50%;
+  z-index: 2;
+  margin: 0;
+  transform: translateX(-50%);
+  color: color-mix(in srgb, var(--lavender-0) 75%, transparent);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .hud--identity {
+    top: var(--space-3);
+    left: var(--space-3);
+  }
+  .hud--status {
+    top: var(--space-3);
+    right: var(--space-3);
+  }
+  .hud--inspector {
+    right: var(--space-3);
+    bottom: 148px;
+  }
+  .control-dock {
+    bottom: var(--space-3);
+    flex-wrap: wrap;
+    justify-content: center;
+    width: min(470px, calc(100% - 24px));
+  }
+  .interaction-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .hud--status {
+    top: 88px;
+  }
+  .hud--inspector {
+    left: var(--space-3);
+    right: auto;
+    bottom: 190px;
+    min-width: 0;
+    text-align: left;
+  }
+  .control {
+    flex: 1 1 42%;
+  }
+  .explode-control {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+  input[type="range"] {
+    flex: 1;
+  }
+  .interaction-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
