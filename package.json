@@ -4,11 +4,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:phone": "pnpm --dir phone run dev --port 5174",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
     "lint": "biome check .",
-    "qa:browser": "node scripts/browser-qa.mjs"
+    "qa:browser": "node scripts/browser-qa.mjs",
+    "verify:root": "pnpm run typecheck && bun test ./src/model/*.test.ts ./src/runtime/*.test.ts && pnpm run lint && pnpm run build",
+    "verify:phone": "pnpm --dir phone run verify",
+    "verify:all": "pnpm run verify:root && pnpm run verify:phone"
   },
   "dependencies": {
     "three": "^0.179.1"

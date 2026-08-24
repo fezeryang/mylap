@@ -8,7 +8,8 @@
     "test": "bun test",
     "build": "tsc --noEmit && vite build",
     "lint": "biome check .",
-    "qa:browser": "node scripts/browser-qa.mjs"
+    "qa:browser": "node scripts/browser-qa.mjs",
+    "verify": "pnpm run typecheck && bun test ./src/model/*.test.ts ./src/ui/*.test.ts && pnpm run lint && pnpm run build"
   },
   "dependencies": {
     "three": "^0.179.1"
