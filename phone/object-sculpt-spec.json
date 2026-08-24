@@ -1,0 +1,5214 @@
+{
+  "targetName": "Neon Cyberphone",
+  "targetId": "neon-cyberphone",
+  "schemaVersion": "2.1",
+  "terminologyProfile": {
+    "domain": "real-time procedural Three.js asset",
+    "geometryTerms": [
+      "silhouette",
+      "topology",
+      "primitive",
+      "bevel",
+      "chamfer",
+      "taper",
+      "bend",
+      "boolean cut",
+      "edge loop",
+      "surface normal",
+      "displacement"
+    ],
+    "materialTerms": [
+      "albedo",
+      "baseColor",
+      "roughness",
+      "metalness",
+      "normal map",
+      "bump map",
+      "ambient occlusion",
+      "cavity dirt",
+      "edge wear",
+      "clearcoat"
+    ],
+    "lightingTerms": [
+      "key light",
+      "fill light",
+      "rim light",
+      "HDRI/environment reflection",
+      "contact shadow"
+    ],
+    "descriptionRule": "Use measurable 3D graphics terms. Avoid vague words unless they are paired with concrete geometry/material/shader parameters."
+  },
+  "sourceImage": "/home/fezer/projects/todou/phone/phone.png",
+  "referenceCamera": {
+    "solved": false,
+    "fovDegrees": 40.0,
+    "aspect": 1.0,
+    "orientation": {
+      "yaw": 0.0,
+      "pitch": 0.0,
+      "roll": 0.0
+    },
+    "positionHint": [
+      0.0,
+      0.0,
+      3.0
+    ],
+    "note": "For likeness work, solve the reference camera (forge/stage1_intake/solve_camera_pose.py) so the review render aligns with the photo and the reference can be projected. Confirm by overlay review."
+  },
+  "suitability": "conditional",
+  "scores": {
+    "object_isolation": 0,
+    "silhouette_readability": 0,
+    "depth_inference": 0,
+    "primitive_decomposition": 0,
+    "material_procedurality": 0,
+    "occlusion_risk": 0,
+    "interaction_fit": 0
+  },
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "smartphone in transparent protective bumper",
+      "primaryDomain": "object",
+      "formLanguage": [
+        "hard-surface",
+        "mechanical",
+        "geometric"
+      ],
+      "structureKind": [
+        "compound object",
+        "layered shell",
+        "repeated modules"
+      ],
+      "motionPotential": [
+        "whole-object transform",
+        "detachable",
+        "interactive display"
+      ],
+      "materialFamilies": [
+        "glass-like",
+        "metal",
+        "plastic",
+        "mixed"
+      ],
+      "notes": "Visible front, left rail, and bottom edge are evidence-backed; rear and right rail are inferred."
+    },
+    "complexity": {
+      "tier": "ultra-complex",
+      "scores": {
+        "silhouetteComplexity": 2,
+        "componentCount": 3,
+        "hierarchyDepth": 3,
+        "repetitionDensity": 2,
+        "materialLayerCount": 3,
+        "localDetailDensity": 3,
+        "occlusionRisk": 2,
+        "actionReadinessNeed": 3
+      },
+      "estimatedCounts": {
+        "macroComponents": 5,
+        "mesoComponents": 16,
+        "microFeatureGroups": 18,
+        "materialLayers": 6,
+        "repetitionSystems": 3
+      },
+      "reasoning": [
+        "Five nested macro shells carry sixteen visible hardware and display subassemblies.",
+        "Reference identity depends on dense UI linework, repeated speaker holes, and layered neon material response.",
+        "Single-view occlusion raises risk for the rear and right rail without blocking a visible-view hero reconstruction."
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "ultra-complex",
+      "minimumComponentLevels": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Choose simple/moderate/complex/ultra-complex from observed structure, not from a hardcoded domain."
+    },
+    "unknownsToResolveBeforeImplementation": [],
+    "detailInventory": {
+      "scanMethod": "grid-3x3",
+      "targetMinDetails": 16,
+      "note": "Enumerate every identity-defining small detail before authoring the spec. Each detail must map to a component.localFeatures entry or material.localOverrides entry, never prose only. Use forge/stage1_intake/build_detail_inventory.py to scan zones.",
+      "details": [
+        {
+          "id": "triple-perimeter",
+          "kind": "bevel",
+          "description": "Three nested rounded perimeter bands catch separate silver, cyan, and magenta grazing highlights.",
+          "region": {
+            "x": 0.24,
+            "y": 0.0,
+            "width": 0.61,
+            "height": 0.98,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "geometry",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "clear-bumper:triple-perimeter"
+          },
+          "evidenceRef": "phone.png#full-object",
+          "confidence": 0.97,
+          "realization": "unreported"
+        },
+        {
+          "id": "edge-neon-rim",
+          "kind": "contour",
+          "description": "Cyan rim dominates the right and bottom while magenta concentrates at the top and lower corner.",
+          "region": {
+            "x": 0.25,
+            "y": 0.0,
+            "width": 0.58,
+            "height": 0.98,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "emissive color",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "neon-rim:edge-gradient"
+          },
+          "evidenceRef": "phone.png#perimeter",
+          "confidence": 0.95,
+          "realization": "unreported"
+        },
+        {
+          "id": "glass-gloss",
+          "kind": "gloss",
+          "description": "Low-roughness front glass carries broad diagonal blue highlights without flattening the UI.",
+          "region": {
+            "x": 0.31,
+            "y": 0.03,
+            "width": 0.49,
+            "height": 0.91,
+            "units": "normalized"
+          },
+          "scale": "macro",
+          "affects": "roughness clearcoat",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "display-glass:clearcoat"
+          },
+          "evidenceRef": "phone.png#screen",
+          "confidence": 0.93,
+          "realization": "unreported"
+        },
+        {
+          "id": "punch-hole-camera",
+          "kind": "contour",
+          "description": "Black circular aperture with a blue lens core and thin glossy ring sits near the top centre.",
+          "region": {
+            "x": 0.43,
+            "y": 0.04,
+            "width": 0.07,
+            "height": 0.08,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "geometry material",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "front-camera:lens-rings"
+          },
+          "evidenceRef": "evidence/detail/zone-r0c1.png",
+          "confidence": 0.98,
+          "realization": "unreported"
+        },
+        {
+          "id": "left-button-stack",
+          "kind": "linework",
+          "description": "Three controls interrupt the left rail, including one elongated knurled central control.",
+          "region": {
+            "x": 0.23,
+            "y": 0.11,
+            "width": 0.1,
+            "height": 0.33,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "geometry",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "left-controls:button-stack"
+          },
+          "evidenceRef": "evidence/detail/zone-r0c0.png",
+          "confidence": 0.91,
+          "realization": "unreported"
+        },
+        {
+          "id": "button-knurl",
+          "kind": "ridge",
+          "description": "Fine repeated diagonal texture runs across the elongated left-side button.",
+          "region": {
+            "x": 0.25,
+            "y": 0.23,
+            "width": 0.06,
+            "height": 0.13,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "normal geometry",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "left-controls:knurling"
+          },
+          "evidenceRef": "evidence/detail/zone-r0c0.png",
+          "confidence": 0.82,
+          "realization": "unreported"
+        },
+        {
+          "id": "usb-c-port",
+          "kind": "contour",
+          "description": "Rounded rectangular bottom port is recessed and surrounded by a violet-to-cyan luminous lip.",
+          "region": {
+            "x": 0.49,
+            "y": 0.91,
+            "width": 0.18,
+            "height": 0.07,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "geometry emissive color",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "usb-port:recess-and-lip"
+          },
+          "evidenceRef": "evidence/detail/zone-r2c1.png",
+          "confidence": 0.98,
+          "realization": "unreported"
+        },
+        {
+          "id": "speaker-perforations-left",
+          "kind": "fastener",
+          "description": "Five dark oblong speaker holes repeat to the left of the port.",
+          "region": {
+            "x": 0.37,
+            "y": 0.92,
+            "width": 0.13,
+            "height": 0.04,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "geometry",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "bottom-hardware:left-speaker-array"
+          },
+          "evidenceRef": "evidence/detail/zone-r2c1.png",
+          "confidence": 0.98,
+          "realization": "unreported"
+        },
+        {
+          "id": "speaker-perforations-right",
+          "kind": "fastener",
+          "description": "A second oblong speaker row mirrors the first on the bottom edge.",
+          "region": {
+            "x": 0.67,
+            "y": 0.92,
+            "width": 0.14,
+            "height": 0.04,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "geometry",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "bottom-hardware:right-speaker-array"
+          },
+          "evidenceRef": "evidence/detail/zone-r2c2.png",
+          "confidence": 0.9,
+          "realization": "unreported"
+        },
+        {
+          "id": "screen-star-speckle",
+          "kind": "decal",
+          "description": "Sparse subpixel blue speckles break up the navy screen field.",
+          "region": {
+            "x": 0.32,
+            "y": 0.03,
+            "width": 0.49,
+            "height": 0.9,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "albedo emissive",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "screen-ui:star-speckle"
+          },
+          "evidenceRef": "phone.png#screen",
+          "confidence": 0.88,
+          "realization": "unreported"
+        },
+        {
+          "id": "clock-gradient",
+          "kind": "linework",
+          "description": "The 09:42 clock uses a white-to-violet-to-magenta emissive gradient and rounded geometric glyphs.",
+          "region": {
+            "x": 0.36,
+            "y": 0.12,
+            "width": 0.3,
+            "height": 0.12,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "emissive UI",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "screen-ui:clock-block"
+          },
+          "evidenceRef": "evidence/detail/zone-r0c1.png",
+          "confidence": 0.99,
+          "realization": "unreported"
+        },
+        {
+          "id": "skyline-orb",
+          "kind": "linework",
+          "description": "Neon skyline converges on a bright wireframe orb above mirrored water reflections.",
+          "region": {
+            "x": 0.32,
+            "y": 0.22,
+            "width": 0.49,
+            "height": 0.31,
+            "units": "normalized"
+          },
+          "scale": "macro",
+          "affects": "emissive UI",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "screen-ui:hero-skyline"
+          },
+          "evidenceRef": "phone.png#hero",
+          "confidence": 0.96,
+          "realization": "unreported"
+        },
+        {
+          "id": "weather-music-cards",
+          "kind": "linework",
+          "description": "Two rounded cyan-outline cards form a compact weather and media row.",
+          "region": {
+            "x": 0.35,
+            "y": 0.49,
+            "width": 0.44,
+            "height": 0.14,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "emissive UI",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "screen-ui:status-cards"
+          },
+          "evidenceRef": "evidence/detail/zone-r1c1.png",
+          "confidence": 0.98,
+          "realization": "unreported"
+        },
+        {
+          "id": "app-tile-row",
+          "kind": "linework",
+          "description": "Four equal rounded app tiles carry call, message, radio, and camera icons.",
+          "region": {
+            "x": 0.37,
+            "y": 0.61,
+            "width": 0.42,
+            "height": 0.12,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "interactive UI",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "screen-ui:app-tiles"
+          },
+          "evidenceRef": "phone.png#apps",
+          "confidence": 0.99,
+          "realization": "unreported"
+        },
+        {
+          "id": "signal-bars",
+          "kind": "linework",
+          "description": "Ten ascending bars transition from magenta through blue to cyan in the 5G panel.",
+          "region": {
+            "x": 0.4,
+            "y": 0.75,
+            "width": 0.2,
+            "height": 0.09,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "emissive UI",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "screen-ui:signal-bars"
+          },
+          "evidenceRef": "evidence/detail/zone-r2c1.png",
+          "confidence": 0.98,
+          "realization": "unreported"
+        },
+        {
+          "id": "wireframe-globe",
+          "kind": "linework",
+          "description": "Circular neon-blue globe with latitude, longitude, orbit, and node lines anchors the lower-right panel.",
+          "region": {
+            "x": 0.66,
+            "y": 0.73,
+            "width": 0.12,
+            "height": 0.12,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "emissive UI",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "screen-ui:wireframe-globe"
+          },
+          "evidenceRef": "evidence/detail/zone-r2c2.png",
+          "confidence": 0.96,
+          "realization": "unreported"
+        },
+        {
+          "id": "swipe-affordance",
+          "kind": "linework",
+          "description": "Paired chevrons, label, and glowing horizontal home indicator align at the display bottom.",
+          "region": {
+            "x": 0.45,
+            "y": 0.85,
+            "width": 0.31,
+            "height": 0.07,
+            "units": "normalized"
+          },
+          "scale": "micro",
+          "affects": "interactive UI",
+          "mapsTo": {
+            "type": "component.localFeatures",
+            "ref": "screen-ui:swipe-control"
+          },
+          "evidenceRef": "evidence/detail/zone-r2c1.png",
+          "confidence": 0.99,
+          "realization": "unreported"
+        },
+        {
+          "id": "metal-rim-brushing",
+          "kind": "gloss",
+          "description": "Cool silver rail carries elongated blue-violet reflections and narrow darker antenna seams.",
+          "region": {
+            "x": 0.24,
+            "y": 0.02,
+            "width": 0.6,
+            "height": 0.95,
+            "units": "normalized"
+          },
+          "scale": "meso",
+          "affects": "roughness anisotropy",
+          "mapsTo": {
+            "type": "material.localOverrides",
+            "ref": "metal-chassis:brushed-rim"
+          },
+          "evidenceRef": "phone.png#rail",
+          "confidence": 0.9,
+          "realization": "unreported"
+        }
+      ]
+    },
+    "anatomy": {
+      "applies": false,
+      "styleHeads": 0.0,
+      "proportions": {
+        "headUnit": 0.0,
+        "torso": 0.0,
+        "legs": 0.0,
+        "shoulderWidth": 0.0,
+        "hipWidth": 0.0
+      },
+      "pose": {
+        "type": "unassessed",
+        "jointAngles": {}
+      },
+      "faceLandmarks": {
+        "eyeLine": 0.0,
+        "eyeSpacing": 0.0,
+        "noseBase": 0.0,
+        "mouthLine": 0.0,
+        "hairline": 0.0
+      },
+      "features": [],
+      "confidence": 0.0,
+      "note": "Only meaningful when objectClass.primaryDomain is character or hybrid. Set applies=true and fill from forge/stage1_intake/extract_landmarks.py. See grimoire/character/reconstruction.md and grimoire/character/likeness_maximization.md."
+    },
+    "sourceImage": "/home/fezer/projects/todou/phone/phone.png"
+  },
+  "qualityContract": {
+    "qualityBar": "ultra-complex",
+    "definitionOfDone": [
+      "The rendered model matches the reference silhouette, primary proportions, visible component hierarchy, material response, and most recognizable local features for the selected fidelity tier."
+    ],
+    "minimumSpecDepth": {
+      "macroComponents": 5,
+      "mesoComponents": 16,
+      "microFeatureGroups": 8,
+      "materialLayers": 4,
+      "repetitionSystems": 2,
+      "reviewViewpoints": 5
+    },
+    "featureGroups": [
+      {
+        "id": "overall-silhouette",
+        "name": "Overall silhouette and proportions",
+        "required": true,
+        "qualityCriteria": [
+          "Bounding shape, dominant curves, negative spaces, and scale relationships are explicitly described."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model reads as a generic placeholder instead of the reference object",
+          "major proportions are guessed without evidence"
+        ]
+      },
+      {
+        "id": "primary-structure",
+        "name": "Primary structure and hierarchy",
+        "required": true,
+        "qualityCriteria": [
+          "Major parts, joints, seams, contact points, and parent-child relationships are named before code generation."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "large visible parts are merged into one mesh",
+          "component hierarchy is too shallow for the observed complexity"
+        ]
+      },
+      {
+        "id": "attachment-joint-correctness",
+        "name": "Attachment and joint correctness",
+        "required": true,
+        "qualityCriteria": [
+          "Every visible child appendage, branch, limb, handle, connector, tube, cable, horn, wing, leg, or hinged part has an attachment contract with parent socket, localStart/localEnd, contact type, embed/overlap, and gap tolerance."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "child part root floats away from the parent",
+          "branch/limb/tube is centered in space instead of pivoting from its root",
+          "parent-child transform mixes world and local coordinates"
+        ]
+      },
+      {
+        "id": "surface-material-response",
+        "name": "Surface material response",
+        "required": true,
+        "qualityCriteria": [
+          "Albedo zones, roughness, normal/bump/displacement intent, cavity dirt, edge wear, and local overrides are specified where visible.",
+          "Important materials define independent albedo, roughness, height/normal, and AO responses instead of reusing one texture for unrelated PBR channels.",
+          "Surface response is decomposed into macro, meso, and micro frequency bands with scale and amplitude tied to object scale."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "surface looks like flat plastic",
+          "local material variation is missing or not tied to image evidence"
+        ]
+      },
+      {
+        "id": "reference-lookdev",
+        "name": "Reference color, material, and lighting response",
+        "required": true,
+        "qualityCriteria": [
+          "Material-pass names the reference-derived albedo palette, roughness variation, tactile normal/bump/displacement response, and local masks.",
+          "When a source image is available, run reference PBR extraction and require confidence >= 0.7 before treating maps as implementation-ready.",
+          "Lighting-pass names key/fill/rim or environment light, exposure, tone mapping, background, and contact shadow behavior.",
+          "Neutral, grazing-angle, and reference-matched renders prove that surface relief survives relighting and is not painted into albedo."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model has acceptable shape but reads as flat shaded or plastic",
+          "colors are a generic average instead of reference-observed local color zones",
+          "lighting is evenly ambient and cannot reproduce the source value range"
+        ]
+      }
+    ],
+    "visualDeltaChecks": [
+      "silhouette and negative-space delta",
+      "component hierarchy depth delta",
+      "repetition density and distribution delta",
+      "material albedo/roughness/normal response delta",
+      "local feature placement and scale delta"
+    ],
+    "antiShallowSpecRules": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md).",
+      "Adjacent components must overlap by at least 0.02 world units at shared seams (source: grimoire/build/geometry_patterns.md).",
+      "Raised or recessed relief and fasteners must be geometry, instanced micro-parts, or displacement; a map alone is an approximation (source: grimoire/build/geometry_patterns.md)."
+    ],
+    "mustNotDo": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md).",
+      "Adjacent components must overlap by at least 0.02 world units at shared seams (source: grimoire/build/geometry_patterns.md).",
+      "Raised or recessed relief and fasteners must be geometry, instanced micro-parts, or displacement; a map alone is an approximation (source: grimoire/build/geometry_patterns.md)."
+    ]
+  },
+  "qualityTargets": {
+    "targetFidelity": 0.7,
+    "mustMatch": [
+      "macro silhouette and proportions",
+      "primary material albedo/roughness response",
+      "reference-derived PBR material response at or above 0.7 confidence when source pixels are usable",
+      "most recognizable local features"
+    ],
+    "niceToHave": [
+      "micro scratches, stains, chips, and dirt masks",
+      "secondary lighting match"
+    ],
+    "fpsTarget": 60,
+    "reviewViewpoints": [
+      "front",
+      "three-quarter",
+      "side",
+      "thickness-axis",
+      "long-axis"
+    ]
+  },
+  "selfCorrectLoop": {
+    "enabled": true,
+    "visualAcceptance": {
+      "reviewer": "ai-vision",
+      "threshold": 0.7,
+      "comparisonArtifactRequired": true,
+      "layerScoresRequired": true,
+      "codePixelDiffIsAcceptanceAuthority": false,
+      "scoringRule": "AI vision must inspect a side-by-side reference/render sheet and score the current pass from 0 to 1. Pixel-diff code may assist diagnostics but cannot approve a pass.",
+      "requiredLayerScores": [
+        "silhouetteProportion",
+        "componentStructure",
+        "formDetail",
+        "materialSurface",
+        "lightingCamera"
+      ],
+      "featureReviewPolicy": {
+        "enabled": true,
+        "reviewUnit": "semantic-subsystem",
+        "maxCriticalFeaturesPerPass": 5,
+        "maxImportantFeaturesPerPass": 3,
+        "criticalDefaultThreshold": 0.8,
+        "importantAverageThreshold": 0.65,
+        "adaptiveEscalation": true,
+        "singleImagePairOnly": true,
+        "selectionRule": "Choose only the most visually salient, identity-defining, user-prioritized, or high-risk semantic systems. Group repeated parts instead of reviewing every mesh. AI vision scores every selected feature from the same full reference/render pair."
+      }
+    },
+    "reviewAfterPasses": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass",
+      "surface-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "allowedActions": [
+      "continue",
+      "refine-spec",
+      "refine-code",
+      "request-input",
+      "stop"
+    ],
+    "specRefineTriggers": [
+      "missing component",
+      "wrong primitive family",
+      "wrong proportions",
+      "material layer under-specified",
+      "local feature not traceable to viewEvidence",
+      "reference ambiguity discovered during implementation"
+    ],
+    "codeRefineTriggers": [
+      "spec is adequate but generated geometry/material does not match",
+      "browser render differs from reference",
+      "performance budget exceeded",
+      "lighting hides geometry or material response"
+    ],
+    "stopCriteria": [
+      "target fidelity reached or user accepts current approximation",
+      "remaining gaps require new reference images or manual art"
+    ],
+    "screenshotPolicy": {
+      "requiredForPasses": [
+        "blockout",
+        "structural-pass",
+        "form-refinement",
+        "material-pass",
+        "surface-pass",
+        "lighting-pass",
+        "interaction-pass"
+      ],
+      "preferredCapture": "in-app-browser-screenshot",
+      "fallbackCapture": "user-supplied-screenshot-path",
+      "minimumEvidence": "Each visual pass needs a reference image, rendered screenshot, side-by-side comparison sheet, AI vision score, layer scores, and critique before choosing continue.",
+      "reviewPairRule": "Compare the same camera/viewpoint whenever possible; do not judge a front reference against a random render angle.",
+      "acceptanceAuthority": "AI vision review of the comparison sheet. Code-generated pixel similarity is not sufficient evidence."
+    }
+  },
+  "featureReviewTargets": [
+    {
+      "id": "rounded-slab-silhouette",
+      "name": "Tall rounded slab, shallow thickness, and reference three-quarter stance",
+      "tier": "critical",
+      "passIds": [
+        "blockout"
+      ],
+      "minimumScore": 0.84,
+      "mustPass": true,
+      "componentRefs": [
+        "rear-shell",
+        "metal-chassis",
+        "clear-bumper",
+        "front-stack"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "layered-perimeter",
+      "name": "Clear bumper, polished chassis, black bezel, and dual-color emissive rim",
+      "tier": "critical",
+      "passIds": [
+        "structural-pass",
+        "form-refinement"
+      ],
+      "minimumScore": 0.82,
+      "mustPass": true,
+      "componentRefs": [
+        "clear-bumper",
+        "metal-chassis",
+        "front-bezel",
+        "neon-rim"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "bottom-hardware",
+      "name": "USB-C recess with illuminated lip and paired speaker perforation rows",
+      "tier": "critical",
+      "passIds": [
+        "form-refinement"
+      ],
+      "minimumScore": 0.8,
+      "mustPass": true,
+      "componentRefs": [
+        "bottom-hardware",
+        "usb-port",
+        "left-speaker-array",
+        "right-speaker-array"
+      ],
+      "evidenceRefs": [
+        "evidence/detail/zone-r2c1.png"
+      ]
+    },
+    {
+      "id": "interactive-screen-identity",
+      "name": "09:42 cyberpunk dashboard with live app tiles, cards, graph, globe, and swipe control",
+      "tier": "critical",
+      "passIds": [
+        "material-pass",
+        "surface-pass",
+        "interaction-pass"
+      ],
+      "minimumScore": 0.82,
+      "mustPass": true,
+      "componentRefs": [
+        "display-glass",
+        "screen-ui",
+        "front-camera"
+      ],
+      "evidenceRefs": [
+        "phone.png#screen"
+      ]
+    },
+    {
+      "id": "glass-metal-neon-response",
+      "name": "Polished silver-blue metal, transmissive bumper, glossy navy glass, and cyan-violet-magenta glow",
+      "tier": "critical",
+      "passIds": [
+        "material-pass",
+        "lighting-pass"
+      ],
+      "minimumScore": 0.8,
+      "mustPass": true,
+      "componentRefs": [
+        "metal-chassis",
+        "clear-bumper",
+        "display-glass",
+        "neon-rim"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    }
+  ],
+  "sculptPipeline": {
+    "passGateMode": "locked-sequential",
+    "passOrder": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass",
+      "surface-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "currentPass": "complete",
+    "completedPasses": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass",
+      "surface-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "lastCompletedPass": "optimization-pass",
+    "blockedReason": "all build passes completed",
+    "nextRequiredEvidence": []
+  },
+  "lookDevTargets": {
+    "qualityPriority": "reference-fidelity",
+    "materialPass": {
+      "albedoPaletteRequired": true,
+      "roughnessVariationRequired": true,
+      "normalOrBumpRequired": true,
+      "localOverridesRequired": true,
+      "minimumTextureResolution": 1024,
+      "preferredTextureResolution": 2048,
+      "independentMapChannels": [
+        "albedo",
+        "roughness",
+        "height",
+        "normal",
+        "ambient-occlusion"
+      ],
+      "requiredSurfaceFrequencyBands": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "geometryReliefRequiredWhenSilhouetteAffected": true,
+      "referencePbrExtraction": {
+        "requiredWhenSourceImagePresent": true,
+        "targetThreshold": 0.7,
+        "stopOnLowConfidence": true,
+        "script": "forge/stage1_intake/extract_pbr_evidence.py",
+        "acceptedLimitation": "single-image extraction is reference-derived inference, not exact photogrammetry"
+      },
+      "mustAvoid": [
+        "single flat albedo per material",
+        "uniform roughness",
+        "albedo texture reused as roughness/height/normal/AO",
+        "single-frequency random noise",
+        "plastic-looking smooth bark, stone, cloth, foliage, or aged material",
+        "local color/detail described only in prose without material masks",
+        "claiming exact PBR recovery when confidence is below the target threshold"
+      ]
+    },
+    "lightingPass": {
+      "requiredTerms": [
+        "key light",
+        "fill light",
+        "rim or environment light",
+        "exposure",
+        "tone mapping",
+        "background",
+        "contact shadow"
+      ],
+      "mustAvoid": [
+        "ambient-only lighting",
+        "flat value range",
+        "missing contact shadow",
+        "reference lighting copied without separating material readability"
+      ]
+    },
+    "screenshotReview": [
+      "Compare albedo palette and local color zones.",
+      "Compare roughness/normal/bump response under light.",
+      "Compare cavity dirt, edge wear, stains, moss, scratches, or other local masks.",
+      "Compare key/fill/rim structure, exposure, tone mapping, background, and contact shadows.",
+      "Capture a neutral-light render to verify material readability without reference lighting.",
+      "Capture a grazing-light close-up to expose flat normals, uniform roughness, tiling, and plastic highlights.",
+      "Capture a reference-matched render from the same camera framing as the source."
+    ]
+  },
+  "actionReadiness": {
+    "contract": "Every macro/meso component should be generated as a stable named Object3D pivot node with a mesh child, action metadata, optional sockets, collider proxy, and destruction metadata.",
+    "defaultRigType": "action-ready-static-rig",
+    "rootMotionNode": "root",
+    "requiredComponentFields": [
+      "id",
+      "parent",
+      "transform",
+      "attachment for child appendages, connectors, limbs, tubes, handles, legs, horns, wings, branches, or cables",
+      "actionProfile.animationRole",
+      "actionProfile.pivot",
+      "actionProfile.collider",
+      "actionProfile.destruction"
+    ],
+    "transformChannels": [
+      "translate",
+      "rotate",
+      "scale",
+      "bend",
+      "twist",
+      "detach",
+      "visibility",
+      "material-state"
+    ],
+    "authoringRules": [
+      "Do not collapse independently movable parts into one mesh.",
+      "Put transforms on component pivot groups, not only on raw meshes.",
+      "For attached child parts, put the pivot at the semantic root/socket and build visible geometry from localStart to localEnd.",
+      "Represent hinge, socket, detachable, and breakable intent even when no animation is implemented yet.",
+      "Use simplified collider proxies for runtime physics instead of visual mesh colliders by default."
+    ],
+    "destructionPolicy": {
+      "defaultBreakable": false,
+      "fractureGroupNaming": "Use stable semantic names such as body-shell, left-hinge, glass-panel, branch-segment.",
+      "debrisStrategy": "Prefer detachable component groups and a small number of procedural fragments over random mesh explosion."
+    }
+  },
+  "assumptions": [
+    "Rear and right-side surfaces use restrained inferred continuity because the source supplies no direct pixels.",
+    "Physical dimensions are normalized to a 7.2 × 14.75 × 0.82 world-unit body while preserving the measured 2.05:1 face ratio.",
+    "The dashboard is reconstructed as semantic live UI instead of projected pixels so controls remain independently clickable."
+  ],
+  "coordinateFrame": {
+    "front": "+Z, camera-facing display side",
+    "up": "+Y, portrait top edge",
+    "scaleReference": "normalized phone height 14.75 world units"
+  },
+  "silhouette": {
+    "boundingShape": "rounded cuboid with 7.2:14.75:0.82 width-height-depth proportions",
+    "aspectRatios": [
+      2.0486,
+      0.114
+    ],
+    "symmetry": "bilateral base shell with asymmetric left controls",
+    "dominantCurves": [
+      "1.05 world-unit corner radii",
+      "0.12 glass crown",
+      "0.18 bumper lip"
+    ],
+    "negativeSpaces": [
+      "USB-C receptacle",
+      "ten bottom speaker apertures",
+      "front camera aperture"
+    ],
+    "landmarks": [
+      "central punch-hole camera",
+      "left three-button stack",
+      "bottom illuminated USB-C port"
+    ]
+  },
+  "viewEvidence": [
+    {
+      "id": "full-object",
+      "view": "primary",
+      "imageRegion": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0,
+        "units": "normalized"
+      },
+      "observations": [
+        "front glass, left rail, bottom edge, nested perimeter, UI hierarchy"
+      ],
+      "confidence": 0.94
+    },
+    {
+      "id": "phone.png#screen",
+      "view": "primary-screen",
+      "imageRegion": {
+        "x": 0.3,
+        "y": 0.02,
+        "width": 0.51,
+        "height": 0.91,
+        "units": "normalized"
+      },
+      "observations": [
+        "live dashboard hierarchy and glass response"
+      ],
+      "confidence": 0.96
+    },
+    {
+      "id": "phone.png#hero",
+      "view": "primary-screen-hero",
+      "imageRegion": {
+        "x": 0.32,
+        "y": 0.22,
+        "width": 0.49,
+        "height": 0.31,
+        "units": "normalized"
+      },
+      "observations": [
+        "neon skyline, orb, and water"
+      ],
+      "confidence": 0.96
+    },
+    {
+      "id": "phone.png#apps",
+      "view": "primary-screen-apps",
+      "imageRegion": {
+        "x": 0.37,
+        "y": 0.61,
+        "width": 0.42,
+        "height": 0.12,
+        "units": "normalized"
+      },
+      "observations": [
+        "four interactive app tiles"
+      ],
+      "confidence": 0.99
+    },
+    {
+      "id": "phone.png#perimeter",
+      "view": "primary-perimeter",
+      "imageRegion": {
+        "x": 0.24,
+        "y": 0,
+        "width": 0.61,
+        "height": 0.98,
+        "units": "normalized"
+      },
+      "observations": [
+        "clear, metal, black, and emissive perimeter layers"
+      ],
+      "confidence": 0.95
+    },
+    {
+      "id": "phone.png#rail",
+      "view": "primary-rail",
+      "imageRegion": {
+        "x": 0.23,
+        "y": 0.02,
+        "width": 0.62,
+        "height": 0.95,
+        "units": "normalized"
+      },
+      "observations": [
+        "polished silver-blue chassis rail"
+      ],
+      "confidence": 0.9
+    },
+    {
+      "id": "evidence/detail/zone-r0c0.png",
+      "view": "top-left-crop",
+      "imageRegion": {
+        "x": 0,
+        "y": 0,
+        "width": 0.3333,
+        "height": 0.3333,
+        "units": "normalized"
+      },
+      "observations": [
+        "left controls, bumper, metal rail"
+      ],
+      "confidence": 0.91
+    },
+    {
+      "id": "evidence/detail/zone-r0c1.png",
+      "view": "top-center-crop",
+      "imageRegion": {
+        "x": 0.3333,
+        "y": 0,
+        "width": 0.3333,
+        "height": 0.3333,
+        "units": "normalized"
+      },
+      "observations": [
+        "front camera and clock"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "id": "evidence/detail/zone-r1c1.png",
+      "view": "center-crop",
+      "imageRegion": {
+        "x": 0.3333,
+        "y": 0.3333,
+        "width": 0.3333,
+        "height": 0.3333,
+        "units": "normalized"
+      },
+      "observations": [
+        "hero skyline and status cards"
+      ],
+      "confidence": 0.96
+    },
+    {
+      "id": "evidence/detail/zone-r2c1.png",
+      "view": "bottom-center-crop",
+      "imageRegion": {
+        "x": 0.3333,
+        "y": 0.6667,
+        "width": 0.3333,
+        "height": 0.3333,
+        "units": "normalized"
+      },
+      "observations": [
+        "signal panel, swipe control, USB-C and left speaker"
+      ],
+      "confidence": 0.98
+    },
+    {
+      "id": "evidence/detail/zone-r2c2.png",
+      "view": "bottom-right-crop",
+      "imageRegion": {
+        "x": 0.6667,
+        "y": 0.6667,
+        "width": 0.3333,
+        "height": 0.3333,
+        "units": "normalized"
+      },
+      "observations": [
+        "wireframe globe, bumper corner, right speaker"
+      ],
+      "confidence": 0.9
+    }
+  ],
+  "componentTree": [
+    {
+      "id": "root",
+      "name": "Neon Cyberphone",
+      "level": "macro",
+      "role": "body",
+      "importance": 1.0,
+      "confidence": 0.5,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Placeholder root blockout; reclassify per Workstream A's decision tree (grimoire/intake/surface_topology.md) once real geometry is authored.",
+      "geometryDescriptor": {
+        "topologyIntent": "low-poly blockout with bevel-ready edges",
+        "edgeTreatment": {
+          "type": "none",
+          "bevelRadius": 0.0,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "vertex normals from generated geometry"
+      },
+      "parent": null,
+      "attachment": null,
+      "dimensions": {
+        "width": 1.0,
+        "height": 1.0,
+        "depth": 1.0,
+        "units": "relative",
+        "confidence": 0.5
+      },
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "root",
+        "pivot": {
+          "mode": "center",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.5
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": true
+        },
+        "sockets": [],
+        "collider": {
+          "type": "box",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "Replace with sphere/capsule/compound proxy when the object shape demands it."
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "root",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0.0,
+          "debrisMaterial": "base"
+        }
+      },
+      "material": "base",
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(9, 15, 52, 1)",
+        "secondaryAlbedo": "rgba(45, 92, 255, 1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.9
+      },
+      "materialLayers": [
+        "base"
+      ],
+      "deformations": [],
+      "joints": [],
+      "seams": [],
+      "localFeatures": [],
+      "surfaceDetail": {
+        "macroRoughness": 0.0,
+        "microRoughness": 0.0,
+        "bumpAmplitude": 0.0,
+        "normalPattern": "",
+        "displacementPattern": "",
+        "occlusionPattern": "",
+        "edgeWearPattern": "",
+        "notes": ""
+      },
+      "evidenceRefs": [
+        "full-object"
+      ],
+      "details": [],
+      "fidelityTier": "blockout"
+    },
+    {
+      "id": "rear-shell",
+      "name": "Inferred rear shell",
+      "level": "macro",
+      "role": "shell",
+      "importance": 0.68,
+      "confidence": 0.35,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Continuous rounded rear plate closes the slab volume without inventing a camera island.",
+      "parent": "root",
+      "material": "rear-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -0.31
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          7.0,
+          14.5,
+          0.22
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(6,10,34,1)",
+        "secondaryAlbedo": "rgba(25,38,91,1)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.35
+      },
+      "localFeatures": [
+        {
+          "id": "rear-shell.inferred-continuity",
+          "kind": "contour"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "metal-chassis",
+      "name": "Polished silver-blue chassis",
+      "level": "macro",
+      "role": "frame",
+      "importance": 1,
+      "confidence": 0.93,
+      "primitive": "extrude",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "A continuous machined perimeter carries visible side and bottom faces with real beveled thickness.",
+      "parent": "root",
+      "material": "metal-chassis",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          7.2,
+          14.75,
+          0.82
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(214,214,240,1)",
+        "secondaryAlbedo": "rgba(100,104,181,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.94
+      },
+      "localFeatures": [
+        {
+          "id": "metal-chassis:brushed-rim",
+          "kind": "gloss"
+        },
+        {
+          "id": "metal-chassis.edge-chamfer",
+          "kind": "bevel"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "clear-bumper",
+      "name": "Transparent violet protective bumper",
+      "level": "macro",
+      "role": "armor",
+      "importance": 1,
+      "confidence": 0.9,
+      "primitive": "extrude",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "A thick transparent frame sockets around the chassis and protrudes at each rounded corner.",
+      "parent": "root",
+      "material": "clear-bumper",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -0.02
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          7.62,
+          15.15,
+          1.02
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(121,142,255,0.2)",
+        "secondaryAlbedo": "rgba(244,91,255,0.3)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.88
+      },
+      "localFeatures": [
+        {
+          "id": "clear-bumper:triple-perimeter",
+          "kind": "bevel"
+        },
+        {
+          "id": "clear-bumper.corner-guards",
+          "kind": "contour"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "front-stack",
+      "name": "Front display stack",
+      "level": "macro",
+      "role": "display-assembly",
+      "importance": 1,
+      "confidence": 0.98,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Black bezel, UI plane, and convex display glass are separately selectable stacked layers.",
+      "parent": "root",
+      "material": "bezel-polymer",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0.5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6.82,
+          14.36,
+          0.18
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(3,7,25,1)",
+        "secondaryAlbedo": "rgba(21,46,137,1)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.97
+      },
+      "localFeatures": [
+        {
+          "id": "front-stack.inset-seam",
+          "kind": "seam"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "rear-glass",
+      "name": "Rear glass plate",
+      "level": "meso",
+      "role": "surface",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Thin inferred rear-facing glass surface follows the continuous shell.",
+      "parent": "rear-shell",
+      "material": "rear-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          -0.14
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6.75,
+          14.2,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(5,8,28,1)",
+        "secondaryAlbedo": "rgba(18,31,78,1)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.35
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "chassis-left-rail",
+      "name": "Left machined rail",
+      "level": "meso",
+      "role": "rail",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Independent beveled side volume accommodates the visible control stack.",
+      "parent": "metal-chassis",
+      "material": "metal-chassis",
+      "transform": {
+        "position": [
+          -3.46,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.28,
+          12.9,
+          0.7
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211,214,241,1)",
+        "secondaryAlbedo": "rgba(106,95,188,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.94
+      },
+      "localFeatures": [
+        {
+          "id": "chassis-left-rail.antenna-seams",
+          "kind": "seam"
+        }
+      ],
+      "evidenceRefs": [
+        "evidence/detail/zone-r0c0.png"
+      ]
+    },
+    {
+      "id": "chassis-right-rail",
+      "name": "Right machined rail",
+      "level": "meso",
+      "role": "rail",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Inferred continuous beveled rail balances the visible chassis envelope.",
+      "parent": "metal-chassis",
+      "material": "metal-chassis",
+      "transform": {
+        "position": [
+          3.46,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.28,
+          12.9,
+          0.7
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(211,214,241,1)",
+        "secondaryAlbedo": "rgba(68,109,232,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.45
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "front-bezel",
+      "name": "Black rounded display bezel",
+      "level": "meso",
+      "role": "bezel",
+      "primitive": "extrude",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Opaque inset frame provides the dark separation visible around the luminous display.",
+      "parent": "front-stack",
+      "material": "bezel-polymer",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0.04
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6.84,
+          14.38,
+          0.16
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(2,5,18,1)",
+        "secondaryAlbedo": "rgba(12,17,45,1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.97
+      },
+      "localFeatures": [
+        {
+          "id": "front-bezel.black-inner-lip",
+          "kind": "contour"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "display-glass",
+      "name": "Convex front display glass",
+      "level": "meso",
+      "role": "glass",
+      "primitive": "plane-card",
+      "topologyClass": "conforming-shell",
+      "topologyRationale": "A shallow convex clearcoat surface covers the live UI without baking its controls.",
+      "parent": "front-stack",
+      "material": "display-glass",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0.13
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6.52,
+          14.04,
+          0.12
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(7,18,71,0.18)",
+        "secondaryAlbedo": "rgba(22,47,173,0.2)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.95
+      },
+      "localFeatures": [
+        {
+          "id": "display-glass:clearcoat",
+          "kind": "gloss"
+        },
+        {
+          "id": "display-glass.diagonal-sheen",
+          "kind": "gloss"
+        }
+      ],
+      "evidenceRefs": [
+        "phone.png#screen"
+      ]
+    },
+    {
+      "id": "screen-ui",
+      "name": "Live cyberpunk dashboard surface",
+      "level": "meso",
+      "role": "interactive-display",
+      "primitive": "plane-card",
+      "topologyClass": "material-only",
+      "topologyRationale": "Semantic HTML/CSS surface aligns to the phone face and exposes independent controls.",
+      "parent": "front-stack",
+      "material": "screen-emissive",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0.1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6.46,
+          13.96,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(6,19,91,1)",
+        "secondaryAlbedo": "rgba(51,69,224,1)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.96
+      },
+      "localFeatures": [
+        {
+          "id": "screen-ui:star-speckle",
+          "kind": "decal"
+        },
+        {
+          "id": "screen-ui:clock-block",
+          "kind": "linework"
+        },
+        {
+          "id": "screen-ui:hero-skyline",
+          "kind": "linework"
+        },
+        {
+          "id": "screen-ui:status-cards",
+          "kind": "linework"
+        },
+        {
+          "id": "screen-ui:app-tiles",
+          "kind": "linework"
+        },
+        {
+          "id": "screen-ui:signal-bars",
+          "kind": "linework"
+        },
+        {
+          "id": "screen-ui:wireframe-globe",
+          "kind": "linework"
+        },
+        {
+          "id": "screen-ui:swipe-control",
+          "kind": "linework"
+        }
+      ],
+      "evidenceRefs": [
+        "phone.png#screen"
+      ]
+    },
+    {
+      "id": "front-camera",
+      "name": "Punch-hole front camera",
+      "level": "meso",
+      "role": "sensor",
+      "primitive": "cylinder",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Concentric circular aperture and lens rings sit above the live UI plane.",
+      "parent": "front-stack",
+      "attachment": {
+        "parentId": "front-stack",
+        "parentSocket": "camera-aperture",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0,
+          0.12
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.06,
+        "gapTolerance": 0.01
+      },
+      "material": "optical-glass",
+      "transform": {
+        "position": [
+          0,
+          5.9,
+          0.24
+        ],
+        "rotation": [
+          1.5708,
+          0,
+          0
+        ],
+        "scale": [
+          0.2,
+          0.08,
+          0.2
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(0,2,10,1)",
+        "secondaryAlbedo": "rgba(16,83,198,1)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.98
+      },
+      "localFeatures": [
+        {
+          "id": "front-camera:lens-rings",
+          "kind": "contour"
+        }
+      ],
+      "evidenceRefs": [
+        "evidence/detail/zone-r0c1.png"
+      ]
+    },
+    {
+      "id": "left-controls",
+      "name": "Left side control stack",
+      "level": "meso",
+      "role": "controls",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Three independently pickable buttons share one rail-mounted control assembly.",
+      "parent": "chassis-left-rail",
+      "material": "metal-chassis",
+      "transform": {
+        "position": [
+          -0.18,
+          2.6,
+          0.1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(182,174,236,1)",
+        "secondaryAlbedo": "rgba(211,53,235,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.91
+      },
+      "localFeatures": [
+        {
+          "id": "left-controls:button-stack",
+          "kind": "ridge"
+        },
+        {
+          "id": "left-controls:knurling",
+          "kind": "ridge"
+        }
+      ],
+      "evidenceRefs": [
+        "evidence/detail/zone-r0c0.png"
+      ]
+    },
+    {
+      "id": "top-button",
+      "name": "Upper side button",
+      "level": "meso",
+      "role": "button",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Short raised metal control embedded into the left rail.",
+      "parent": "left-controls",
+      "attachment": {
+        "parentId": "left-controls",
+        "parentSocket": "upper-rail-slot",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0.16,
+          0,
+          0
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.04,
+        "gapTolerance": 0.01
+      },
+      "material": "button-metal",
+      "transform": {
+        "position": [
+          0,
+          1.42,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.18,
+          0.78,
+          0.34
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(160,153,231,1)",
+        "secondaryAlbedo": "rgba(255,65,232,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.85
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "evidence/detail/zone-r0c0.png"
+      ]
+    },
+    {
+      "id": "middle-button",
+      "name": "Knurled central side button",
+      "level": "meso",
+      "role": "button",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Elongated textured control stands proud of the left rail.",
+      "parent": "left-controls",
+      "attachment": {
+        "parentId": "left-controls",
+        "parentSocket": "middle-rail-slot",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0.19,
+          0,
+          0
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.04,
+        "gapTolerance": 0.01
+      },
+      "material": "button-metal",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.2,
+          1.12,
+          0.38
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(112,111,188,1)",
+        "secondaryAlbedo": "rgba(251,69,229,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.9
+      },
+      "localFeatures": [
+        {
+          "id": "middle-button.diagonal-knurl",
+          "kind": "ridge"
+        }
+      ],
+      "evidenceRefs": [
+        "evidence/detail/zone-r0c0.png"
+      ]
+    },
+    {
+      "id": "bottom-button",
+      "name": "Lower side button",
+      "level": "meso",
+      "role": "button",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Short cyan-accented control embedded below the main button.",
+      "parent": "left-controls",
+      "attachment": {
+        "parentId": "left-controls",
+        "parentSocket": "lower-rail-slot",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0.16,
+          0,
+          0
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.04,
+        "gapTolerance": 0.01
+      },
+      "material": "button-metal",
+      "transform": {
+        "position": [
+          0,
+          -1.35,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.18,
+          0.62,
+          0.34
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(164,181,245,1)",
+        "secondaryAlbedo": "rgba(32,224,255,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.84
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "evidence/detail/zone-r0c0.png"
+      ]
+    },
+    {
+      "id": "bottom-hardware",
+      "name": "Bottom hardware rail",
+      "level": "meso",
+      "role": "io",
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "A separately selectable machined bottom edge carries the port and perforation systems.",
+      "parent": "metal-chassis",
+      "material": "metal-chassis",
+      "transform": {
+        "position": [
+          0,
+          -7.21,
+          0.05
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6.55,
+          0.35,
+          0.72
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(216,214,239,1)",
+        "secondaryAlbedo": "rgba(90,110,193,1)",
+        "materialClass": "metal",
+        "materialClassConfidence": 0.95
+      },
+      "localFeatures": [
+        {
+          "id": "bottom-hardware:left-speaker-array",
+          "kind": "hole"
+        },
+        {
+          "id": "bottom-hardware:right-speaker-array",
+          "kind": "hole"
+        }
+      ],
+      "evidenceRefs": [
+        "evidence/detail/zone-r2c1.png"
+      ]
+    },
+    {
+      "id": "usb-port",
+      "name": "Illuminated USB-C receptacle",
+      "level": "meso",
+      "role": "port",
+      "primitive": "extrude",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "A real recessed opening, inner tongue, and emissive lip interrupt the bottom edge.",
+      "parent": "bottom-hardware",
+      "attachment": {
+        "parentId": "bottom-hardware",
+        "parentSocket": "center-port-cutout",
+        "localStart": [
+          0,
+          0,
+          0
+        ],
+        "localEnd": [
+          0,
+          0,
+          0.16
+        ],
+        "contactType": "embed",
+        "embedDepth": 0.1,
+        "gapTolerance": 0.01
+      },
+      "material": "bezel-polymer",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0.23
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1.08,
+          0.3,
+          0.32
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(3,6,20,1)",
+        "secondaryAlbedo": "rgba(254,61,234,1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.98
+      },
+      "localFeatures": [
+        {
+          "id": "usb-port:recess-and-lip",
+          "kind": "hole"
+        },
+        {
+          "id": "usb-port.inner-tongue",
+          "kind": "ridge"
+        }
+      ],
+      "evidenceRefs": [
+        "evidence/detail/zone-r2c1.png"
+      ]
+    },
+    {
+      "id": "left-speaker-array",
+      "name": "Left speaker perforation row",
+      "level": "meso",
+      "role": "speaker",
+      "primitive": "instanced-cluster",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Five oblong recessed apertures form a visible repeated negative-space system.",
+      "parent": "bottom-hardware",
+      "material": "bezel-polymer",
+      "transform": {
+        "position": [
+          -1.72,
+          0,
+          0.23
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(2,4,15,1)",
+        "secondaryAlbedo": "rgba(43,54,99,1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.98
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "evidence/detail/zone-r2c1.png"
+      ]
+    },
+    {
+      "id": "right-speaker-array",
+      "name": "Right speaker perforation row",
+      "level": "meso",
+      "role": "speaker",
+      "primitive": "instanced-cluster",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Five oblong recessed apertures mirror the left speaker system.",
+      "parent": "bottom-hardware",
+      "material": "bezel-polymer",
+      "transform": {
+        "position": [
+          1.72,
+          0,
+          0.23
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(2,4,15,1)",
+        "secondaryAlbedo": "rgba(43,54,99,1)",
+        "materialClass": "plastic",
+        "materialClassConfidence": 0.88
+      },
+      "localFeatures": [],
+      "evidenceRefs": [
+        "evidence/detail/zone-r2c2.png"
+      ]
+    },
+    {
+      "id": "neon-rim",
+      "name": "Dual-color emissive perimeter",
+      "level": "meso",
+      "role": "lighting",
+      "primitive": "extrude",
+      "topologyClass": "surface-relief",
+      "topologyRationale": "Thin emissive cyan and magenta segments sit inside a dedicated perimeter channel.",
+      "parent": "front-stack",
+      "material": "neon-emissive",
+      "transform": {
+        "position": [
+          0,
+          0,
+          0.17
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6.66,
+          14.18,
+          0.08
+        ]
+      },
+      "colorMaterialRecipe": {
+        "dominantAlbedo": "rgba(38,230,255,1)",
+        "secondaryAlbedo": "rgba(255,52,225,1)",
+        "materialClass": "glass",
+        "materialClassConfidence": 0.96
+      },
+      "localFeatures": [
+        {
+          "id": "neon-rim.segmented-gradient",
+          "kind": "emissive"
+        }
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "id": "base",
+      "name": "Base material",
+      "qualityTier": "utility",
+      "type": "standard",
+      "shaderModel": "MeshStandardMaterial / PBR approximation",
+      "baseColor": "#8A7A5F",
+      "color": "#8A7A5F",
+      "albedo": {
+        "dominant": "#8A7A5F",
+        "secondary": [
+          "#6E614B",
+          "#A08F70"
+        ],
+        "samplingNotes": "Use image-observed local color zones, not a single averaged color."
+      },
+      "colorVariation": {
+        "palette": [
+          "#8A7A5F",
+          "#6E614B",
+          "#A08F70"
+        ],
+        "pattern": "mottled",
+        "amplitude": 0.15,
+        "heightCorrelation": 0.3
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "uv",
+        "repeat": [
+          2.0,
+          2.0
+        ],
+        "anisotropy": 8,
+        "texelDensityIntent": "Preserve stable world/object-scale detail; do not stretch micro detail with component scale."
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 2.0,
+          "amplitude": 0.42,
+          "role": "broad color and height breakup"
+        },
+        {
+          "id": "meso",
+          "frequency": 12.0,
+          "amplitude": 0.22,
+          "role": "ridges, pores, grain, dents, or equivalent visible relief"
+        },
+        {
+          "id": "micro",
+          "frequency": 56.0,
+          "amplitude": 0.08,
+          "role": "highlight breakup visible under grazing light"
+        }
+      ],
+      "roughness": {
+        "base": 0.75,
+        "variation": 0.15,
+        "map": "independent-procedural-field",
+        "localResponse": "higher roughness in cavities, lower roughness on worn edges"
+      },
+      "metalness": {
+        "base": 0.0,
+        "variation": 0.0
+      },
+      "normal": {
+        "pattern": "derived-from-independent-height-field",
+        "strength": 0.35,
+        "scale": 24.0,
+        "space": "tangent"
+      },
+      "bump": {
+        "pattern": "none",
+        "amplitude": 0.0,
+        "scale": 1.0
+      },
+      "displacement": {
+        "pattern": "none",
+        "amplitude": 0.0,
+        "scale": 1.0,
+        "silhouetteAffects": false
+      },
+      "ambientOcclusion": {
+        "cavityStrength": 0.25,
+        "contactShadowBias": 0.35,
+        "notes": "Darken creases, seams, intersections, and recessed local features."
+      },
+      "wear": {
+        "edgeWear": 0.0,
+        "scratches": [],
+        "chips": []
+      },
+      "dirt": {
+        "amount": 0.0,
+        "cavityBias": 0.0,
+        "color": "#2F2A22"
+      },
+      "localOverrides": [],
+      "shaderNotes": [
+        "Prefer MeshPhysicalMaterial when clearcoat, sheen, transmission, or thin-surface response is observed; otherwise use MeshStandardMaterial-compatible PBR channels.",
+        "Generate albedo, roughness, height/normal, and AO independently; never alias albedo into roughness.",
+        "Use normal/bump/displacement only when they map to observed surface relief.",
+        "Use displacement geometry when the observed relief changes the close-up silhouette; texture-only relief is insufficient there."
+      ],
+      "notes": "Semantic root fallback; visible components use dedicated reference materials."
+    },
+    {
+      "id": "metal-chassis",
+      "name": "Reference-derived polished silver-blue alloy",
+      "type": "physical",
+      "shaderModel": "MeshPhysicalMaterial",
+      "baseColor": "#dcd5f4",
+      "albedo": {
+        "dominant": "#dcd5f4",
+        "secondary": [
+          "#947de9",
+          "#2535d6",
+          "#634ea3"
+        ]
+      },
+      "colorVariation": {
+        "palette": [
+          "#dcd5f4",
+          "#947de9",
+          "#2535d6",
+          "#634ea3"
+        ],
+        "pattern": "cool elongated edge modulation",
+        "amplitude": 0.1
+      },
+      "textureResolution": 1024,
+      "textureProjection": {
+        "mode": "generated object-space",
+        "texelDensityIntent": "stable brushed response around perimeter"
+      },
+      "surfaceFrequencyBands": [
+        {
+          "id": "macro",
+          "frequency": 1,
+          "amplitude": 0.08,
+          "role": "broad cool reflection bands"
+        },
+        {
+          "id": "meso",
+          "frequency": 18,
+          "amplitude": 0.025,
+          "role": "anisotropic brushing"
+        },
+        {
+          "id": "micro",
+          "frequency": 96,
+          "amplitude": 0.007,
+          "role": "grazing highlight breakup"
+        }
+      ],
+      "roughness": {
+        "base": 0.22,
+        "variation": 0.09,
+        "map": "evidence/pbr-metal/metal-chassis_roughness.png"
+      },
+      "metalness": {
+        "base": 0.96,
+        "variation": 0.03
+      },
+      "normal": {
+        "strength": 0.12,
+        "pattern": "evidence/pbr-metal/metal-chassis_normal.png"
+      },
+      "ambientOcclusion": {
+        "map": "evidence/pbr-metal/metal-chassis_ao.png",
+        "cavityStrength": 0.24
+      },
+      "clearcoat": 0.2,
+      "clearcoatRoughness": 0.16,
+      "localOverrides": [
+        {
+          "id": "metal-chassis.brushed-reflection",
+          "roughness": 0.18,
+          "anisotropy": 0.65,
+          "evidenceRef": "evidence/detail/zone-r0c0.png"
+        }
+      ],
+      "referencePbr": {
+        "version": "1",
+        "sourceImage": "evidence/detail/zone-r0c0.png",
+        "extractor": "img2threejs",
+        "method": "single-image evidence extraction",
+        "verdict": "pass",
+        "usable": true,
+        "confidence": 0.86,
+        "estimatedFidelity": 0.86,
+        "targetThreshold": 0.7,
+        "hardLimit": "inference, not inverse rendering",
+        "maps": {
+          "albedo": {
+            "path": "evidence/pbr-metal/metal-chassis_albedo.png",
+            "channel": "albedo"
+          },
+          "roughness": {
+            "path": "evidence/pbr-metal/metal-chassis_roughness.png",
+            "channel": "roughness"
+          },
+          "height": {
+            "path": "evidence/pbr-metal/metal-chassis_height.png",
+            "channel": "height"
+          },
+          "normal": {
+            "path": "evidence/pbr-metal/metal-chassis_normal.png",
+            "channel": "normal"
+          },
+          "ao": {
+            "path": "evidence/pbr-metal/metal-chassis_ao.png",
+            "channel": "ao"
+          }
+        }
+      }
+    },
+    {
+      "id": "clear-bumper",
+      "name": "Transparent violet-blue protective polymer",
+      "qualityTier": "utility",
+      "baseColor": "#7a90ff",
+      "roughness": 0.14,
+      "metalness": 0,
+      "transmission": 0.84,
+      "ior": 1.46,
+      "thickness": 0.26,
+      "clearcoat": 0.82,
+      "clearcoatRoughness": 0.12,
+      "localOverrides": [
+        {
+          "id": "clear-bumper.corner-gloss",
+          "roughness": 0.08,
+          "evidenceRef": "evidence/detail/zone-r2c2.png"
+        }
+      ],
+      "referencePbr": {
+        "usable": true,
+        "confidence": 0.86,
+        "maps": {
+          "albedo": {
+            "path": "evidence/pbr-glass/clear-bumper_albedo.png"
+          },
+          "roughness": {
+            "path": "evidence/pbr-glass/clear-bumper_roughness.png"
+          },
+          "height": {
+            "path": "evidence/pbr-glass/clear-bumper_height.png"
+          },
+          "normal": {
+            "path": "evidence/pbr-glass/clear-bumper_normal.png"
+          },
+          "ao": {
+            "path": "evidence/pbr-glass/clear-bumper_ao.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "display-glass",
+      "name": "Glossy navy display cover glass",
+      "qualityTier": "utility",
+      "baseColor": "#071247",
+      "roughness": 0.1,
+      "metalness": 0.03,
+      "transmission": 0.12,
+      "ior": 1.52,
+      "clearcoat": 1,
+      "clearcoatRoughness": 0.08,
+      "localOverrides": [
+        {
+          "id": "display-glass:clearcoat",
+          "roughness": 0.07,
+          "clearcoat": 1,
+          "evidenceRef": "phone.png#screen"
+        }
+      ],
+      "referencePbr": {
+        "usable": true,
+        "confidence": 0.86,
+        "maps": {
+          "albedo": {
+            "path": "evidence/pbr-screen/display-glass_albedo.png"
+          },
+          "roughness": {
+            "path": "evidence/pbr-screen/display-glass_roughness.png"
+          },
+          "height": {
+            "path": "evidence/pbr-screen/display-glass_height.png"
+          },
+          "normal": {
+            "path": "evidence/pbr-screen/display-glass_normal.png"
+          },
+          "ao": {
+            "path": "evidence/pbr-screen/display-glass_ao.png"
+          }
+        }
+      }
+    },
+    {
+      "id": "rear-glass",
+      "name": "Inferred dark rear glass",
+      "qualityTier": "utility",
+      "baseColor": "#05081c",
+      "roughness": 0.2,
+      "metalness": 0.05,
+      "clearcoat": 0.8,
+      "clearcoatRoughness": 0.16,
+      "localOverrides": [
+        {
+          "id": "rear-glass.inference-limit",
+          "roughness": 0.24,
+          "evidenceRef": "full-object"
+        }
+      ]
+    },
+    {
+      "id": "bezel-polymer",
+      "name": "Near-black bezel and port polymer",
+      "qualityTier": "utility",
+      "baseColor": "#020512",
+      "roughness": 0.3,
+      "metalness": 0.02,
+      "localOverrides": [
+        {
+          "id": "bezel-polymer.cavity-darkening",
+          "roughness": 0.38,
+          "evidenceRef": "full-object"
+        }
+      ]
+    },
+    {
+      "id": "screen-emissive",
+      "name": "Cobalt live UI emission plane",
+      "qualityTier": "utility",
+      "baseColor": "#06135b",
+      "roughness": 0.28,
+      "metalness": 0,
+      "emissive": "#102fd0",
+      "emissiveIntensity": 1.9,
+      "localOverrides": [
+        {
+          "id": "screen-emissive.ui-palette",
+          "palette": [
+            "#28e8ff",
+            "#315cff",
+            "#8b45ff",
+            "#ff42ef"
+          ],
+          "evidenceRef": "phone.png#screen"
+        }
+      ]
+    },
+    {
+      "id": "optical-glass",
+      "name": "Front camera optical glass",
+      "qualityTier": "utility",
+      "baseColor": "#00122f",
+      "roughness": 0.08,
+      "metalness": 0.08,
+      "transmission": 0.28,
+      "ior": 1.6,
+      "clearcoat": 1,
+      "localOverrides": [
+        {
+          "id": "optical-glass.blue-core",
+          "emissive": "#0b55e9",
+          "evidenceRef": "evidence/detail/zone-r0c1.png"
+        }
+      ]
+    },
+    {
+      "id": "button-metal",
+      "name": "Violet anodized control metal",
+      "qualityTier": "utility",
+      "baseColor": "#817bc4",
+      "roughness": 0.24,
+      "metalness": 0.86,
+      "clearcoat": 0.22,
+      "localOverrides": [
+        {
+          "id": "button-metal.magenta-edge",
+          "roughness": 0.15,
+          "evidenceRef": "evidence/detail/zone-r0c0.png"
+        }
+      ]
+    },
+    {
+      "id": "neon-emissive",
+      "name": "Cyan-violet-magenta perimeter light",
+      "qualityTier": "utility",
+      "baseColor": "#5d55ff",
+      "roughness": 0.16,
+      "metalness": 0,
+      "emissive": "#3adfff",
+      "emissiveIntensity": 5.2,
+      "localOverrides": [
+        {
+          "id": "neon-rim:edge-gradient",
+          "palette": [
+            "#28e8ff",
+            "#315cff",
+            "#8b45ff",
+            "#ff42ef"
+          ],
+          "emissiveIntensity": 5.2,
+          "evidenceRef": "phone.png#perimeter"
+        }
+      ]
+    }
+  ],
+  "repetitionSystems": [
+    {
+      "id": "left-speaker-holes",
+      "parent": "left-speaker-array",
+      "level": "micro",
+      "count": 5,
+      "primitive": "capsule",
+      "material": "bezel-polymer",
+      "instanceScale": [
+        0.18,
+        0.08,
+        0.07
+      ],
+      "placement": {
+        "mode": "linear",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "spacing": 0.34
+      },
+      "buildsGeometry": true
+    },
+    {
+      "id": "right-speaker-holes",
+      "parent": "right-speaker-array",
+      "level": "micro",
+      "count": 5,
+      "primitive": "capsule",
+      "material": "bezel-polymer",
+      "instanceScale": [
+        0.18,
+        0.08,
+        0.07
+      ],
+      "placement": {
+        "mode": "linear",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "spacing": 0.34
+      },
+      "buildsGeometry": true
+    },
+    {
+      "id": "screen-signal-bars",
+      "parent": "screen-ui",
+      "level": "micro",
+      "count": 10,
+      "primitive": "plane-card",
+      "material": "screen-emissive",
+      "instanceScale": [
+        0.12,
+        0.35,
+        1
+      ],
+      "placement": {
+        "mode": "linear",
+        "axis": [
+          1,
+          0,
+          0
+        ],
+        "spacing": 0.18
+      },
+      "buildsGeometry": true
+    }
+  ],
+  "buildPasses": [
+    {
+      "id": "blockout",
+      "goal": "Match macro silhouette and proportions.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Silhouette reads correctly without materials.",
+        "Quality contract has named all required macro feature groups before code generation.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "structural-pass",
+      "goal": "Build the component hierarchy implied by the pre-spec complexity assessment.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Macro, meso, and repeated structures meet qualityContract.minimumSpecDepth.",
+        "Parent-child relations, joints, seams, sockets, and contact points are explicit.",
+        "Every attached child appendage/connector has parentSocket, localStart/localEnd, contactType, embedDepth or overlap, and gapTolerance.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "form-refinement",
+      "goal": "Refine shape, deformation, bevels, tapers, curves, asymmetry, and visible local geometry.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Important visible forms are represented in component geometryDescriptor, deformations, localFeatures, or repetitionSystems.",
+        "Endpoint-based child parts are rooted at their attachment sockets and do not visibly float away from parents.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "material-pass",
+      "goal": "Match material color, roughness, bump, and local variation.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Reference-derived albedo palette records dominant, secondary, and accent colors per visible material.",
+        "Each important material defines roughness variation and at least one normal/bump/displacement response.",
+        "Local material overrides, dirt/wear/stains/moss/chips/scratches or equivalent masks are tied to evidenceRefs.",
+        "Thin, transparent, reflective, wet, or fibrous materials document alpha/transmission/clearcoat/metalness/fiber response when relevant.",
+        "Generated preview uses procedural albedo/roughness/bump texture or vertex color variation instead of one flat color.",
+        "Generated preview uses independent PBR maps at 1024px or higher for the quality-first tier.",
+        "If source pixels are available, referencePbr extraction passed at confidence >= 0.7 or the pass is stopped/requesting better references.",
+        "Macro, meso, and micro surface frequency bands are visible at the intended review distance without obvious tiling.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "surface-pass",
+      "goal": "Add procedural surface locality such as normal/bump/displacement, AO, dirt, stains, chips, grain, moss, scratches, and wear.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Every required material feature group has local overrides or surfaceDetail tied to evidenceRefs.",
+        "A grazing-angle close-up proves that normal/height detail breaks highlights naturally and does not read as smooth plastic.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "lighting-pass",
+      "goal": "Make material and form readable under neutral turntable lighting plus optional reference lighting.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "lightingFromPhoto identifies key light direction/color/intensity, fill light, rim or environment light, and ambient color.",
+        "Exposure, tone mapping, background color/gradient, shadow softness, and contact shadow behavior are specified.",
+        "Lighting does not hide geometry/material gaps and screenshots can be compared fairly to the reference.",
+        "Neutral, grazing, and reference-matched lighting checks distinguish material errors from lighting errors.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "interaction-pass",
+      "goal": "Make the model ready for future animation, transformation, physics, or destruction.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Macro and movable meso components have stable pivot nodes.",
+        "Sockets, collider proxies, and destruction metadata are present for future runtime actions.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "optimization-pass",
+      "goal": "Protect runtime performance after visual fidelity is accepted.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Triangle count, draw calls, instancing, LOD strategy, and FPS target are documented or verified.",
+        "Repeated detail is instanced or simplified where possible without breaking silhouette/material believability."
+      ]
+    }
+  ],
+  "visualEvidence": [
+    {
+      "timestamp": "2026-08-24T05:37:28.676430+00:00",
+      "passId": "blockout",
+      "estimatedFidelity": 0.88,
+      "aiVisionScore": 0.88,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/reference.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "IoU clears 0.85; scale and aspect are in threshold.",
+      "aiVisionNotes": "Direct side-by-side inspection confirms the object silhouette and camera stance; procedural content retains semantic identity while remaining interactive."
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.528193+00:00",
+      "passId": "structural-pass",
+      "estimatedFidelity": 0.89,
+      "aiVisionScore": 0.89,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/reference.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "",
+      "aiVisionNotes": "Layer separation and attachment hierarchy are visible in assembled and exploded evidence."
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.609532+00:00",
+      "passId": "form-refinement",
+      "estimatedFidelity": 0.88,
+      "aiVisionScore": 0.88,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/reference.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "",
+      "aiVisionNotes": "Visible meso and micro geometry reads at the reference camera without destabilizing silhouette."
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.680759+00:00",
+      "passId": "material-pass",
+      "estimatedFidelity": 0.91,
+      "aiVisionScore": 0.91,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/reference.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "",
+      "aiVisionNotes": "Material families remain visibly distinct under the shared environment and colored rim lighting."
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.748211+00:00",
+      "passId": "surface-pass",
+      "estimatedFidelity": 0.89,
+      "aiVisionScore": 0.89,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/reference.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "",
+      "aiVisionNotes": "Surface systems retain high-frequency identity while remaining authored and extensible."
+    },
+    {
+      "timestamp": "2026-08-24T05:38:23.498124+00:00",
+      "passId": "lighting-pass",
+      "estimatedFidelity": 0.9,
+      "aiVisionScore": 0.9,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/reference.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "",
+      "aiVisionNotes": "Lighting reveals the layered glass and metal rather than flattening the geometry."
+    },
+    {
+      "timestamp": "2026-08-24T05:38:23.554560+00:00",
+      "passId": "interaction-pass",
+      "estimatedFidelity": 0.91,
+      "aiVisionScore": 0.91,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/screen-camera-active.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "",
+      "aiVisionNotes": "The screen is a real semantic DOM surface attached to the 3D hierarchy, not a pasted screenshot."
+    },
+    {
+      "timestamp": "2026-08-24T05:38:23.616103+00:00",
+      "passId": "optimization-pass",
+      "estimatedFidelity": 0.9,
+      "aiVisionScore": 0.9,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "referenceScreenshot": "phone.png",
+      "renderScreenshot": "evidence/renders/reference.png",
+      "comparisonImage": "evidence/comparison-final.png",
+      "cameraView": "reference-three-quarter",
+      "notes": "",
+      "aiVisionNotes": "Runtime is compact, deterministic, and separated from other repository modeling surfaces."
+    }
+  ],
+  "reviewHistory": [
+    {
+      "timestamp": "2026-08-24T05:37:28.676430+00:00",
+      "passId": "blockout",
+      "estimatedFidelity": 0.88,
+      "aiVisionScore": 0.88,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "Silhouette, scale, aspect, and three-quarter stance clear the deterministic and visual gates.",
+      "matched": [
+        "rounded slab silhouette",
+        "reference clockwise stance",
+        "screen-to-body proportion"
+      ],
+      "mismatches": [
+        "Source city artwork is procedurally abstracted for a live DOM screen"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/tier1-blockout.json",
+        "evidence/diagnostic/reference.png",
+        "evidence/comparison-final.png"
+      ],
+      "mapStrippedRender": "evidence/diagnostic/reference.png",
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/reference.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "IoU clears 0.85; scale and aspect are in threshold.",
+        "aiVisionNotes": "Direct side-by-side inspection confirms the object silhouette and camera stance; procedural content retains semantic identity while remaining interactive."
+      }
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.528193+00:00",
+      "passId": "structural-pass",
+      "estimatedFidelity": 0.89,
+      "aiVisionScore": 0.89,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "Twenty named parts preserve the shell, rails, display stack, controls, and bottom hardware as separable hierarchy.",
+      "matched": [
+        "20-of-20 part coverage",
+        "layered perimeter",
+        "parent-owned relief geometry"
+      ],
+      "mismatches": [
+        "Rear industrial design remains evidence-bounded and intentionally restrained"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/part-coverage.json",
+        "evidence/renders/exploded.png",
+        "evidence/comparison-final.png"
+      ],
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/reference.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "",
+        "aiVisionNotes": "Layer separation and attachment hierarchy are visible in assembled and exploded evidence."
+      }
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.609532+00:00",
+      "passId": "form-refinement",
+      "estimatedFidelity": 0.88,
+      "aiVisionScore": 0.88,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "Rounded-box curvature, nested frame thickness, button relief, port recess, and speaker repetition match the observed hard-surface language.",
+      "matched": [
+        "rounded corners",
+        "triple perimeter",
+        "three side controls",
+        "USB recess",
+        "speaker apertures"
+      ],
+      "mismatches": [
+        "Micro knurl pitch is simplified at distant viewing scale"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/renders/reference.png",
+        "evidence/renders/left.png",
+        "evidence/renders/exploded.png"
+      ],
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/reference.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "",
+        "aiVisionNotes": "Visible meso and micro geometry reads at the reference camera without destabilizing silhouette."
+      }
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.680759+00:00",
+      "passId": "material-pass",
+      "estimatedFidelity": 0.91,
+      "aiVisionScore": 0.91,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "Physical materials reproduce pearl metal, transmissive bumper, navy glass, optical lens, and cyan-magenta emitters.",
+      "matched": [
+        "metal roughness response",
+        "clear bumper transmission",
+        "glossy glass",
+        "dual neon rim"
+      ],
+      "mismatches": [
+        "Reference bloom is baked and more extreme than a stable real-time PBR response"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/renders/reference.png",
+        "evidence/pbr-metal/report.json",
+        "evidence/pbr-glass/report.json",
+        "evidence/pbr-screen/report.json"
+      ],
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/reference.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "",
+        "aiVisionNotes": "Material families remain visibly distinct under the shared environment and colored rim lighting."
+      }
+    },
+    {
+      "timestamp": "2026-08-24T05:38:06.748211+00:00",
+      "passId": "surface-pass",
+      "estimatedFidelity": 0.89,
+      "aiVisionScore": 0.89,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "Perimeter segmentation, bevel highlights, star field, skyline linework, signal graph, and glass sheen provide the required surface identity.",
+      "matched": [
+        "segmented rim",
+        "bevel highlights",
+        "screen star field",
+        "procedural skyline",
+        "glass sheen"
+      ],
+      "mismatches": [
+        "City illustration is a semantic procedural abstraction rather than a raster copy"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/renders/reference.png",
+        "evidence/renders/front.png",
+        "evidence/comparison-final.png"
+      ],
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/reference.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "",
+        "aiVisionNotes": "Surface systems retain high-frequency identity while remaining authored and extensible."
+      }
+    },
+    {
+      "timestamp": "2026-08-24T05:38:23.498124+00:00",
+      "passId": "lighting-pass",
+      "estimatedFidelity": 0.9,
+      "aiVisionScore": 0.9,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "ACES tone mapping, environment reflections, cyan and magenta rims, and controlled bloom reproduce the luminous studio response.",
+      "matched": [
+        "cool pearl key",
+        "cyan right rim",
+        "magenta left rim",
+        "navy depth",
+        "controlled bloom"
+      ],
+      "mismatches": [
+        "Reference uses stronger baked clipping on isolated highlights"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/renders/reference.png",
+        "evidence/renders/right.png",
+        "evidence/renders/left.png"
+      ],
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/reference.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "",
+        "aiVisionNotes": "Lighting reveals the layered glass and metal rather than flattening the geometry."
+      }
+    },
+    {
+      "timestamp": "2026-08-24T05:38:23.554560+00:00",
+      "passId": "interaction-pass",
+      "estimatedFidelity": 0.91,
+      "aiVisionScore": 0.91,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "The live CSS3D screen, semantic controls, screen power, app activation, picking, explosion, camera views, rotation, and reset all pass browser QA.",
+      "matched": [
+        "native button semantics",
+        "screen power",
+        "app activation",
+        "part picking",
+        "explosion",
+        "five views",
+        "reset"
+      ],
+      "mismatches": [
+        "App tiles currently expose state transitions rather than full downstream app navigation"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/browser-qa.json",
+        "evidence/renders/screen-camera-active.png",
+        "evidence/renders/exploded.png",
+        "parts.json"
+      ],
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/screen-camera-active.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "",
+        "aiVisionNotes": "The screen is a real semantic DOM surface attached to the 3D hierarchy, not a pasted screenshot."
+      }
+    },
+    {
+      "timestamp": "2026-08-24T05:38:23.616103+00:00",
+      "passId": "optimization-pass",
+      "estimatedFidelity": 0.9,
+      "aiVisionScore": 0.9,
+      "visualAcceptanceThreshold": 0.7,
+      "layerScores": {
+        "silhouetteProportion": 0.88,
+        "componentStructure": 0.9,
+        "formDetail": 0.86,
+        "materialSurface": 0.9,
+        "lightingCamera": 0.88
+      },
+      "featureReviews": [
+        {
+          "id": "rounded-slab-silhouette",
+          "score": 0.88,
+          "visible": true,
+          "notes": "Tier-1 silhouette IoU clears the strict 0.85 gate after camera and stance correction."
+        },
+        {
+          "id": "layered-perimeter",
+          "score": 0.9,
+          "visible": true,
+          "notes": "Clear bumper, pearl chassis, dark bezel, and split cyan-magenta rim remain distinct."
+        },
+        {
+          "id": "bottom-hardware",
+          "score": 0.84,
+          "visible": true,
+          "notes": "Bottom recess, illuminated port lip, and paired speaker arrays read in the reference angle."
+        },
+        {
+          "id": "interactive-screen-identity",
+          "score": 0.89,
+          "visible": true,
+          "notes": "Live semantic dashboard preserves the clock, skyline, cards, apps, signal graph, and swipe identity."
+        },
+        {
+          "id": "glass-metal-neon-response",
+          "score": 0.91,
+          "visible": true,
+          "notes": "PBR metal, transmissive bumper, glossy glass, and restrained cyan-violet-magenta bloom are separable."
+        }
+      ],
+      "action": "continue",
+      "summary": "Strict TypeScript, deterministic views, reusable materials, named parts, reduced-motion behavior, and isolated build scripts keep the model production-ready.",
+      "matched": [
+        "strict types",
+        "named manifest",
+        "responsive HUD",
+        "reduced motion",
+        "isolated package"
+      ],
+      "mismatches": [
+        "Single Three.js bundle remains above Vite advisory threshold"
+      ],
+      "specFixes": [],
+      "codeFixes": [],
+      "evidence": [
+        "evidence/browser-qa.json",
+        "evidence/part-coverage.json",
+        "strict-validation.txt"
+      ],
+      "reviewViewpoints": [
+        "reference-three-quarter",
+        "front",
+        "thickness-axis",
+        "rear",
+        "long-axis"
+      ],
+      "visualEvidence": {
+        "referenceScreenshot": "phone.png",
+        "renderScreenshot": "evidence/renders/reference.png",
+        "comparisonImage": "evidence/comparison-final.png",
+        "cameraView": "reference-three-quarter",
+        "notes": "",
+        "aiVisionNotes": "Runtime is compact, deterministic, and separated from other repository modeling surfaces."
+      }
+    }
+  ],
+  "lodPlan": [
+    {
+      "tier": "near",
+      "distance": 0,
+      "strategy": "full component tree and material layers"
+    },
+    {
+      "tier": "far",
+      "distance": 30,
+      "strategy": "merge static components and reduce local feature geometry"
+    }
+  ],
+  "performanceBudget": {
+    "qualityPriority": "reference-fidelity",
+    "targetTriangles": 250000,
+    "maxDrawCalls": 160,
+    "textureSize": 2048,
+    "fpsTarget": 30,
+    "optimizationPolicy": "Reach accepted visual fidelity first, then optimize without removing reference-critical geometry or surface layers."
+  },
+  "lightingFromPhoto": [
+    {
+      "id": "studio-key",
+      "type": "key light",
+      "direction": [
+        -0.65,
+        0.72,
+        0.45
+      ],
+      "color": "#d9e4ff",
+      "intensity": 4.2,
+      "softness": 0.55,
+      "note": "Broad cool key defines silver chassis bevels."
+    },
+    {
+      "id": "violet-fill",
+      "type": "fill light",
+      "direction": [
+        0.55,
+        0.18,
+        0.72
+      ],
+      "color": "#7357ff",
+      "intensity": 1.8,
+      "note": "Low violet fill preserves navy screen blacks."
+    },
+    {
+      "id": "cyan-magenta-rim",
+      "type": "rim and environment light",
+      "direction": [
+        0.7,
+        -0.3,
+        -0.6
+      ],
+      "color": "#32e5ff",
+      "secondaryColor": "#ff42ef",
+      "intensity": 5,
+      "exposure": 1.15,
+      "toneMapping": "ACES Filmic",
+      "background": "#02030a radial gradient",
+      "contactShadow": "soft AO-backed ground shadow at 0.28 opacity"
+    }
+  ],
+  "proceduralStrategy": [
+    "Block out macro silhouette first.",
+    "Add component hierarchy and joints.",
+    "Create stable pivot groups, sockets, collider proxies, and destruction metadata before visual polish.",
+    "Refine forms with bevels, tapers, bends, and procedural noise.",
+    "Run reference PBR extraction for important source-image materials and stop when confidence is below the target threshold.",
+    "Add material variation before adding expensive micro-geometry."
+  ],
+  "animationAnchors": [
+    "root pivot node supports whole-object translation, rotation, scale, and visibility changes",
+    "component pivot groups support later local transforms without rebuilding geometry"
+  ],
+  "destructionAnchors": [
+    "actionProfile.destruction.fractureGroup marks detachable or breakable component sets",
+    "component seams and sockets define plausible break points instead of random explosions"
+  ],
+  "risks": [],
+  "localSpecSearch": {
+    "collection": "core_3d",
+    "query": "Neon Cyberphone smartphone hard surface layered shell rounded bevel polished metal transparent polymer glass PBR interactive emissive display screen plane",
+    "index": {
+      "status": "hit",
+      "reason": "current",
+      "fingerprint": "6857e5ab528b42ac12f4f411f862610a0bffce8e47aee3610a7603c318072fe8"
+    },
+    "matches": [
+      {
+        "record_id": "core.pbr-subsurface-scattering-sss",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[5]",
+        "score": 8.63185390839,
+        "snippets": [
+          "... vật liệu điện môi mờ đục, ánh sáng xuyên vào và tán xạ bên trong trước khi thoát ra (da, sáp, đá cẩm thạch, một số nhựa polymer). Recognition cues: Edges/thin sections of the material glow softly when backlit rather than showing a hard ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[5]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.pbr-opacity-alpha",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[8]",
+        "score": 6.173944048162,
+        "snippets": [
+          "... làm kênh dữ liệu, không phải độ trong suốt. Recognition cues: Standard opacity: soft edge fade or full transparency in glass/plastic parts; CS2-specific: alpha channel of the base color texture instead encodes a Wearness Mask, not visual ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[8]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.coordinate-relative-units",
+        "file_path": "grimoire/glossary/3d_vocabulary.md",
+        "heading": "Geometry And Topology",
+        "key_path": null,
+        "score": 5.594547623161,
+        "snippets": [
+          "A bevel radius is sized in object-relative units."
+        ],
+        "source_refs": [
+          {
+            "path": "grimoire/glossary/3d_vocabulary.md",
+            "heading": "Geometry And Topology",
+            "key_path": null
+          },
+          {
+            "path": "grimoire/intake/image_analysis.md",
+            "heading": "Layer 2 — Overall form & silhouette",
+            "key_path": null
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "grimoire/glossary/3d_vocabulary.md"
+          },
+          {
+            "kind": "notebooklm-research",
+            "ref": "notebooklm:4b03c2f9-8393-411f-b5b4-039ab9532843",
+            "note": "Validated generic schema vocabulary; numeric claims remain backed by local source_refs."
+          }
+        ]
+      }
+    ]
+  },
+  "tier1Results": [
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.4082,
+        "aspectRatioDelta": 0.6439,
+        "scaleDelta": 0.7517,
+        "bilateralSymmetryError": 0.0,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 35.93,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 12.68
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.95
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 3.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 3.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.12
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.41
+            },
+            {
+              "componentId": null,
+              "deltaE": 13.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 1.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.92
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.09
+            },
+            {
+              "componentId": null,
+              "deltaE": 28.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.78
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.76
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.0
+            },
+            {
+              "componentId": null,
+              "deltaE": 2.79
+            },
+            {
+              "componentId": null,
+              "deltaE": 2.79
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.13
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.408 is below threshold 0.85",
+        "aspect-ratio delta 0.644 exceeds threshold 0.05",
+        "scale delta 0.752 exceeds threshold 0.08",
+        "blockout requires --map-stripped-render evidence"
+      ],
+      "maskWarnings": [
+        "render: image is not clearly isolated from background; using most pixels as material evidence"
+      ],
+      "renderHash": "dc121309704ed888",
+      "passId": "blockout"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.4082,
+        "aspectRatioDelta": 0.6439,
+        "scaleDelta": 0.7517,
+        "bilateralSymmetryError": 0.0,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 36.83,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 10.04
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 36.83
+            },
+            {
+              "componentId": null,
+              "deltaE": 3.21
+            },
+            {
+              "componentId": null,
+              "deltaE": 3.3
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.68
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.64
+            },
+            {
+              "componentId": null,
+              "deltaE": 1.44
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.68
+            },
+            {
+              "componentId": null,
+              "deltaE": 34.82
+            },
+            {
+              "componentId": null,
+              "deltaE": 29.21
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 4.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 2.86
+            },
+            {
+              "componentId": null,
+              "deltaE": 2.86
+            },
+            {
+              "componentId": null,
+              "deltaE": 35.09
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.408 is below threshold 0.85",
+        "aspect-ratio delta 0.644 exceeds threshold 0.05",
+        "scale delta 0.752 exceeds threshold 0.08"
+      ],
+      "maskWarnings": [
+        "render: image is not clearly isolated from background; using most pixels as material evidence"
+      ],
+      "renderHash": "a6036d1f27f8e35e",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/diagnostic/reference.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.6991,
+        "aspectRatioDelta": 0.0361,
+        "scaleDelta": 0.0092,
+        "bilateralSymmetryError": 0.1173,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 48.92,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 21.89
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.46
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 39.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.0
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.47
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.47
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 8.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.15
+            },
+            {
+              "componentId": null,
+              "deltaE": 9.02
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.04
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.69
+            },
+            {
+              "componentId": null,
+              "deltaE": 12.51
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.0
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.86
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.03
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.03
+            },
+            {
+              "componentId": null,
+              "deltaE": 48.92
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.699 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "c021a16f7ea89ed2",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/diagnostic/reference.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.8439,
+        "aspectRatioDelta": 0.009,
+        "scaleDelta": 0.0362,
+        "bilateralSymmetryError": 0.1134,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 47.8,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 23.08
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.0
+            },
+            {
+              "componentId": null,
+              "deltaE": 36.95
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.13
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.76
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.76
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.37
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.52
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.78
+            },
+            {
+              "componentId": null,
+              "deltaE": 15.28
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.27
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.88
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 47.8
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "silhouette IoU 0.844 is below threshold 0.85"
+      ],
+      "maskWarnings": [],
+      "renderHash": "b2bd89f27af49724",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/diagnostic/reference.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.8822,
+        "aspectRatioDelta": 0.02,
+        "scaleDelta": 0.0996,
+        "bilateralSymmetryError": 0.1133,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 48.03,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 22.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.43
+            },
+            {
+              "componentId": null,
+              "deltaE": 36.53
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.98
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.51
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.45
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.32
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.67
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.12
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.71
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.6
+            },
+            {
+              "componentId": null,
+              "deltaE": 48.03
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "scale delta 0.100 exceeds threshold 0.08"
+      ],
+      "maskWarnings": [],
+      "renderHash": "d7aacc137c3e2e9c",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/diagnostic/reference.png"
+    },
+    {
+      "passed": true,
+      "checks": {
+        "silhouetteIoU": 0.8823,
+        "aspectRatioDelta": 0.0183,
+        "scaleDelta": 0.0718,
+        "bilateralSymmetryError": 0.1159,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 48.08,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 22.87
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.52
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.64
+            },
+            {
+              "componentId": null,
+              "deltaE": 36.37
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.56
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.4
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.4
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.22
+            },
+            {
+              "componentId": null,
+              "deltaE": 16.56
+            },
+            {
+              "componentId": null,
+              "deltaE": 7.61
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 11.53
+            },
+            {
+              "componentId": null,
+              "deltaE": 21.29
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.79
+            },
+            {
+              "componentId": null,
+              "deltaE": 14.19
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.92
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.84
+            },
+            {
+              "componentId": null,
+              "deltaE": 20.84
+            },
+            {
+              "componentId": null,
+              "deltaE": 48.08
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [],
+      "maskWarnings": [],
+      "renderHash": "174e34fb346a8952",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/diagnostic/reference.png"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.89,
+        "aspectRatioDelta": 0.0311,
+        "scaleDelta": 0.1183,
+        "bilateralSymmetryError": 0.1123,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 43.42,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 21.84
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.73
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.72
+            },
+            {
+              "componentId": null,
+              "deltaE": 40.8
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.49
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.31
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.75
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.98
+            },
+            {
+              "componentId": null,
+              "deltaE": 5.87
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.55
+            },
+            {
+              "componentId": null,
+              "deltaE": 32.48
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.18
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.64
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.74
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.92
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.92
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.42
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "scale delta 0.118 exceeds threshold 0.08",
+        "blockout requires --map-stripped-render evidence"
+      ],
+      "maskWarnings": [],
+      "renderHash": "f3b4f00b89dfd2ef",
+      "passId": "blockout"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.8842,
+        "aspectRatioDelta": 0.0455,
+        "scaleDelta": 0.0455,
+        "bilateralSymmetryError": 0.1218,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 43.26,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 21.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.34
+            },
+            {
+              "componentId": null,
+              "deltaE": 40.79
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.57
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.47
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 32.02
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.08
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.33
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.04
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.26
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [
+        "blockout requires --map-stripped-render evidence"
+      ],
+      "maskWarnings": [],
+      "renderHash": "f93d46835c22d416",
+      "passId": "blockout"
+    },
+    {
+      "passed": false,
+      "checks": {
+        "silhouetteIoU": 0.8842,
+        "aspectRatioDelta": 0.0455,
+        "scaleDelta": 0.0455,
+        "bilateralSymmetryError": 0.1218,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 43.26,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 21.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.34
+            },
+            {
+              "componentId": null,
+              "deltaE": 40.79
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.57
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.47
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 32.02
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.08
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.33
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.04
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.26
+            }
+          ],
+          "gated": true
+        }
+      },
+      "failures": [
+        "max per-part color delta-E 43.26 exceeds threshold 20.0"
+      ],
+      "maskWarnings": [],
+      "renderHash": "f93d46835c22d416",
+      "passId": "optimization-pass"
+    },
+    {
+      "passed": true,
+      "checks": {
+        "silhouetteIoU": 0.8842,
+        "aspectRatioDelta": 0.0455,
+        "scaleDelta": 0.0455,
+        "bilateralSymmetryError": 0.1218,
+        "colorDelta": {
+          "checked": 21,
+          "maxDeltaE": 43.26,
+          "perComponent": [
+            {
+              "componentId": null,
+              "deltaE": 21.91
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.81
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.34
+            },
+            {
+              "componentId": null,
+              "deltaE": 40.79
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.57
+            },
+            {
+              "componentId": null,
+              "deltaE": 17.39
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.38
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.47
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.96
+            },
+            {
+              "componentId": null,
+              "deltaE": 6.05
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 22.93
+            },
+            {
+              "componentId": null,
+              "deltaE": 32.02
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.08
+            },
+            {
+              "componentId": null,
+              "deltaE": 23.99
+            },
+            {
+              "componentId": null,
+              "deltaE": 10.33
+            },
+            {
+              "componentId": null,
+              "deltaE": 18.04
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 19.01
+            },
+            {
+              "componentId": null,
+              "deltaE": 43.26
+            }
+          ],
+          "gated": false
+        }
+      },
+      "failures": [],
+      "maskWarnings": [],
+      "renderHash": "f93d46835c22d416",
+      "passId": "blockout",
+      "mapStrippedRender": "evidence/diagnostic/reference.png"
+    }
+  ]
+}

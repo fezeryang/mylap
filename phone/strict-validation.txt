@@ -1,0 +1,21 @@
+PASS
+warning: component 'rear-shell' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'metal-chassis' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'clear-bumper' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'front-stack' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'rear-glass' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'chassis-left-rail' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'chassis-right-rail' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'front-bezel' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'display-glass' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'screen-ui' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'front-camera' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'left-controls' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'top-button' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'middle-button' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'bottom-button' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'bottom-hardware' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'usb-port' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'left-speaker-array' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'right-speaker-array' is missing actionProfile; future animation/destruction may require refactor
+warning: component 'neon-rim' is missing actionProfile; future animation/destruction may require refactor

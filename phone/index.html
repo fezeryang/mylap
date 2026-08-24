@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive procedural Three.js reconstruction of a neon cyberpunk smartphone."
+    />
+    <meta name="theme-color" content="#02030a" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2302030a'/><path d='M8 23V9h4l8 8V9h4v14h-4l-8-8v8z' fill='%2328e8ff'/></svg>" />
+    <meta property="og:title" content="Neon Cyberphone — Interactive 3D Reconstruction" />
+    <meta
+      property="og:description"
+      content="A clickable, explodable, procedural Three.js smartphone rebuilt from one reference image."
+    />
+    <title>Neon Cyberphone — Interactive 3D Reconstruction</title>
+  </head>
+  <body>
+    <main id="stage" aria-label="Neon Cyberphone 3D viewer">
+      <canvas
+        id="webgl-canvas"
+        aria-label="Interactive 3D model. Drag outside the screen to orbit the phone."
+      ></canvas>
+      <div id="css-layer"></div>
+
+      <header class="hud hud--identity">
+        <p class="hud__eyebrow">PROCEDURAL OBJECT / 01</p>
+        <h1>NEON<br />CYBERPHONE</h1>
+        <p class="hud__hint">Drag the shell to orbit. Tap the live screen to launch an app.</p>
+      </header>
+
+      <section class="hud hud--views" aria-label="Camera views">
+        <p class="hud__label">CAMERA</p>
+        <div class="control-cluster">
+          <button type="button" class="viewer-control" data-view="reference" aria-pressed="true">REF</button>
+          <button type="button" class="viewer-control" data-view="front" aria-pressed="false">FRONT</button>
+          <button type="button" class="viewer-control" data-view="right" aria-pressed="false">RIGHT</button>
+          <button type="button" class="viewer-control" data-view="rear" aria-pressed="false">REAR</button>
+          <button type="button" class="viewer-control" data-view="left" aria-pressed="false">LEFT</button>
+        </div>
+      </section>
+
+      <section class="hud hud--actions" aria-label="Model controls">
+        <button type="button" id="screen-power-control" class="viewer-control" aria-pressed="true">SCREEN</button>
+        <button type="button" id="explode-control" class="viewer-control" aria-pressed="false">EXPLODE</button>
+        <button type="button" id="auto-rotate-control" class="viewer-control" aria-pressed="false">ROTATE</button>
+        <button type="button" id="reset-control" class="viewer-control">RESET</button>
+      </section>
+
+      <p id="viewer-status" class="hud hud--status" aria-live="polite">Reference view ready</p>
+
+      <section id="primitive-showcase" aria-label="Primitive state showcase">
+        <p>PRIMITIVE / STATE MATRIX</p>
+        <div class="showcase-row">
+          <button type="button" class="viewer-control">DEFAULT</button>
+          <button type="button" class="viewer-control" aria-pressed="true">SELECTED</button>
+          <button type="button" class="viewer-control" disabled>DISABLED</button>
+          <button type="button" class="screen-app" data-app-id="call" aria-pressed="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.7 3.3 3.4 5 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.2.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1z" /></svg><span>CALL</span>
+          </button>
+        </div>
+      </section>
+
+      <div id="screen-seed">
+        <section id="phone-screen" aria-label="Interactive cyberphone home screen" data-power="on">
+          <div class="screen-stars" aria-hidden="true"></div>
+          <header class="screen-statusbar">
+            <span class="weather-mini">SUNSHINE<br /><b>24°C</b></span>
+            <span class="signal-mini"><i></i><i></i><i></i><i></i> 5G <b aria-hidden="true"></b></span>
+          </header>
+
+          <section class="clock-block" aria-label="Time and date">
+            <time datetime="2025-04-22T09:42:00">09:42</time>
+            <p>TUE, APR 22, 2025</p>
+          </section>
+
+          <section class="skyline-hero" aria-label="Neon skyline visualization">
+            <div class="moon" aria-hidden="true"></div>
+            <div class="orb" aria-hidden="true"><span></span></div>
+            <div class="buildings" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="water-lines" aria-hidden="true"></div>
+          </section>
+
+          <section class="screen-card-row" aria-label="Weather and media widgets">
+            <article class="screen-panel weather-card">
+              <span class="sun-cloud" aria-hidden="true"></span>
+              <p><small>PARTLY CLOUDY</small><strong>24°C</strong><span>H: 26°　L: 18°</span></p>
+            </article>
+            <article class="screen-panel media-card">
+              <div class="album-art" aria-hidden="true"><span></span></div>
+              <p><strong>Neon Skyline</strong><small>SYNTHWAVE • LIVE</small><span class="waveform"></span></p>
+              <button type="button" aria-label="Pause Neon Skyline">Ⅱ</button>
+            </article>
+          </section>
+
+          <nav class="screen-apps" aria-label="Phone apps">
+            <button type="button" class="screen-app" data-app-id="call" aria-label="Open Call" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.7 3.3 3.4 5 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.2.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1z" /></svg>
+              <span>CALL</span>
+            </button>
+            <button type="button" class="screen-app" data-app-id="message" aria-label="Open Messages" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm4 8h2v-2H8zm4 0h2v-2h-2zm4 0h2v-2h-2z" /></svg>
+              <span>MESSAGE</span>
+            </button>
+            <button type="button" class="screen-app" data-app-id="radio" aria-label="Open Radio" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7-3 2 2a7 7 0 0 0 0 10l-2 2A10 10 0 0 1 5 5zm14 0a10 10 0 0 1 0 14l-2-2a7 7 0 0 0 0-10z" /></svg>
+              <span>RADIO</span>
+            </button>
+            <button type="button" class="screen-app" data-app-id="camera" aria-label="Open Camera" aria-pressed="false">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3zm3 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z" /></svg>
+              <span>CAMERA</span>
+            </button>
+          </nav>
+
+          <section class="screen-panel signal-card" aria-label="5G signal strength">
+            <p><small>5G SIGNAL STRENGTH</small><span class="bar-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
+            <strong>5G<small>━━<br />━━</small></strong>
+            <div class="globe" aria-hidden="true"><i></i><i></i><i></i></div>
+          </section>
+
+          <aside class="app-surface" data-app-surface hidden aria-live="polite">
+            <small>ACTIVE APP</small>
+            <strong data-app-title></strong>
+            <p data-app-copy></p>
+          </aside>
+
+          <button type="button" class="swipe-control" aria-label="Unlock phone"><span>»</span> SWIPE TO UNLOCK <span>»</span></button>
+          <span class="home-indicator" aria-hidden="true"></span>
+          <button type="button" class="camera-aperture" aria-label="Front camera"></button>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

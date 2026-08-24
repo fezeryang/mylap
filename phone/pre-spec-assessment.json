@@ -1,0 +1,320 @@
+{
+  "targetName": "Neon Cyberphone",
+  "sourceImage": "/home/fezer/projects/todou/phone/phone.png",
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "smartphone in transparent protective bumper",
+      "primaryDomain": "object",
+      "formLanguage": ["hard-surface", "mechanical", "geometric"],
+      "structureKind": ["compound object", "layered shell", "repeated modules"],
+      "motionPotential": ["whole-object transform", "detachable", "interactive display"],
+      "materialFamilies": ["glass-like", "metal", "plastic", "mixed"],
+      "notes": "Visible front, left rail, and bottom edge are evidence-backed; rear and right rail are inferred."
+    },
+    "complexity": {
+      "tier": "ultra-complex",
+      "scores": {
+        "silhouetteComplexity": 2,
+        "componentCount": 3,
+        "hierarchyDepth": 3,
+        "repetitionDensity": 2,
+        "materialLayerCount": 3,
+        "localDetailDensity": 3,
+        "occlusionRisk": 2,
+        "actionReadinessNeed": 3
+      },
+      "estimatedCounts": {
+        "macroComponents": 5,
+        "mesoComponents": 16,
+        "microFeatureGroups": 18,
+        "materialLayers": 6,
+        "repetitionSystems": 3
+      },
+      "reasoning": [
+        "Five nested macro shells carry sixteen visible hardware and display subassemblies.",
+        "Reference identity depends on dense UI linework, repeated speaker holes, and layered neon material response.",
+        "Single-view occlusion raises risk for the rear and right rail without blocking a visible-view hero reconstruction."
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "ultra-complex",
+      "minimumComponentLevels": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Choose simple/moderate/complex/ultra-complex from observed structure, not from a hardcoded domain."
+    },
+    "unknownsToResolveBeforeImplementation": [
+      "Rear glass, camera module, and logo are hidden; implement a restrained inferred back and cap confidence at 0.35.",
+      "Right-side controls are hidden; keep the rail plain until another view is supplied.",
+      "Exact physical dimensions are unavailable; preserve the measured 2.05:1 face ratio instead."
+    ],
+    "detailInventory": {
+      "scanMethod": "grid-3x3",
+      "targetMinDetails": 16,
+      "note": "Enumerate every identity-defining small detail before authoring the spec. Each detail must map to a component.localFeatures entry or material.localOverrides entry, never prose only. Use forge/stage1_intake/build_detail_inventory.py to scan zones.",
+      "details": [
+        {"id":"triple-perimeter","kind":"bevel","description":"Three nested rounded perimeter bands catch separate silver, cyan, and magenta grazing highlights.","region":{"x":0.24,"y":0.0,"width":0.61,"height":0.98,"units":"normalized"},"scale":"meso","affects":"geometry","mapsTo":{"type":"component.localFeatures","ref":"clear-bumper:triple-perimeter"},"evidenceRef":"phone.png#full-object","confidence":0.97},
+        {"id":"edge-neon-rim","kind":"contour","description":"Cyan rim dominates the right and bottom while magenta concentrates at the top and lower corner.","region":{"x":0.25,"y":0.0,"width":0.58,"height":0.98,"units":"normalized"},"scale":"meso","affects":"emissive color","mapsTo":{"type":"material.localOverrides","ref":"neon-rim:edge-gradient"},"evidenceRef":"phone.png#perimeter","confidence":0.95},
+        {"id":"glass-gloss","kind":"gloss","description":"Low-roughness front glass carries broad diagonal blue highlights without flattening the UI.","region":{"x":0.31,"y":0.03,"width":0.49,"height":0.91,"units":"normalized"},"scale":"macro","affects":"roughness clearcoat","mapsTo":{"type":"material.localOverrides","ref":"display-glass:clearcoat"},"evidenceRef":"phone.png#screen","confidence":0.93},
+        {"id":"punch-hole-camera","kind":"contour","description":"Black circular aperture with a blue lens core and thin glossy ring sits near the top centre.","region":{"x":0.43,"y":0.04,"width":0.07,"height":0.08,"units":"normalized"},"scale":"micro","affects":"geometry material","mapsTo":{"type":"component.localFeatures","ref":"front-camera:lens-rings"},"evidenceRef":"evidence/detail/zone-r0c1.png","confidence":0.98},
+        {"id":"left-button-stack","kind":"linework","description":"Three controls interrupt the left rail, including one elongated knurled central control.","region":{"x":0.23,"y":0.11,"width":0.10,"height":0.33,"units":"normalized"},"scale":"meso","affects":"geometry","mapsTo":{"type":"component.localFeatures","ref":"left-controls:button-stack"},"evidenceRef":"evidence/detail/zone-r0c0.png","confidence":0.91},
+        {"id":"button-knurl","kind":"repeated-relief","description":"Fine repeated diagonal texture runs across the elongated left-side button.","region":{"x":0.25,"y":0.23,"width":0.06,"height":0.13,"units":"normalized"},"scale":"micro","affects":"normal geometry","mapsTo":{"type":"component.localFeatures","ref":"left-controls:knurling"},"evidenceRef":"evidence/detail/zone-r0c0.png","confidence":0.82},
+        {"id":"usb-c-port","kind":"contour","description":"Rounded rectangular bottom port is recessed and surrounded by a violet-to-cyan luminous lip.","region":{"x":0.49,"y":0.91,"width":0.18,"height":0.07,"units":"normalized"},"scale":"meso","affects":"geometry emissive color","mapsTo":{"type":"component.localFeatures","ref":"usb-port:recess-and-lip"},"evidenceRef":"evidence/detail/zone-r2c1.png","confidence":0.98},
+        {"id":"speaker-perforations-left","kind":"fastener","description":"Five dark oblong speaker holes repeat to the left of the port.","region":{"x":0.37,"y":0.92,"width":0.13,"height":0.04,"units":"normalized"},"scale":"micro","affects":"geometry","mapsTo":{"type":"component.localFeatures","ref":"bottom-hardware:left-speaker-array"},"evidenceRef":"evidence/detail/zone-r2c1.png","confidence":0.98},
+        {"id":"speaker-perforations-right","kind":"fastener","description":"A second oblong speaker row mirrors the first on the bottom edge.","region":{"x":0.67,"y":0.92,"width":0.14,"height":0.04,"units":"normalized"},"scale":"micro","affects":"geometry","mapsTo":{"type":"component.localFeatures","ref":"bottom-hardware:right-speaker-array"},"evidenceRef":"evidence/detail/zone-r2c2.png","confidence":0.9},
+        {"id":"screen-star-speckle","kind":"wear","description":"Sparse subpixel blue speckles break up the navy screen field.","region":{"x":0.32,"y":0.03,"width":0.49,"height":0.9,"units":"normalized"},"scale":"micro","affects":"albedo emissive","mapsTo":{"type":"material.localOverrides","ref":"screen-ui:star-speckle"},"evidenceRef":"phone.png#screen","confidence":0.88},
+        {"id":"clock-gradient","kind":"linework","description":"The 09:42 clock uses a white-to-violet-to-magenta emissive gradient and rounded geometric glyphs.","region":{"x":0.36,"y":0.12,"width":0.3,"height":0.12,"units":"normalized"},"scale":"meso","affects":"emissive UI","mapsTo":{"type":"component.localFeatures","ref":"screen-ui:clock-block"},"evidenceRef":"evidence/detail/zone-r0c1.png","confidence":0.99},
+        {"id":"skyline-orb","kind":"linework","description":"Neon skyline converges on a bright wireframe orb above mirrored water reflections.","region":{"x":0.32,"y":0.22,"width":0.49,"height":0.31,"units":"normalized"},"scale":"macro","affects":"emissive UI","mapsTo":{"type":"component.localFeatures","ref":"screen-ui:hero-skyline"},"evidenceRef":"phone.png#hero","confidence":0.96},
+        {"id":"weather-music-cards","kind":"panel-line","description":"Two rounded cyan-outline cards form a compact weather and media row.","region":{"x":0.35,"y":0.49,"width":0.44,"height":0.14,"units":"normalized"},"scale":"meso","affects":"emissive UI","mapsTo":{"type":"component.localFeatures","ref":"screen-ui:status-cards"},"evidenceRef":"evidence/detail/zone-r1c1.png","confidence":0.98},
+        {"id":"app-tile-row","kind":"panel-line","description":"Four equal rounded app tiles carry call, message, radio, and camera icons.","region":{"x":0.37,"y":0.61,"width":0.42,"height":0.12,"units":"normalized"},"scale":"meso","affects":"interactive UI","mapsTo":{"type":"component.localFeatures","ref":"screen-ui:app-tiles"},"evidenceRef":"phone.png#apps","confidence":0.99},
+        {"id":"signal-bars","kind":"repeated-relief","description":"Ten ascending bars transition from magenta through blue to cyan in the 5G panel.","region":{"x":0.4,"y":0.75,"width":0.2,"height":0.09,"units":"normalized"},"scale":"micro","affects":"emissive UI","mapsTo":{"type":"component.localFeatures","ref":"screen-ui:signal-bars"},"evidenceRef":"evidence/detail/zone-r2c1.png","confidence":0.98},
+        {"id":"wireframe-globe","kind":"linework","description":"Circular neon-blue globe with latitude, longitude, orbit, and node lines anchors the lower-right panel.","region":{"x":0.66,"y":0.73,"width":0.12,"height":0.12,"units":"normalized"},"scale":"meso","affects":"emissive UI","mapsTo":{"type":"component.localFeatures","ref":"screen-ui:wireframe-globe"},"evidenceRef":"evidence/detail/zone-r2c2.png","confidence":0.96},
+        {"id":"swipe-affordance","kind":"linework","description":"Paired chevrons, label, and glowing horizontal home indicator align at the display bottom.","region":{"x":0.45,"y":0.85,"width":0.31,"height":0.07,"units":"normalized"},"scale":"micro","affects":"interactive UI","mapsTo":{"type":"component.localFeatures","ref":"screen-ui:swipe-control"},"evidenceRef":"evidence/detail/zone-r2c1.png","confidence":0.99},
+        {"id":"metal-rim-brushing","kind":"gloss","description":"Cool silver rail carries elongated blue-violet reflections and narrow darker antenna seams.","region":{"x":0.24,"y":0.02,"width":0.6,"height":0.95,"units":"normalized"},"scale":"meso","affects":"roughness anisotropy","mapsTo":{"type":"material.localOverrides","ref":"metal-chassis:brushed-rim"},"evidenceRef":"phone.png#rail","confidence":0.9}
+      ]
+    },
+    "anatomy": {
+      "applies": false,
+      "styleHeads": 0.0,
+      "proportions": {
+        "headUnit": 0.0,
+        "torso": 0.0,
+        "legs": 0.0,
+        "shoulderWidth": 0.0,
+        "hipWidth": 0.0
+      },
+      "pose": {
+        "type": "unassessed",
+        "jointAngles": {}
+      },
+      "faceLandmarks": {
+        "eyeLine": 0.0,
+        "eyeSpacing": 0.0,
+        "noseBase": 0.0,
+        "mouthLine": 0.0,
+        "hairline": 0.0
+      },
+      "features": [],
+      "confidence": 0.0,
+      "note": "Only meaningful when objectClass.primaryDomain is character or hybrid. Set applies=true and fill from forge/stage1_intake/extract_landmarks.py. See grimoire/character/reconstruction.md and grimoire/character/likeness_maximization.md."
+    },
+    "sourceImage": "/home/fezer/projects/todou/phone/phone.png"
+  },
+  "qualityContract": {
+    "qualityBar": "ultra-complex",
+    "definitionOfDone": [
+      "The rendered model matches the reference silhouette, primary proportions, visible component hierarchy, material response, and most recognizable local features for the selected fidelity tier."
+    ],
+    "minimumSpecDepth": {
+      "macroComponents": 5,
+      "mesoComponents": 16,
+      "microFeatureGroups": 8,
+      "materialLayers": 4,
+      "repetitionSystems": 2,
+      "reviewViewpoints": 5
+    },
+    "featureGroups": [
+      {
+        "id": "overall-silhouette",
+        "name": "Overall silhouette and proportions",
+        "required": true,
+        "qualityCriteria": [
+          "Bounding shape, dominant curves, negative spaces, and scale relationships are explicitly described."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model reads as a generic placeholder instead of the reference object",
+          "major proportions are guessed without evidence"
+        ]
+      },
+      {
+        "id": "primary-structure",
+        "name": "Primary structure and hierarchy",
+        "required": true,
+        "qualityCriteria": [
+          "Major parts, joints, seams, contact points, and parent-child relationships are named before code generation."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "large visible parts are merged into one mesh",
+          "component hierarchy is too shallow for the observed complexity"
+        ]
+      },
+      {
+        "id": "attachment-joint-correctness",
+        "name": "Attachment and joint correctness",
+        "required": true,
+        "qualityCriteria": [
+          "Every visible child appendage, branch, limb, handle, connector, tube, cable, horn, wing, leg, or hinged part has an attachment contract with parent socket, localStart/localEnd, contact type, embed/overlap, and gap tolerance."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "child part root floats away from the parent",
+          "branch/limb/tube is centered in space instead of pivoting from its root",
+          "parent-child transform mixes world and local coordinates"
+        ]
+      },
+      {
+        "id": "surface-material-response",
+        "name": "Surface material response",
+        "required": true,
+        "qualityCriteria": [
+          "Albedo zones, roughness, normal/bump/displacement intent, cavity dirt, edge wear, and local overrides are specified where visible.",
+          "Important materials define independent albedo, roughness, height/normal, and AO responses instead of reusing one texture for unrelated PBR channels.",
+          "Surface response is decomposed into macro, meso, and micro frequency bands with scale and amplitude tied to object scale."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "surface looks like flat plastic",
+          "local material variation is missing or not tied to image evidence"
+        ]
+      },
+      {
+        "id": "reference-lookdev",
+        "name": "Reference color, material, and lighting response",
+        "required": true,
+        "qualityCriteria": [
+          "Material-pass names the reference-derived albedo palette, roughness variation, tactile normal/bump/displacement response, and local masks.",
+          "When a source image is available, run reference PBR extraction and require confidence >= 0.7 before treating maps as implementation-ready.",
+          "Lighting-pass names key/fill/rim or environment light, exposure, tone mapping, background, and contact shadow behavior.",
+          "Neutral, grazing-angle, and reference-matched renders prove that surface relief survives relighting and is not painted into albedo."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model has acceptable shape but reads as flat shaded or plastic",
+          "colors are a generic average instead of reference-observed local color zones",
+          "lighting is evenly ambient and cannot reproduce the source value range"
+        ]
+      }
+    ],
+    "visualDeltaChecks": [
+      "silhouette and negative-space delta",
+      "component hierarchy depth delta",
+      "repetition density and distribution delta",
+      "material albedo/roughness/normal response delta",
+      "local feature placement and scale delta"
+    ],
+    "antiShallowSpecRules": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md)."
+    ]
+  },
+  "authoringInstruction": "Fill observed object class, complexity reasoning, featureGroups, visualDeltaChecks, and unknowns before generating or implementing ObjectSculptSpec.",
+  "localSpecSearch": {
+    "collection": "core_3d",
+    "query": "Neon Cyberphone smartphone hard surface layered shell rounded bevel polished metal transparent polymer glass PBR interactive emissive display screen plane",
+    "index": {
+      "status": "hit",
+      "reason": "current",
+      "fingerprint": "6857e5ab528b42ac12f4f411f862610a0bffce8e47aee3610a7603c318072fe8"
+    },
+    "matches": [
+      {
+        "record_id": "core.pbr-subsurface-scattering-sss",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[5]",
+        "score": 8.63185390839,
+        "snippets": [
+          "... vật liệu điện môi mờ đục, ánh sáng xuyên vào và tán xạ bên trong trước khi thoát ra (da, sáp, đá cẩm thạch, một số nhựa polymer). Recognition cues: Edges/thin sections of the material glow softly when backlit rather than showing a hard ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[5]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.pbr-opacity-alpha",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[8]",
+        "score": 6.173944048162,
+        "snippets": [
+          "... làm kênh dữ liệu, không phải độ trong suốt. Recognition cues: Standard opacity: soft edge fade or full transparency in glass/plastic parts; CS2-specific: alpha channel of the base color texture instead encodes a Wearness Mask, not visual ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[8]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.coordinate-relative-units",
+        "file_path": "grimoire/glossary/3d_vocabulary.md",
+        "heading": "Geometry And Topology",
+        "key_path": null,
+        "score": 5.594547623161,
+        "snippets": [
+          "A bevel radius is sized in object-relative units."
+        ],
+        "source_refs": [
+          {
+            "path": "grimoire/glossary/3d_vocabulary.md",
+            "heading": "Geometry And Topology",
+            "key_path": null
+          },
+          {
+            "path": "grimoire/intake/image_analysis.md",
+            "heading": "Layer 2 — Overall form & silhouette",
+            "key_path": null
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "grimoire/glossary/3d_vocabulary.md"
+          },
+          {
+            "kind": "notebooklm-research",
+            "ref": "notebooklm:4b03c2f9-8393-411f-b5b4-039ab9532843",
+            "note": "Validated generic schema vocabulary; numeric claims remain backed by local source_refs."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "admitted": true,
+  "reasons": [],
+  "provenance": {
+    "viewpoint": "reference-three-quarter",
+    "sourcePath": "/home/fezer/projects/todou/phone/phone.png",
+    "width": 1254,
+    "height": 1254,
+    "foregroundCoverage": 0.4083,
+    "largestComponentFraction": 1.0,
+    "pHash": 12607750998675947708,
+    "duplicateOfHash": null
+  }
+}

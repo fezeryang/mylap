@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "parts": [
+    {
+      "name": "rear-shell",
+      "kind": "part",
+      "module": "rear-shell",
+      "triangles": 3468,
+      "id": "rear-shell",
+      "meshNames": [
+        "rear-shell-mesh"
+      ],
+      "homePosition": [
+        0,
+        0,
+        -0.3
+      ]
+    },
+    {
+      "name": "metal-chassis",
+      "kind": "part",
+      "module": "metal-chassis",
+      "triangles": 3040,
+      "id": "metal-chassis",
+      "meshNames": [
+        "metal-chassis-mesh"
+      ],
+      "homePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "clear-bumper",
+      "kind": "part",
+      "module": "clear-bumper",
+      "triangles": 3040,
+      "id": "clear-bumper",
+      "meshNames": [
+        "clear-bumper-mesh"
+      ],
+      "homePosition": [
+        0,
+        0,
+        -0.03
+      ]
+    },
+    {
+      "name": "front-stack",
+      "kind": "part",
+      "module": "front-stack",
+      "triangles": 0,
+      "id": "front-stack",
+      "meshNames": [],
+      "homePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "rear-glass",
+      "kind": "part",
+      "module": "rear-glass",
+      "triangles": 3468,
+      "id": "rear-glass",
+      "meshNames": [
+        "rear-glass-mesh"
+      ],
+      "homePosition": [
+        0,
+        0,
+        -0.51
+      ]
+    },
+    {
+      "name": "chassis-left-rail",
+      "kind": "part",
+      "module": "chassis-left-rail",
+      "triangles": 1452,
+      "id": "chassis-left-rail",
+      "meshNames": [
+        "chassis-left-rail-mesh"
+      ],
+      "homePosition": [
+        -3.51,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "chassis-right-rail",
+      "kind": "part",
+      "module": "chassis-right-rail",
+      "triangles": 1452,
+      "id": "chassis-right-rail",
+      "meshNames": [
+        "chassis-right-rail-mesh"
+      ],
+      "homePosition": [
+        3.51,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "front-bezel",
+      "kind": "part",
+      "module": "front-bezel",
+      "triangles": 3040,
+      "id": "front-bezel",
+      "meshNames": [
+        "front-bezel-mesh"
+      ],
+      "homePosition": [
+        0,
+        0,
+        0.42
+      ]
+    },
+    {
+      "name": "display-glass",
+      "kind": "part",
+      "module": "display-glass",
+      "triangles": 3468,
+      "id": "display-glass",
+      "meshNames": [
+        "display-glass-mesh"
+      ],
+      "homePosition": [
+        0,
+        0,
+        0.62
+      ]
+    },
+    {
+      "name": "screen-ui",
+      "kind": "part",
+      "module": "screen-ui",
+      "triangles": 0,
+      "id": "screen-ui",
+      "meshNames": [],
+      "homePosition": [
+        0,
+        0,
+        0.54
+      ]
+    },
+    {
+      "name": "front-camera",
+      "kind": "part",
+      "module": "front-camera",
+      "triangles": 224,
+      "id": "front-camera",
+      "meshNames": [
+        "front-camera-mesh",
+        "front-camera-relief-1"
+      ],
+      "homePosition": [
+        0,
+        5.91,
+        0.7
+      ]
+    },
+    {
+      "name": "neon-rim",
+      "kind": "part",
+      "module": "neon-rim",
+      "triangles": 2354,
+      "id": "neon-rim",
+      "meshNames": [
+        "neon-rim-relief-0",
+        "neon-rim-relief-1",
+        "neon-rim-relief-2",
+        "neon-rim-relief-3",
+        "display-glass-diagonal-sheen"
+      ],
+      "homePosition": [
+        0,
+        0,
+        0.68
+      ]
+    },
+    {
+      "name": "left-controls",
+      "kind": "part",
+      "module": "left-controls",
+      "triangles": 0,
+      "id": "left-controls",
+      "meshNames": [],
+      "homePosition": [
+        -3.68,
+        2.5,
+        0.04
+      ]
+    },
+    {
+      "name": "top-button",
+      "kind": "part",
+      "module": "top-button",
+      "triangles": 1560,
+      "id": "top-button",
+      "meshNames": [
+        "top-button-mesh",
+        "top-button-relief-1"
+      ],
+      "homePosition": [
+        -3.75,
+        4.18,
+        0.05
+      ]
+    },
+    {
+      "name": "middle-button",
+      "kind": "part",
+      "module": "middle-button",
+      "triangles": 1692,
+      "id": "middle-button",
+      "meshNames": [
+        "middle-button-mesh",
+        "middle-button-relief-1",
+        "middle-button-relief-2",
+        "middle-button-relief-3",
+        "middle-button-relief-4",
+        "middle-button-relief-5",
+        "middle-button-relief-6",
+        "middle-button-relief-7",
+        "middle-button-relief-8",
+        "middle-button-relief-9",
+        "middle-button-relief-10",
+        "middle-button-relief-11",
+        "middle-button-relief-12"
+      ],
+      "homePosition": [
+        -3.79,
+        2.64,
+        0.06
+      ]
+    },
+    {
+      "name": "bottom-button",
+      "kind": "part",
+      "module": "bottom-button",
+      "triangles": 1560,
+      "id": "bottom-button",
+      "meshNames": [
+        "bottom-button-mesh",
+        "bottom-button-relief-1"
+      ],
+      "homePosition": [
+        -3.75,
+        1.2,
+        0.05
+      ]
+    },
+    {
+      "name": "bottom-hardware",
+      "kind": "part",
+      "module": "bottom-hardware",
+      "triangles": 972,
+      "id": "bottom-hardware",
+      "meshNames": [
+        "bottom-hardware-mesh"
+      ],
+      "homePosition": [
+        0,
+        -7.34,
+        0.02
+      ]
+    },
+    {
+      "name": "usb-port",
+      "kind": "part",
+      "module": "usb-port",
+      "triangles": 2916,
+      "id": "usb-port",
+      "meshNames": [
+        "usb-port-mesh",
+        "usb-port-relief-1",
+        "usb-port-relief-2"
+      ],
+      "homePosition": [
+        0,
+        -7.5,
+        0.46
+      ]
+    },
+    {
+      "name": "left-speaker-array",
+      "kind": "part",
+      "module": "left-speaker-array",
+      "triangles": 2940,
+      "id": "left-speaker-array",
+      "meshNames": [
+        "left-speaker-array-relief-0",
+        "left-speaker-array-relief-1",
+        "left-speaker-array-relief-2",
+        "left-speaker-array-relief-3",
+        "left-speaker-array-relief-4"
+      ],
+      "homePosition": [
+        -1.82,
+        -7.54,
+        0.66
+      ]
+    },
+    {
+      "name": "right-speaker-array",
+      "kind": "part",
+      "module": "right-speaker-array",
+      "triangles": 2940,
+      "id": "right-speaker-array",
+      "meshNames": [
+        "right-speaker-array-relief-0",
+        "right-speaker-array-relief-1",
+        "right-speaker-array-relief-2",
+        "right-speaker-array-relief-3",
+        "right-speaker-array-relief-4"
+      ],
+      "homePosition": [
+        1.82,
+        -7.54,
+        0.66
+      ]
+    }
+  ],
+  "unnamedMeshes": 0,
+  "integralMeshes": 46
+}
