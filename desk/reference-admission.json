@@ -1,0 +1,14 @@
+{
+  "admitted": true,
+  "reasons": [],
+  "provenance": {
+    "viewpoint": "three-quarter",
+    "sourcePath": "desk/desk.png",
+    "width": 1672,
+    "height": 941,
+    "foregroundCoverage": 0.4422,
+    "largestComponentFraction": 1.0,
+    "pHash": 10303377026722144376,
+    "duplicateOfHash": null
+  }
+}

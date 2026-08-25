@@ -1,0 +1,14 @@
+{
+  "name": "todou-cyber-desk-asset",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "../node_modules/.bin/vite --port 5175",
+    "preview": "../node_modules/.bin/vite preview --port 4175",
+    "typecheck": "../node_modules/.bin/tsc --noEmit",
+    "test": "bun test",
+    "build": "../node_modules/.bin/tsc --noEmit && ../node_modules/.bin/vite build",
+    "qa:browser": "node scripts/browser-qa.mjs",
+    "verify": "pnpm run typecheck && bun test && pnpm run build"
+  }
+}

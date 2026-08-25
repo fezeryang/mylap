@@ -1,0 +1,121 @@
+{
+  "model": "cyber-desk",
+  "parts": [
+    {
+      "name": "upper-shell",
+      "kind": "part",
+      "module": "tabletop",
+      "triangles": 6512
+    },
+    {
+      "name": "lower-chassis",
+      "kind": "part",
+      "module": "tabletop",
+      "triangles": 4852
+    },
+    {
+      "name": "work-surface",
+      "kind": "part",
+      "module": "tabletop",
+      "triangles": 8960
+    },
+    {
+      "name": "work-surface-linework",
+      "kind": "part",
+      "module": "tabletop",
+      "triangles": 0
+    },
+    {
+      "name": "light-rails",
+      "kind": "part",
+      "module": "tabletop",
+      "triangles": 5292
+    },
+    {
+      "name": "control-pods",
+      "kind": "part",
+      "module": "tabletop",
+      "triangles": 904
+    },
+    {
+      "name": "front-latch",
+      "kind": "part",
+      "module": "tabletop",
+      "triangles": 12
+    },
+    {
+      "name": "leg-left-rear-hip",
+      "kind": "part",
+      "module": "leg-left-rear",
+      "triangles": 768
+    },
+    {
+      "name": "leg-left-rear-upper",
+      "kind": "part",
+      "module": "leg-left-rear",
+      "triangles": 3048
+    },
+    {
+      "name": "leg-left-rear-lower",
+      "kind": "part",
+      "module": "leg-left-rear",
+      "triangles": 3140
+    },
+    {
+      "name": "leg-right-rear-hip",
+      "kind": "part",
+      "module": "leg-right-rear",
+      "triangles": 768
+    },
+    {
+      "name": "leg-right-rear-upper",
+      "kind": "part",
+      "module": "leg-right-rear",
+      "triangles": 3048
+    },
+    {
+      "name": "leg-right-rear-lower",
+      "kind": "part",
+      "module": "leg-right-rear",
+      "triangles": 3140
+    },
+    {
+      "name": "leg-left-front-hip",
+      "kind": "part",
+      "module": "leg-left-front",
+      "triangles": 768
+    },
+    {
+      "name": "leg-left-front-upper",
+      "kind": "part",
+      "module": "leg-left-front",
+      "triangles": 3048
+    },
+    {
+      "name": "leg-left-front-lower",
+      "kind": "part",
+      "module": "leg-left-front",
+      "triangles": 3140
+    },
+    {
+      "name": "leg-right-front-hip",
+      "kind": "part",
+      "module": "leg-right-front",
+      "triangles": 768
+    },
+    {
+      "name": "leg-right-front-upper",
+      "kind": "part",
+      "module": "leg-right-front",
+      "triangles": 3048
+    },
+    {
+      "name": "leg-right-front-lower",
+      "kind": "part",
+      "module": "leg-right-front",
+      "triangles": 3140
+    }
+  ],
+  "unnamedMeshes": 0,
+  "integralMeshes": 153
+}

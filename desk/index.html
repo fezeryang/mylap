@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#030611" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%2300e5ff' d='M3 8h26v16H3z'/%3E%3Cpath fill='%23030611' d='M7 11h18v10H7z'/%3E%3C/svg%3E" />
+    <title>Cyber Desk · isolated asset lab</title>
+  </head>
+  <body>
+    <canvas id="scene" aria-label="赛博桌三维资产预览"></canvas>
+    <header class="hud">
+      <p class="eyebrow">TODŌU / ASSET LAB 03</p>
+      <h1>CYBER DESK</h1>
+      <p class="lede">程序化桌面底座 · 独立资产工作区</p>
+      <dl>
+        <div><dt>ACTIVE PART</dt><dd id="part-name">CYBER DESK</dd></div>
+        <div><dt>MODE</dt><dd id="mode-name">REFERENCE VIEW</dd></div>
+      </dl>
+    </header>
+    <aside class="legend" aria-label="材质与交互说明">
+      <span><i class="cyan"></i> CYAN SYSTEM</span>
+      <span><i class="magenta"></i> MAGENTA SYSTEM</span>
+      <p id="status" aria-live="polite">资产已隔离，正在初始化。</p>
+    </aside>
+    <fieldset class="view-controls">
+      <legend>相机视角</legend>
+      <button type="button" data-view="reference" aria-pressed="true">参考</button>
+      <button type="button" data-view="front" aria-pressed="false">正面</button>
+      <button type="button" data-view="right" aria-pressed="false">右侧</button>
+      <button type="button" data-view="rear" aria-pressed="false">背面</button>
+      <button type="button" data-view="left" aria-pressed="false">左侧</button>
+      <button type="button" data-view="top" aria-pressed="false">俯视</button>
+    </fieldset>
+    <section class="control-dock" aria-label="模型控制">
+      <label for="explode">结构展开 <output id="explode-value">0%</output></label>
+      <input id="explode" type="range" min="0" max="100" value="0" />
+      <div class="button-row">
+        <button id="lights" type="button" aria-pressed="true">灯光开启</button>
+        <button id="rotate" type="button" aria-pressed="false">自动旋转</button>
+        <button id="reset" type="button">重置</button>
+      </div>
+    </section>
+    <p class="hint">拖动旋转 · 滚轮缩放 · 点击选择部件</p>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

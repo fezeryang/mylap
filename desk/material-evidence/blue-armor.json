@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "verdict": "pass",
+  "confidence": 0.86,
+  "estimatedFidelity": 0.86,
+  "targetThreshold": 0.7,
+  "materialId": "blue-armor",
+  "sourceImage": "/home/fezer/projects/todou/desk/detail-evidence/zone-r2c0.png",
+  "outDir": "/home/fezer/projects/todou/desk/material-evidence/blue-armor",
+  "palette": [
+    "#1D285F",
+    "#09091A",
+    "#5A52AA",
+    "#D49AEC",
+    "#13B3F4"
+  ],
+  "maps": {
+    "albedo": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/blue-armor/blue-armor_albedo.png",
+      "url": "blue-armor_albedo.png",
+      "channel": "albedo",
+      "source": "reference-pixel-extraction"
+    },
+    "roughness": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/blue-armor/blue-armor_roughness.png",
+      "url": "blue-armor_roughness.png",
+      "channel": "roughness",
+      "source": "reference-pixel-extraction"
+    },
+    "height": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/blue-armor/blue-armor_height.png",
+      "url": "blue-armor_height.png",
+      "channel": "height",
+      "source": "reference-pixel-extraction"
+    },
+    "normal": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/blue-armor/blue-armor_normal.png",
+      "url": "blue-armor_normal.png",
+      "channel": "normal",
+      "source": "reference-pixel-extraction"
+    },
+    "ao": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/blue-armor/blue-armor_ao.png",
+      "url": "blue-armor_ao.png",
+      "channel": "ao",
+      "source": "reference-pixel-extraction"
+    }
+  },
+  "diagnostics": {
+    "sourceWidth": 557,
+    "sourceHeight": 314,
+    "mapSize": 1024,
+    "cropBBoxPixels": {
+      "x": 161,
+      "y": 0,
+      "width": 254,
+      "height": 314
+    },
+    "mask": {
+      "backgroundColor": "#FFFFFF",
+      "backgroundNoise": 0.0,
+      "transparentPixelFraction": 0.0,
+      "foregroundCoverage": 0.2121
+    },
+    "mapStats": {
+      "valueRange": 0.7919,
+      "heightP90Gradient": 0.06262,
+      "roughnessBase": 0.686,
+      "roughnessVariation": 0.101,
+      "normalStrength": 0.23,
+      "blurRadius": 21
+    },
+    "palette": [
+      "#1D285F",
+      "#09091A",
+      "#5A52AA",
+      "#D49AEC",
+      "#13B3F4"
+    ]
+  },
+  "warnings": [
+    "single-image inverse rendering cannot prove true physical PBR; confidence is capped"
+  ],
+  "limitation": "single-image PBR extraction is an estimate; 70%+ extraction confidence still needs render screenshot review"
+}

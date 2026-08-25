@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "verdict": "pass",
+  "confidence": 0.86,
+  "estimatedFidelity": 0.86,
+  "targetThreshold": 0.7,
+  "materialId": "silver-shell",
+  "sourceImage": "/home/fezer/projects/todou/desk/detail-evidence/zone-r0c1.png",
+  "outDir": "/home/fezer/projects/todou/desk/material-evidence/silver-shell",
+  "palette": [
+    "#263857",
+    "#1D2841",
+    "#ACC7F1",
+    "#98A3D2",
+    "#1594D7"
+  ],
+  "maps": {
+    "albedo": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/silver-shell/silver-shell_albedo.png",
+      "url": "silver-shell_albedo.png",
+      "channel": "albedo",
+      "source": "reference-pixel-extraction"
+    },
+    "roughness": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/silver-shell/silver-shell_roughness.png",
+      "url": "silver-shell_roughness.png",
+      "channel": "roughness",
+      "source": "reference-pixel-extraction"
+    },
+    "height": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/silver-shell/silver-shell_height.png",
+      "url": "silver-shell_height.png",
+      "channel": "height",
+      "source": "reference-pixel-extraction"
+    },
+    "normal": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/silver-shell/silver-shell_normal.png",
+      "url": "silver-shell_normal.png",
+      "channel": "normal",
+      "source": "reference-pixel-extraction"
+    },
+    "ao": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/silver-shell/silver-shell_ao.png",
+      "url": "silver-shell_ao.png",
+      "channel": "ao",
+      "source": "reference-pixel-extraction"
+    }
+  },
+  "diagnostics": {
+    "sourceWidth": 557,
+    "sourceHeight": 314,
+    "mapSize": 1024,
+    "cropBBoxPixels": {
+      "x": 0,
+      "y": 35,
+      "width": 557,
+      "height": 279
+    },
+    "mask": {
+      "backgroundColor": "#FFFFFF",
+      "backgroundNoise": 347.528,
+      "transparentPixelFraction": 0.0,
+      "foregroundCoverage": 0.6812
+    },
+    "mapStats": {
+      "valueRange": 0.65,
+      "heightP90Gradient": 0.0528,
+      "roughnessBase": 0.69,
+      "roughnessVariation": 0.077,
+      "normalStrength": 0.218,
+      "blurRadius": 21
+    },
+    "palette": [
+      "#263857",
+      "#1D2841",
+      "#ACC7F1",
+      "#98A3D2",
+      "#1594D7"
+    ]
+  },
+  "warnings": [
+    "single-image inverse rendering cannot prove true physical PBR; confidence is capped"
+  ],
+  "limitation": "single-image PBR extraction is an estimate; 70%+ extraction confidence still needs render screenshot review"
+}

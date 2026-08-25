@@ -1,0 +1,85 @@
+{
+  "ok": true,
+  "verdict": "pass",
+  "confidence": 0.86,
+  "estimatedFidelity": 0.86,
+  "targetThreshold": 0.7,
+  "materialId": "desk-mat",
+  "sourceImage": "/home/fezer/projects/todou/desk/detail-evidence/zone-r1c1.png",
+  "outDir": "/home/fezer/projects/todou/desk/material-evidence/desk-mat",
+  "palette": [
+    "#2B3651",
+    "#0C152C",
+    "#BFC3F8",
+    "#10347F",
+    "#2C77D1"
+  ],
+  "maps": {
+    "albedo": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/desk-mat/desk-mat_albedo.png",
+      "url": "desk-mat_albedo.png",
+      "channel": "albedo",
+      "source": "reference-pixel-extraction"
+    },
+    "roughness": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/desk-mat/desk-mat_roughness.png",
+      "url": "desk-mat_roughness.png",
+      "channel": "roughness",
+      "source": "reference-pixel-extraction"
+    },
+    "height": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/desk-mat/desk-mat_height.png",
+      "url": "desk-mat_height.png",
+      "channel": "height",
+      "source": "reference-pixel-extraction"
+    },
+    "normal": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/desk-mat/desk-mat_normal.png",
+      "url": "desk-mat_normal.png",
+      "channel": "normal",
+      "source": "reference-pixel-extraction"
+    },
+    "ao": {
+      "path": "/home/fezer/projects/todou/desk/material-evidence/desk-mat/desk-mat_ao.png",
+      "url": "desk-mat_ao.png",
+      "channel": "ao",
+      "source": "reference-pixel-extraction"
+    }
+  },
+  "diagnostics": {
+    "sourceWidth": 557,
+    "sourceHeight": 314,
+    "mapSize": 1024,
+    "cropBBoxPixels": {
+      "x": 0,
+      "y": 0,
+      "width": 557,
+      "height": 259
+    },
+    "mask": {
+      "backgroundColor": "#FFFFFF",
+      "backgroundNoise": 344.076,
+      "transparentPixelFraction": 0.0,
+      "foregroundCoverage": 0.61
+    },
+    "mapStats": {
+      "valueRange": 0.7343,
+      "heightP90Gradient": 0.05662,
+      "roughnessBase": 0.696,
+      "roughnessVariation": 0.082,
+      "normalStrength": 0.223,
+      "blurRadius": 21
+    },
+    "palette": [
+      "#2B3651",
+      "#0C152C",
+      "#BFC3F8",
+      "#10347F",
+      "#2C77D1"
+    ]
+  },
+  "warnings": [
+    "single-image inverse rendering cannot prove true physical PBR; confidence is capped"
+  ],
+  "limitation": "single-image PBR extraction is an estimate; 70%+ extraction confidence still needs render screenshot review"
+}
