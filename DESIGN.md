@@ -237,6 +237,8 @@ purposeful; it is not a macOS or iOS imitation.
 | --- | --- | --- | --- |
 | Stage | `--workspace-stage` | `#f3f4f6` | Pale-gray product field |
 | Stage | `--workspace-stage-light` | `#fafafb` | Soft central light |
+| Stage | `--workspace-stage-warm` | `#f5ede3` | Warm neutral WebGL/page backdrop |
+| Stage | `--workspace-stage-warm-light` | `#fffaf4` | Warm central light pool |
 | Surface | `--workspace-surface` | `#ffffff` | Elevated software/sheet surface only |
 | Surface | `--workspace-surface-muted` | `#e9ecf0` | Quiet recessed region |
 | Ink | `--workspace-ink` | `#1c2734` | Headings and interactive text |

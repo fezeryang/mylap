@@ -2,6 +2,8 @@
   color-scheme: light;
   --workspace-stage: #f3f4f6;
   --workspace-stage-light: #fafafb;
+  --workspace-stage-warm: #f5ede3;
+  --workspace-stage-warm-light: #fffaf4;
   --workspace-surface: #ffffff;
   --workspace-surface-muted: #e9ecf0;
   --workspace-ink: #1c2734;

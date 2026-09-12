@@ -7,7 +7,7 @@ body,
 }
 
 body {
-  background: #ffffff;
+  background: var(--workspace-stage-warm);
   color: var(--workspace-ink);
   font-family: var(--workspace-type-family);
 }
@@ -15,7 +15,9 @@ body {
 #app {
   position: relative;
   isolation: isolate;
-  background: #ffffff;
+  background:
+    radial-gradient(circle at 52% 40%, var(--workspace-stage-warm-light) 0%, transparent 68%),
+    var(--workspace-stage-warm);
 }
 
 #scene {
@@ -24,7 +26,7 @@ body {
   width: 100%;
   height: 100%;
   touch-action: none;
-  background: #ffffff;
+  background: var(--workspace-stage-warm);
 }
 
 .desktop-shell {

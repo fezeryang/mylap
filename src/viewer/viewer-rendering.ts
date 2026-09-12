@@ -2,6 +2,7 @@ import {
   ACESFilmicToneMapping,
   AmbientLight,
   CircleGeometry,
+  Color,
   DirectionalLight,
   HemisphereLight,
   Mesh,
@@ -60,7 +61,7 @@ export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRe
   const baseVerticalFieldOfView = 31.5
   const navigationFrameAspect = 1.4
   const scene = new Scene()
-  scene.background = null
+  scene.background = new Color(0xf5ede3)
   scene.fog = null
   const camera = new PerspectiveCamera(
     baseVerticalFieldOfView,
@@ -132,9 +133,9 @@ export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRe
   const ground = new Mesh(
     new CircleGeometry(options.multipleAssets ? 18 : 12, 128),
     new MeshStandardMaterial({
-      color: 0x03030a,
+      color: 0xd9c9b8,
       metalness: 0.05,
-      opacity: 0.04,
+      opacity: 0.12,
       roughness: 0.76,
       transparent: true,
     }),
