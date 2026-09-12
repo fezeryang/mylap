@@ -19,20 +19,30 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js"
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
+import type { DesktopNavigationController } from "../shell/desktop-navigation"
+import {
+  createDesktopNavigationBinding,
+  type DesktopNavigationBindingOptions,
+} from "../shell/desktop-navigation-binding"
 
 export type ViewerRenderingOptions = {
   readonly canvas: HTMLCanvasElement
   readonly multipleAssets: boolean
+  readonly navigation?: Pick<
+    DesktopNavigationBindingOptions,
+    "input" | "onInteractionLockChange" | "onSettled" | "reducedMotion"
+  >
   readonly requestedView: string | null
 }
 
 export type ViewerRendering = {
   readonly camera: PerspectiveCamera
   readonly controls: OrbitControls
+  readonly navigation: DesktopNavigationController | null
   readonly renderer: WebGLRenderer
   readonly scene: Scene
   dispose(): void
-  render(): void
+  render(timestampMilliseconds?: number): void
   resetCamera(): void
   resize(width: number, height: number): void
 }
@@ -47,10 +57,17 @@ const cameraViews: Readonly<Record<string, readonly [number, number, number]>> =
 }
 
 export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRendering => {
+  const baseVerticalFieldOfView = 31.5
+  const navigationFrameAspect = 1.4
   const scene = new Scene()
   scene.background = null
   scene.fog = null
-  const camera = new PerspectiveCamera(31.5, window.innerWidth / window.innerHeight, 0.1, 120)
+  const camera = new PerspectiveCamera(
+    baseVerticalFieldOfView,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    120,
+  )
   const renderer = new WebGLRenderer({
     alpha: true,
     antialias: true,
@@ -133,18 +150,37 @@ export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRe
   composer.addPass(
     new UnrealBloomPass(new Vector2(window.innerWidth, window.innerHeight), 0.16, 0.28, 0.91),
   )
+  const navigation =
+    options.navigation === undefined
+      ? null
+      : createDesktopNavigationBinding({
+          camera,
+          controls,
+          input: options.navigation.input,
+          ...(options.navigation.onInteractionLockChange === undefined
+            ? {}
+            : { onInteractionLockChange: options.navigation.onInteractionLockChange }),
+          ...(options.navigation.onSettled === undefined
+            ? {}
+            : { onSettled: options.navigation.onSettled }),
+          reducedMotion: options.navigation.reducedMotion,
+        })
+  if (navigation !== null) controls.minDistance = 2.5
 
   return {
     camera,
     controls,
     dispose: () => {
+      navigation?.dispose()
       controls.dispose()
       composer.dispose()
       renderer.dispose()
       ground.geometry.dispose()
       ground.material.dispose()
     },
-    render: () => {
+    navigation,
+    render: (timestampMilliseconds) => {
+      if (timestampMilliseconds !== undefined) navigation?.advance(timestampMilliseconds)
       controls.update()
       composer.render()
     },
@@ -152,6 +188,15 @@ export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRe
     resetCamera,
     resize: (width, height) => {
       camera.aspect = width / height
+      camera.fov =
+        navigation === null || camera.aspect >= navigationFrameAspect
+          ? baseVerticalFieldOfView
+          : (Math.atan(
+              Math.tan((baseVerticalFieldOfView * Math.PI) / 360) *
+                (navigationFrameAspect / camera.aspect),
+            ) *
+              360) /
+            Math.PI
       camera.updateProjectionMatrix()
       renderer.setSize(width, height)
       composer.setSize(width, height)

@@ -1,4 +1,4 @@
-import type { Group, Material, Vector3 } from "three"
+import type { BufferGeometry, Group, Material, Vector3 } from "three"
 import type { PartId } from "./parts"
 
 export type PhoneMaterials = {
@@ -17,9 +17,16 @@ export type PhoneModel = {
   readonly root: Group
   readonly screenAnchor: Group
   readonly partGroups: ReadonlyMap<PartId, Group>
+  readonly resources: PhoneModelResources
+  readonly dispose: () => void
   readonly setExplosion: (factor: number) => void
   readonly selectPart: (partId: PartId | null) => void
   readonly getManifest: () => PartsManifest
+}
+
+export type PhoneModelResources = {
+  readonly geometries: readonly BufferGeometry[]
+  readonly materials: readonly Material[]
 }
 
 export type PartRecord = {

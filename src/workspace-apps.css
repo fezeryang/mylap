@@ -1,0 +1,298 @@
+.workspace-launcher,
+.phone-shell {
+  --app-bg: #f7f8fa;
+  --app-surface: rgb(255 255 255 / 88%);
+  --app-muted: #687485;
+  --app-ink: #182231;
+  --app-line: #e2e6eb;
+  --app-accent: #28629f;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 100%;
+  min-height: 100%;
+  padding: 16px;
+  overflow: hidden;
+  color: var(--app-ink);
+  background:
+    radial-gradient(circle at 82% 4%, rgb(205 221 239 / 62%), transparent 34%),
+    var(--app-bg);
+  font: 14px/1.45 Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.phone-shell {
+  padding: 14px;
+}
+
+.launcher-topbar,
+.phone-shell-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 4px 4px 14px;
+  overflow-x: auto;
+}
+
+.launcher-brand,
+.phone-shell-brand {
+  margin-right: auto;
+  padding-inline: 4px 12px;
+  color: var(--app-ink);
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.launcher-route,
+.phone-shell-route,
+.launcher-button,
+.app-action {
+  min-height: 38px;
+  border: 0;
+  border-radius: 11px;
+  padding: 8px 12px;
+  color: var(--app-muted);
+  background: transparent;
+  font: 600 13px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.launcher-route:hover,
+.phone-shell-route:hover,
+.launcher-button:hover,
+.app-action:hover,
+.launcher-route[aria-pressed="true"],
+.phone-shell-route[aria-pressed="true"] {
+  color: var(--app-ink);
+  background: rgb(255 255 255 / 88%);
+}
+
+.launcher-button:active,
+.app-action:active {
+  transform: scale(0.97);
+}
+
+.launcher-route:focus-visible,
+.phone-shell-route:focus-visible,
+.launcher-button:focus-visible,
+.app-action:focus-visible,
+.workspace-note textarea:focus-visible,
+.oho-controls select:focus-visible,
+.oho-controls input:focus-visible,
+.launcher-browser input:focus-visible {
+  outline: 3px solid rgb(40 98 159 / 34%);
+  outline-offset: 2px;
+}
+
+.launcher-panel,
+.phone-shell-panel {
+  min-width: 0;
+  min-height: 0;
+  padding: 22px;
+  overflow: auto;
+  border: 1px solid rgb(255 255 255 / 90%);
+  border-radius: 22px;
+  background: var(--app-surface);
+  box-shadow: 0 16px 38px rgb(24 34 49 / 9%);
+  backdrop-filter: blur(18px);
+}
+
+.launcher-panel[hidden],
+.phone-shell-panel[hidden] {
+  display: none;
+}
+
+.launcher-home,
+.phone-shell-home {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.launcher-home h2,
+.phone-shell-home h2,
+.launcher-section-heading,
+.app-panel-title {
+  margin: 0;
+  color: var(--app-ink);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+.launcher-home h2,
+.phone-shell-home h2 {
+  font-size: clamp(24px, 4vw, 42px);
+}
+
+.launcher-section-heading,
+.app-panel-title {
+  font-size: 20px;
+}
+
+.screen-overline,
+.phone-shell-overline {
+  color: var(--app-accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.launcher-home p,
+.phone-shell-home p,
+.oho-status,
+.workspace-note__status {
+  max-width: 42rem;
+  margin: 0;
+  color: var(--app-muted);
+}
+
+.home-actions,
+.device-grid,
+.oho-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.home-actions {
+  margin-top: 12px;
+}
+
+.home-actions .app-action,
+.device-grid .app-action,
+.oho-actions .launcher-button {
+  background: #edf1f5;
+}
+
+.home-actions .app-action:first-child,
+.oho-actions .launcher-button:first-child {
+  color: #fff;
+  background: var(--app-accent);
+}
+
+.oho-controls,
+.workspace-note,
+.device-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.oho-field {
+  display: grid;
+  gap: 7px;
+  color: var(--app-muted);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.oho-field select,
+.launcher-browser input,
+.workspace-note textarea {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--app-line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: var(--app-ink);
+  background: #fff;
+  font: inherit;
+}
+
+.oho-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--app-accent);
+}
+
+.workspace-note textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.workspace-note__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.launcher-browser-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.launcher-browser-label {
+  display: grid;
+  gap: 7px;
+  color: var(--app-muted);
+}
+
+.launcher-browser iframe {
+  width: 100%;
+  min-height: 320px;
+  margin-top: 14px;
+  border: 1px solid var(--app-line);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.model-screen {
+  border-color: rgb(199 205 213 / 44%);
+  background: var(--app-bg);
+  color: var(--app-ink);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.model-screen[data-active-asset="true"] {
+  border-color: rgb(40 98 159 / 54%);
+  filter: drop-shadow(0 8px 18px rgb(24 34 49 / 16%));
+}
+
+.model-screen[data-focused="true"] {
+  outline-color: rgb(40 98 159 / 70%);
+}
+
+.screen-app {
+  background: var(--app-bg);
+  color: var(--app-ink);
+}
+
+.screen-app[data-active="false"] {
+  filter: saturate(0.9) brightness(0.96);
+}
+
+@media (max-width: 560px) {
+  .workspace-launcher,
+  .phone-shell {
+    padding: 10px;
+  }
+
+  .launcher-panel,
+  .phone-shell-panel {
+    padding: 16px;
+  }
+
+  .launcher-brand,
+  .phone-shell-brand {
+    display: none;
+  }
+
+  .launcher-browser-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workspace-launcher *,
+  .phone-shell * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

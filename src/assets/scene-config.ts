@@ -2,6 +2,29 @@ import type { AssetPlacement } from "../runtime/asset-contracts"
 import { assetInstanceId } from "../runtime/ids"
 import { CYBERDECK_ASSET_TYPE_ID } from "./cyberdeck-asset"
 
+export type {
+  DesktopAssetType,
+  DesktopInstanceId,
+  DesktopPlacementSpec,
+  DesktopSceneSpec,
+  DesktopSceneValidationCode,
+  DesktopSocketLabel,
+  DesktopTargetFootprint,
+  DesktopVector,
+} from "./scene-config-validator"
+export {
+  compileDesktopPlacement,
+  compileDesktopScenePlacements,
+  DESKTOP_SCENE_SPECIFICATION,
+  DESKTOP_TABLETOP_BOUNDS,
+  DESKTOP_TABLETOP_SIZE,
+  DesktopSceneValidationError,
+  desktopSceneSpec,
+  desktopSceneSpecification,
+  validateDesktopScene,
+  validateDesktopSceneSpecification,
+} from "./scene-config-validator"
+
 const primary: AssetPlacement = {
   instanceId: assetInstanceId("cyberdeck-main"),
   position: [0, 0, 0],

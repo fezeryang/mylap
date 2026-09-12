@@ -1,0 +1,14 @@
+{
+  "admitted": true,
+  "reasons": [],
+  "provenance": {
+    "viewpoint": "reference-three-quarter",
+    "sourcePath": "/home/fezer/projects/todou/ratio/ratio.png",
+    "width": 1536,
+    "height": 1024,
+    "foregroundCoverage": 0.5487,
+    "largestComponentFraction": 1.0,
+    "pHash": 17207563081128100528,
+    "duplicateOfHash": null
+  }
+}

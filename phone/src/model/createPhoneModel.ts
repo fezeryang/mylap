@@ -1,3 +1,4 @@
+import type { BufferGeometry, Material } from "three"
 import { Group, Mesh } from "three"
 import { createHardwareParts } from "./createHardwareParts"
 import { createShellParts } from "./createShellParts"
@@ -55,10 +56,37 @@ export function createNeonCyberphoneModel(): PhoneModel {
     },
   }
 
+  const geometries = new Set<BufferGeometry>()
+  const resourceMaterials = new Set<Material>()
+  root.traverse((object) => {
+    if (!(object instanceof Mesh)) return
+    geometries.add(object.geometry)
+    const meshMaterials = Array.isArray(object.material) ? object.material : [object.material]
+    meshMaterials.forEach((material) => {
+      resourceMaterials.add(material)
+    })
+  })
+  const resources = {
+    geometries: [...geometries],
+    materials: [...resourceMaterials],
+  }
+  let disposed = false
+
   return {
+    dispose: () => {
+      if (disposed) return
+      disposed = true
+      resources.geometries.forEach((geometry) => {
+        geometry.dispose()
+      })
+      resources.materials.forEach((material) => {
+        material.dispose()
+      })
+    },
     root,
     screenAnchor: screen.group,
     partGroups: new Map([...byId].map(([id, definition]) => [id, definition.group])),
+    resources,
     setExplosion,
     selectPart,
     getManifest,

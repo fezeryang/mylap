@@ -1,0 +1,18 @@
+export const RADIO_COLORS = {
+  background: 0x030511,
+  pearl: 0xd8d5ed,
+  pearlShadow: 0x7773aa,
+  chrome: 0xc7c8dd,
+  dark: 0x070b25,
+  navy: 0x0b1744,
+  lavender: 0x7b70c8,
+  cyan: 0x37e7ff,
+  blue: 0x3974ff,
+  violet: 0x8d5cff,
+  magenta: 0xff4fd8,
+  red: 0xff5b7d,
+  rubber: 0x131528,
+  screenDeep: 0x02041c,
+  screenBorder: 0x1d285b,
+  cassetteBorder: 0x25265e,
+} as const

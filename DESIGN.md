@@ -141,6 +141,44 @@ Screen application geometry:
 | Micro | 120ms | `ease-out` | Button press and focus response |
 | Standard | 240ms | `ease-in-out` | Inspector changes |
 | Emphasis | 420ms | `cubic-bezier(0.16, 1, 0.3, 1)` | HUD entry and explode transition |
+| Desktop entry | 1600ms | cubic-in-out | Landing camera flight to the shared desk overview |
+| Device focus | 650ms | cubic-in-out | Overview to phone or computer focus |
+| Device return | 650ms | cubic-in-out | Phone or computer focus back to overview |
+
+Desktop navigation is a closed host-owned state machine:
+`landing → entering → overview → focusing-phone | focusing-computer → phone-focus |
+computer-focus → returning → overview`. New requests supersede an in-flight camera transition from
+its current interpolated pose; requests for an already stable destination are idempotent. Orbit
+controls and routed physical input are locked only while a transition is active and restored once
+when the newest request settles or navigation is disposed. The existing viewer render update is the
+only animation clock; navigation must not create a timer or another animation-frame loop.
+
+| Navigation pose | Camera position | Camera target |
+| --- | --- | --- |
+| Landing | `[0, 10.5, -20]` | `[0, 0.5, 0]` |
+| Overview | `[-6.8, 6.4, -10.5]` | `[0, 0.5, 0]` |
+| Phone focus | `[-3.1, 1.71, -2.19]` | `[-3, 0.15, 0]` |
+| Computer focus | `[0, 4.03, -5.87]` | `[0, 0.8, 0]` |
+
+Reduced motion settles each navigation request synchronously at its exact destination pose without
+entering a locked transition state. This novel fixed-duration camera mechanism is deliberately not
+a gesture spring: deterministic framing and cancellable retargeting are the interaction contract.
+
+### Navigation legibility floor
+
+At a native 1:1 1280×900 capture, a focused screen application's 12px logical body line or
+interactive control box must project to at least 14 CSS pixels in its rendered box. This preserves
+the system's 12px logical minimum without allowing perspective projection to minify the smallest
+interactive text below its intended readable scale.
+
+The same focused phone frame keeps its physical screen inside the 1280×900 viewport and disjoint
+from the control dock, so legible screen content remains reachable rather than being obscured by
+the HUD.
+
+The interaction hint is a HUD primitive, not scene text: it always
+uses an opaque navy-glass backing and must retain at least 4.5:1 effective contrast over the
+brightest settled scene region at 1280px, 1024px, and reduced motion. Landing body copy uses a
+balanced measure; its final line must never contain only one word.
 
 - Orbit drag, wheel zoom, click-to-select, reset-view, screen-power, autorotate, and explosion scale are real model interactions.
 - Clicking a model or one of its screens makes that instance the active asset. Only the active asset receives physical-key feedback.
@@ -177,3 +215,130 @@ Accepted debt:
 | 3D part picking is not spatially described to screen readers | WebGL canvas | The named part inspector and controls expose the useful state; spatial narration requires a dedicated accessibility model | Add a hierarchical part tree if the viewer becomes a production configurator |
 | CSS3D and WebGL do not share a pixel depth buffer | Three screen surfaces | Whole-screen facing and center-ray occlusion prevent common bleed-through while WebGL geometry retains each bezel | Replace with a texture compositor if per-pixel interleaving becomes mandatory |
 | CSS3D alignment is calibrated for 100% browser zoom | Three screen surfaces | CSS3DRenderer documents this limitation; native zoom remains usable but may shift subpixels | Add zoom compensation if non-100% fidelity becomes a product requirement |
+
+## 9. Light Workspace Stage Contract (Todo16, isolated showcase)
+
+This contract locks the next product-stage language without activating it in the production viewer.
+`src/workspace-theme.css` is imported only by the component QA route in Todo16. The current root
+shell and cyberdeck hardware remain governed by Sections 1–8 until a later shell task explicitly
+adopts this contract.
+
+### Atmosphere and hierarchy
+
+The product stage is a warm white-to-pale-gray field with a single soft pool of light behind the
+hardware. Hardware is the focal object; chrome is intentionally second. There is no persistent
+telemetry, console, or HUD in the overview. One compact Menu entry provides semantic device
+navigation, and Back appears only in a contextual focus state. Software is quiet, editorial, and
+purposeful; it is not a macOS or iOS imitation.
+
+### Workspace tokens
+
+| Family | Token | Value | Purpose |
+| --- | --- | --- | --- |
+| Stage | `--workspace-stage` | `#f3f4f6` | Pale-gray product field |
+| Stage | `--workspace-stage-light` | `#fafafb` | Soft central light |
+| Surface | `--workspace-surface` | `#ffffff` | Elevated software/sheet surface only |
+| Surface | `--workspace-surface-muted` | `#e9ecf0` | Quiet recessed region |
+| Ink | `--workspace-ink` | `#1c2734` | Headings and interactive text |
+| Ink | `--workspace-ink-muted` | `#536273` | Supporting text; AA on pale surfaces |
+| Accent | `--workspace-accent` | `#285f9f` | Focus, selected, and primary action |
+| Accent | `--workspace-accent-pressed` | `#1d4777` | Pressed action state |
+| Feedback | `--workspace-success` | `#17734d` | Concise ready/live state |
+| Feedback | `--workspace-danger` | `#a23b3b` | Recoverable error state |
+| Line | `--workspace-line` | `#c7cdd5` | Fine divisions and control borders |
+| Spacing | `--workspace-space-1` … `--workspace-space-8` | `4px, 8px, 12px, 16px, 24px, 32px, 48px, 64px` | Four-pixel rhythm |
+| Radius | `--workspace-radius-control`, `--workspace-radius-surface`, `--workspace-radius-sheet` | `10px, 18px, 28px` | Control, card, and expanded sheet corners |
+| Elevation | `--workspace-shadow-control`, `--workspace-shadow-surface`, `--workspace-shadow-sheet` | restrained blue-gray shadow recipes | Contact depth without glassy excess |
+| Type | `--workspace-type-body`, `--workspace-type-label`, `--workspace-type-title` | `14px, 12px, 28px` minimum/label/display | Calm readable hierarchy; body is never below 12px |
+| Motion | `--workspace-motion-micro`, `--workspace-motion-standard`, `--workspace-motion-emphasis` | `120ms, 200ms, 320ms` | Feedback, state, and surface transitions |
+
+The workspace uses system sans text with a compact mono label face. Primary text is `--workspace-ink`;
+pure white is never used as page body text. Every visual declaration in the theme consumes the token
+layer above, including spacing, radius, elevation, type, borders, and motion.
+
+#### Implementation token authority
+
+The following implementation tokens are part of the same Todo16 authority. Their raw values are
+deliberate contract values, not local CSS exceptions.
+
+| Family | Token | Value | Purpose |
+| --- | --- | --- | --- |
+| Accent | `--workspace-focus` | `#164f91` | Visible keyboard focus ring |
+| Surface | `--workspace-transparent` | `transparent` | Gradient stop with no fill |
+| Overlay | `--workspace-scrim` | `rgb(28 39 52 / 34%)` | Expanded-surface backdrop |
+| Geometry | `--workspace-border-width` | `1px` | Fine control and surface borders |
+| Geometry | `--workspace-focus-width` | `3px` | Focus-ring outline width |
+| Layer | `--workspace-layer-control` | `10` | Header and control stacking |
+| Layer | `--workspace-layer-tooltip` | `20` | Tooltip stacking above controls |
+| Interaction | `--workspace-touch-target` | `44px` | Minimum native control target |
+| Layout | `--workspace-content-width` | `1120px` | Showcase content measure |
+| Layout | `--workspace-stage-height` | `280px` | Product-stage proportion |
+| Elevation | `--workspace-shadow-control` | `0 1px 2px rgb(28 39 52 / 12%)` | Compact-control contact shadow |
+| Elevation | `--workspace-shadow-surface` | `0 12px 30px rgb(28 39 52 / 10%)` | Card and stage elevation |
+| Elevation | `--workspace-shadow-sheet` | `0 24px 56px rgb(28 39 52 / 18%)` | Expanded-sheet elevation |
+| Type | `--workspace-type-family` | `Inter, ui-sans-serif, system-ui, sans-serif` | Primary system sans stack |
+| Type | `--workspace-type-mono` | `"IBM Plex Mono", "SFMono-Regular", Consolas, monospace` | Compact technical labels |
+| Type | `--workspace-line-body` | `1.5` | Body line height |
+| Type | `--workspace-line-title` | `1.15` | Display line height |
+| Type | `--workspace-track-label` | `0.12em` | Mono overline tracking |
+| Motion | `--workspace-motion-reduced` | `0.01ms` | Immediate reduced-motion settling |
+| Motion | `--workspace-ease` | `cubic-bezier(0.2, 0.7, 0.2, 1)` | Shared state-transition easing |
+| Stage | `--workspace-stage-glow` | `52%` | Radial light falloff |
+| Stage | `--workspace-stage-glow-size` | `44%` | Radial light origin |
+| Layout | `--workspace-grid-gap` | `var(--workspace-space-5)` | Primitive-grid rhythm |
+
+The spacing sequence names each token explicitly: `--workspace-space-1`, `--workspace-space-2`,
+`--workspace-space-3`, `--workspace-space-4`, `--workspace-space-5`, `--workspace-space-6`,
+`--workspace-space-7`, and `--workspace-space-8`; their exact values are listed above. The authority
+includes every `--workspace-*` declaration in `src/workspace-theme.css`, including
+focus/scrim values, border and focus widths, stage proportions and glow geometry, line-height and
+tracking values, reduced-motion duration, easing, shadow recipes, layer levels, and responsive grid
+geometry.
+
+### Primitives and state grammar
+
+| Primitive | Anatomy | Required states |
+| --- | --- | --- |
+| Contextual tooltip | delayed label adjacent to a compact icon/menu control | hidden, hover, keyboard focus, reduced-motion immediate |
+| Compact Menu / Back | 44px native button, text label, visible focus ring | rest, hover, focus-visible, pressed, open/close, disabled where relevant |
+| Expanded surface | labelled native dialog surface, one sheet and an explicit close action | closed, opening, open, closing, reduced-motion settled |
+| Computer software | concise app bar, content panel, labelled editable field, expand action | rest, hover, focus, pressed, loading, empty, error |
+| Phone software | compact home surface, readable status and one primary action | rest, hover, focus, pressed, loading, empty, error |
+| State surface | textual live result and state controls | ready, loading, empty, error |
+
+Tooltip delay is contextual, never instructional clutter. The expanded surface preserves a single
+clear return path; Todo16 only demonstrates it in isolation and does not claim live-session movement.
+
+### Responsive, input, and motion rules
+
+- At 375×812, cards stack, controls retain at least 44×44 CSS pixels, and no horizontal scrolling is
+  introduced. At 768×1024, software primitives use two columns. At 1280×800, the stage and
+  primitives breathe in a restrained two-column layout.
+- At 200% zoom, all content reflows within the viewport; labels, textarea, and close action remain
+  reachable with no clipped text.
+- Every action is a native button or form control with a visible `:focus-visible` ring. The Computer
+  textarea retains native keyboard, composition, and IME behavior. Dialog open moves focus to Close;
+  Close restores it to Expand.
+- Only `transform`, `opacity`, and `filter` animate. Hover and pressed feedback have an interaction
+  purpose. `prefers-reduced-motion: reduce` settles tooltip and expanded-surface transitions
+  immediately, without removing any state or control.
+
+### Persona matrix
+
+| Persona | Showcase proof |
+| --- | --- |
+| Direct explorer | Menu, tooltip, Back, and Expand communicate the available path without a fixed HUD |
+| Keyboard navigator | Native focus, Menu open/close, dialog focus transfer, Close return, and editable textarea work without pointer input |
+| Motion-sensitive user | Reduced-motion media query removes transitional travel while preserving open and close states |
+| Low-vision / zoom user | AA foreground/background pairings, 44px controls, reflow at 375px and 200% zoom, no clipped sheet |
+| IME user | The labelled native textarea accepts composition rather than intercepting keystrokes |
+
+### Immutable hardware annex
+
+The Todo16 stylesheet may not target or alter `src/model/**`, `phone/src/model/**`,
+`ratio/src/model/**`, `desk/src/**`, `src/assets/**`, renderer tone mapping, authored lights,
+materials, geometry, placements, screen anchors, or stable asset IDs. The hardware PIN remains the
+pre-edit capture/fingerprint set at
+`.omo/evidence/personal-3d-device-desktop-20260827-a1/scope-upgrade-discovery/hardware-pin-clean/`;
+the generated fingerprint is
+`9cad875df56a52779bd595bbf7aaf001d74411f5050a172d5b9079a990c5c59b`.

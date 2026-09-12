@@ -1,0 +1,242 @@
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #ffffff;
+  color: var(--workspace-ink);
+  font-family: var(--workspace-type-family);
+}
+
+#app {
+  position: relative;
+  isolation: isolate;
+  background: #ffffff;
+}
+
+#scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  background: #ffffff;
+}
+
+.desktop-shell {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.workspace-menu {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  pointer-events: auto;
+}
+
+.workspace-menu > summary,
+.workspace-back,
+.expanded-screen-close {
+  min-width: var(--workspace-touch-target);
+  min-height: var(--workspace-touch-target);
+  border: 1px solid rgb(199 205 213 / 78%);
+  border-radius: 999px;
+  padding: 0 17px;
+  color: var(--workspace-ink);
+  background: rgb(255 255 255 / 78%);
+  box-shadow: var(--workspace-shadow-control);
+  backdrop-filter: blur(18px) saturate(1.2);
+  font: 600 13px/1 var(--workspace-type-family);
+  cursor: pointer;
+  transition:
+    transform var(--workspace-motion-standard) var(--workspace-ease),
+    background-color var(--workspace-motion-standard) var(--workspace-ease),
+    box-shadow var(--workspace-motion-standard) var(--workspace-ease);
+}
+
+.workspace-menu > summary {
+  display: grid;
+  place-items: center;
+  list-style: none;
+}
+
+.workspace-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.workspace-menu > summary:hover,
+.workspace-back:hover,
+.expanded-screen-close:hover {
+  transform: translateY(-1px);
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(28 39 52 / 12%);
+}
+
+.workspace-menu > summary:focus-visible,
+.workspace-back:focus-visible,
+.expanded-screen-close:focus-visible,
+.workspace-menu button:focus-visible,
+.workspace-menu input:focus-visible {
+  outline: var(--workspace-focus-width) solid var(--workspace-focus);
+  outline-offset: 3px;
+}
+
+.workspace-menu__panel {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  width: min(290px, calc(100vw - 40px));
+  padding: 14px;
+  border: 1px solid rgb(199 205 213 / 72%);
+  border-radius: var(--workspace-radius-surface);
+  background: rgb(255 255 255 / 88%);
+  box-shadow: var(--workspace-shadow-sheet);
+  backdrop-filter: blur(24px) saturate(1.2);
+}
+
+.workspace-menu__devices,
+.workspace-menu__advanced {
+  display: grid;
+  gap: 8px;
+}
+
+.workspace-menu__devices {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.workspace-menu__advanced {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--workspace-surface-muted);
+}
+
+.workspace-menu button,
+.workspace-menu label {
+  min-height: 38px;
+  border: 0;
+  border-radius: var(--workspace-radius-control);
+  padding: 9px 11px;
+  color: var(--workspace-ink);
+  background: var(--workspace-surface-muted);
+  font: 600 12px/1.2 var(--workspace-type-family);
+}
+
+.workspace-menu button {
+  cursor: pointer;
+}
+
+.workspace-menu button:hover {
+  color: #fff;
+  background: var(--workspace-accent);
+}
+
+.workspace-menu label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.workspace-menu input {
+  min-width: 0;
+  accent-color: var(--workspace-accent);
+}
+
+.workspace-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  pointer-events: auto;
+}
+
+.expanded-screen-close {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  z-index: 80;
+  transform: translateX(-50%);
+}
+
+.expanded-screen-close:hover {
+  transform: translateX(-50%) translateY(-1px);
+}
+
+.css3d-layer:has(.model-screen[data-expanded="true"]) {
+  z-index: 60;
+  pointer-events: auto;
+  background: rgb(232 235 239 / 72%);
+  backdrop-filter: blur(18px);
+}
+
+.css3d-layer:has(.model-screen[data-expanded="true"]) > div,
+.css3d-layer:has(.model-screen[data-expanded="true"]) > div > div {
+  transform: none !important;
+  transform-style: flat !important;
+}
+
+.css3d-layer:has(.model-screen[data-expanded="true"]) .model-screen:not([data-expanded="true"]) {
+  display: none !important;
+}
+
+.model-screen[data-expanded="true"] {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: min(1120px, calc(100vw - 40px)) !important;
+  height: min(720px, calc(100vh - 88px)) !important;
+  transform: translate(-50%, -50%) !important;
+  border: 1px solid rgb(199 205 213 / 82%) !important;
+  border-radius: var(--workspace-radius-sheet) !important;
+  box-shadow: var(--workspace-shadow-sheet) !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.model-screen[data-expanded="true"][data-asset-instance="phone-main"] {
+  width: min(430px, calc(100vw - 36px)) !important;
+  height: min(820px, calc(100vh - 88px)) !important;
+  border-radius: 38px !important;
+}
+
+@media (max-width: 640px) {
+  .workspace-menu {
+    top: 12px;
+    right: 12px;
+  }
+
+  .workspace-back {
+    top: 12px;
+    left: 12px;
+  }
+
+  .model-screen[data-expanded="true"] {
+    width: calc(100vw - 20px) !important;
+    height: calc(100vh - 76px) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workspace-menu > summary,
+  .workspace-back,
+  .expanded-screen-close {
+    transition-duration: var(--workspace-motion-reduced);
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "targetName": "Retro-Future Radio",
+  "sourceImage": "/home/fezer/projects/todou/ratio/ratio.png",
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "portable cassette radio with telescopic aerial and dish antenna",
+      "primaryDomain": "object",
+      "formLanguage": ["hard-surface", "mechanical", "geometric"],
+      "structureKind": ["compound object", "layered shell", "articulated assembly", "repeated modules"],
+      "motionPotential": ["whole-object transform", "articulated", "detachable", "interactive displays"],
+      "materialFamilies": ["painted metal", "brushed metal", "plastic", "glass-like", "rubber", "mixed"],
+      "notes": "Front, top, left side, carry handle, aerial, and dish face are evidence-backed. Rear, underside, right side, and internal cassette mechanics are inferred."
+    },
+    "complexity": {
+      "tier": "ultra-complex",
+      "scores": {
+        "silhouetteComplexity": 3,
+        "componentCount": 3,
+        "hierarchyDepth": 3,
+        "repetitionDensity": 3,
+        "materialLayerCount": 3,
+        "localDetailDensity": 3,
+        "occlusionRisk": 2,
+        "actionReadinessNeed": 3
+      },
+      "estimatedCounts": {
+        "macroComponents": 7,
+        "mesoComponents": 22,
+        "microFeatureGroups": 24,
+        "materialLayers": 8,
+        "repetitionSystems": 5
+      },
+      "reasoning": [
+        "Seven macro assemblies create an interrupted silhouette with an elevated handle, diagonal aerial, and tilted parabolic dish.",
+        "The front fascia contains more than twenty independently readable display, speaker, cassette, dial, slider, and transport subassemblies.",
+        "Reference identity depends on five repeated systems: speaker perforations, frequency ticks, spectrum bars, fasteners, and button/slider banks.",
+        "Single-view occlusion is significant for the rear and underside but does not block a visible-view hero reconstruction with explicit confidence caps."
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "ultra-complex",
+      "minimumComponentLevels": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Choose simple/moderate/complex/ultra-complex from observed structure, not from a hardcoded domain."
+    },
+    "unknownsToResolveBeforeImplementation": [
+      "Rear enclosure, battery door, rear I/O, and right-side controls are hidden; keep them restrained and cap confidence at 0.3.",
+      "Dish back-face ribs and exact pivot travel are partially occluded; implement an inferred support with confidence 0.58.",
+      "Exact dimensions are unavailable; preserve the measured 1.55:1 front aspect and visible relative part ratios.",
+      "Printed micro-label font is unknown; use semantic generated labels and prioritize live display adaptability over glyph-exact texture baking."
+    ],
+    "detailInventory": {
+      "scanMethod": "grid-3x3",
+      "targetMinDetails": 16,
+      "note": "Enumerate every identity-defining small detail before authoring the spec. Each detail must map to a component.localFeatures entry or material.localOverrides entry, never prose only. Use forge/stage1_intake/build_detail_inventory.py to scan zones.",
+      "details": [
+        {"id":"chassis-stepped-bevels","kind":"bevel","description":"Three stepped pearl fascia bands and clipped corners create continuous grazing highlights.","region":{"x":0.1,"y":0.23,"width":0.86,"height":0.74,"units":"normalized"},"scale":"macro","affects":"geometry roughness","mapsTo":{"type":"component.localFeatures","ref":"chassis-shell:stepped-bevels"},"evidenceRef":"ratio.png#full-object","confidence":0.97},
+        {"id":"handle-grip-emboss","kind":"linework","description":"Lavender satin carry grip has an inset RADIO wordmark and chrome hinge caps.","region":{"x":0.24,"y":0.1,"width":0.56,"height":0.19,"units":"normalized"},"scale":"meso","affects":"geometry material","mapsTo":{"type":"component.localFeatures","ref":"carry-handle:emboss-and-hinges"},"evidenceRef":".img2threejs/evidence/detail/zone-r0c1.png","confidence":0.94},
+        {"id":"telescopic-aerial","kind":"ridge","description":"Two nested polished aerial tubes terminate in a rounded cap and emerge from a swivel socket.","region":{"x":0.26,"y":0.0,"width":0.51,"height":0.18,"units":"normalized"},"scale":"macro","affects":"geometry metalness","mapsTo":{"type":"component.localFeatures","ref":"telescopic-aerial:nested-segments"},"evidenceRef":".img2threejs/evidence/detail/zone-r0c1.png","confidence":0.96},
+        {"id":"dish-iridescent-face","kind":"gloss","description":"Shallow parabolic dish carries radial ribs and a cyan-violet-magenta low-roughness response.","region":{"x":0.79,"y":0.02,"width":0.2,"height":0.3,"units":"normalized"},"scale":"macro","affects":"geometry roughness color","mapsTo":{"type":"material.localOverrides","ref":"dish-antenna:iridescent-face"},"evidenceRef":".img2threejs/evidence/detail/zone-r0c2.png","confidence":0.92},
+        {"id":"dish-feed-support","kind":"ridge","description":"Central feed capsule is held by one rigid mast and two thin support struts above the dish face.","region":{"x":0.84,"y":0.08,"width":0.12,"height":0.18,"units":"normalized"},"scale":"meso","affects":"geometry attachment","mapsTo":{"type":"component.localFeatures","ref":"dish-feed:tripod-support"},"evidenceRef":".img2threejs/evidence/detail/zone-r0c2.png","confidence":0.88},
+        {"id":"panoramic-tuner-bezel","kind":"bevel","description":"Wide stepped black-and-chrome tuner bezel frames a recessed blue glass display.","region":{"x":0.22,"y":0.34,"width":0.72,"height":0.23,"units":"normalized"},"scale":"macro","affects":"geometry material","mapsTo":{"type":"component.localFeatures","ref":"tuner-display:stepped-bezel"},"evidenceRef":"ratio.png#tuner","confidence":0.98},
+        {"id":"analog-meter-needle","kind":"linework","description":"Left tuner cell contains a cyan arc, white tick fan, and magenta-red pivoting needle.","region":{"x":0.24,"y":0.39,"width":0.13,"height":0.13,"units":"normalized"},"scale":"meso","affects":"live display","mapsTo":{"type":"component.localFeatures","ref":"tuner-display:analog-meter"},"evidenceRef":".img2threejs/evidence/detail/zone-r1c0.png","confidence":0.98},
+        {"id":"frequency-scale","kind":"linework","description":"Three FM/AM/SW rows align white frequency values around a cyan tuning cursor.","region":{"x":0.36,"y":0.39,"width":0.3,"height":0.14,"units":"normalized"},"scale":"meso","affects":"live display","mapsTo":{"type":"component.localFeatures","ref":"tuner-display:frequency-scale"},"evidenceRef":".img2threejs/evidence/detail/zone-r1c1.png","confidence":0.99},
+        {"id":"spectrum-bars","kind":"emissive","description":"Dense cyan-to-magenta equalizer bars and a thin waveform occupy the right half of the tuner.","region":{"x":0.64,"y":0.37,"width":0.26,"height":0.17,"units":"normalized"},"scale":"meso","affects":"live display emissive","mapsTo":{"type":"material.localOverrides","ref":"tuner-display:spectrum-bars"},"evidenceRef":".img2threejs/evidence/detail/zone-r1c2.png","confidence":0.98},
+        {"id":"wire-globe-status","kind":"linework","description":"Wireframe globe, ON AIR indicator, and STEREO state label overlay the spectrum field.","region":{"x":0.7,"y":0.37,"width":0.21,"height":0.15,"units":"normalized"},"scale":"meso","affects":"live display state","mapsTo":{"type":"component.localFeatures","ref":"tuner-display:status-overlay"},"evidenceRef":".img2threejs/evidence/detail/zone-r1c2.png","confidence":0.96},
+        {"id":"speaker-perforations","kind":"hole","description":"Hundreds of dark circular perforations form a radial grille inside a thick illuminated surround.","region":{"x":0.25,"y":0.55,"width":0.27,"height":0.34,"units":"normalized"},"scale":"meso","affects":"geometry repetition","mapsTo":{"type":"component.localFeatures","ref":"speaker-assembly:perforation-field"},"evidenceRef":"ratio.png#speaker","confidence":0.99},
+        {"id":"speaker-neon-rings","kind":"emissive","description":"Concentric cyan, violet, and magenta rings edge the speaker with a dark RADIO hub.","region":{"x":0.26,"y":0.56,"width":0.26,"height":0.33,"units":"normalized"},"scale":"meso","affects":"emissive material","mapsTo":{"type":"material.localOverrides","ref":"speaker-assembly:neon-rings"},"evidenceRef":"ratio.png#speaker","confidence":0.98},
+        {"id":"cassette-reels","kind":"hole","description":"Two transparent cassette reels with dark hubs sit behind blue-violet glass and magenta tape.","region":{"x":0.51,"y":0.61,"width":0.21,"height":0.17,"units":"normalized"},"scale":"meso","affects":"geometry live motion","mapsTo":{"type":"component.localFeatures","ref":"cassette-deck:reels-and-tape"},"evidenceRef":"ratio.png#cassette","confidence":0.98},
+        {"id":"cassette-status-strip","kind":"emissive","description":"SUNSHINE FM and AUTO REVERSE labels sit inside a bordered live cassette display.","region":{"x":0.51,"y":0.58,"width":0.21,"height":0.21,"units":"normalized"},"scale":"meso","affects":"live display text","mapsTo":{"type":"component.localFeatures","ref":"cassette-deck:status-strip"},"evidenceRef":"ratio.png#cassette","confidence":0.97},
+        {"id":"tuning-dial-knurl","kind":"ridge","description":"Large brushed circular tuning dial uses dense vertical knurling and a magenta-blue light collar.","region":{"x":0.79,"y":0.58,"width":0.16,"height":0.2,"units":"normalized"},"scale":"meso","affects":"geometry roughness","mapsTo":{"type":"component.localFeatures","ref":"tuning-dial:knurl-and-collar"},"evidenceRef":".img2threejs/evidence/detail/zone-r1c2.png","confidence":0.98},
+        {"id":"vertical-slider-bank","kind":"groove","description":"Three recessed BASS/TREBLE/VOLUME tracks use individually coloured raised slider caps.","region":{"x":0.72,"y":0.58,"width":0.11,"height":0.2,"units":"normalized"},"scale":"meso","affects":"geometry interaction","mapsTo":{"type":"component.localFeatures","ref":"slider-bank:tracks-and-caps"},"evidenceRef":".img2threejs/evidence/detail/zone-r2c2.png","confidence":0.97},
+        {"id":"transport-key-bank","kind":"bevel","description":"Six separate chamfered transport keys carry semantic icons and labels along the bottom front.","region":{"x":0.51,"y":0.79,"width":0.32,"height":0.12,"units":"normalized"},"scale":"meso","affects":"geometry interaction","mapsTo":{"type":"component.localFeatures","ref":"transport-controls:six-key-bank"},"evidenceRef":".img2threejs/evidence/detail/zone-r2c1.png","confidence":0.99},
+        {"id":"preset-key-row","kind":"bevel","description":"Top deck contains a raised row of white, lavender, violet, navy, and pink preset keys.","region":{"x":0.34,"y":0.28,"width":0.31,"height":0.08,"units":"normalized"},"scale":"meso","affects":"geometry interaction","mapsTo":{"type":"component.localFeatures","ref":"top-controls:preset-key-row"},"evidenceRef":"ratio.png#top-controls","confidence":0.94},
+        {"id":"left-light-rail","kind":"emissive","description":"A tall left-side bar blends magenta through pearl into cyan beside vents and inset I/O slots.","region":{"x":0.11,"y":0.43,"width":0.1,"height":0.39,"units":"normalized"},"scale":"meso","affects":"emissive material","mapsTo":{"type":"material.localOverrides","ref":"left-side-module:gradient-light-rail"},"evidenceRef":".img2threejs/evidence/detail/zone-r2c0.png","confidence":0.97},
+        {"id":"fastener-system","kind":"fastener","description":"Countersunk circular screws repeat at fascia corners, around the speaker, display, and lower panel.","region":{"x":0.2,"y":0.47,"width":0.75,"height":0.45,"units":"normalized"},"scale":"micro","affects":"geometry repetition","mapsTo":{"type":"component.localFeatures","ref":"front-fascia:fastener-system"},"evidenceRef":"ratio.png#front-fascia","confidence":0.95},
+        {"id":"panel-seam-network","kind":"seam","description":"Dark recessed seams outline clipped corner plates, tuner steps, speaker surround, and lower control bay.","region":{"x":0.11,"y":0.29,"width":0.84,"height":0.65,"units":"normalized"},"scale":"micro","affects":"geometry ambient occlusion","mapsTo":{"type":"component.localFeatures","ref":"front-fascia:panel-seams"},"evidenceRef":"ratio.png#full-object","confidence":0.9},
+        {"id":"pearl-chrome-reflection","kind":"gloss","description":"Pearl shell and chrome trim carry elongated cool highlights with local violet and pink reflection zones.","region":{"x":0.11,"y":0.23,"width":0.84,"height":0.73,"units":"normalized"},"scale":"macro","affects":"roughness clearcoat anisotropy","mapsTo":{"type":"material.localOverrides","ref":"pearl-shell:reference-response"},"evidenceRef":"ratio.png#full-object","confidence":0.9}
+      ]
+    },
+    "anatomy": {
+      "applies": false,
+      "styleHeads": 0.0,
+      "proportions": {
+        "headUnit": 0.0,
+        "torso": 0.0,
+        "legs": 0.0,
+        "shoulderWidth": 0.0,
+        "hipWidth": 0.0
+      },
+      "pose": {
+        "type": "unassessed",
+        "jointAngles": {}
+      },
+      "faceLandmarks": {
+        "eyeLine": 0.0,
+        "eyeSpacing": 0.0,
+        "noseBase": 0.0,
+        "mouthLine": 0.0,
+        "hairline": 0.0
+      },
+      "features": [],
+      "confidence": 0.0,
+      "note": "Only meaningful when objectClass.primaryDomain is character or hybrid. Set applies=true and fill from forge/stage1_intake/extract_landmarks.py. See grimoire/character/reconstruction.md and grimoire/character/likeness_maximization.md."
+    },
+    "sourceImage": "/home/fezer/projects/todou/ratio/ratio.png"
+  },
+  "qualityContract": {
+    "qualityBar": "ultra-complex",
+    "definitionOfDone": [
+      "The fixed three-quarter render preserves the 1.55:1 chassis proportion, elevated handle, diagonal aerial, tilted dish, and asymmetric speaker/cassette/dial layout.",
+      "Front displays remain semantic and update from typed media state without rebuilding physical geometry or using a screenshot texture.",
+      "Five-view renders prove the chassis, dish, aerial, dials, buttons, and rear inference are volumetric, attached, selectable, and explodable.",
+      "Pearl paint, brushed aluminium, dark grille, tinted glass, satin polymer, and restrained cyan-violet-magenta emission remain distinguishable under neutral and reference lighting."
+    ],
+    "minimumSpecDepth": {
+      "macroComponents": 7,
+      "mesoComponents": 22,
+      "microFeatureGroups": 16,
+      "materialLayers": 8,
+      "repetitionSystems": 5,
+      "reviewViewpoints": 5
+    },
+    "featureGroups": [
+      {
+        "id": "overall-silhouette",
+        "name": "Overall silhouette and proportions",
+        "required": true,
+        "qualityCriteria": [
+          "Bounding shape, dominant curves, negative spaces, and scale relationships are explicitly described."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model reads as a generic placeholder instead of the reference object",
+          "major proportions are guessed without evidence"
+        ]
+      },
+      {
+        "id": "primary-structure",
+        "name": "Primary structure and hierarchy",
+        "required": true,
+        "qualityCriteria": [
+          "Major parts, joints, seams, contact points, and parent-child relationships are named before code generation."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "large visible parts are merged into one mesh",
+          "component hierarchy is too shallow for the observed complexity"
+        ]
+      },
+      {
+        "id": "attachment-joint-correctness",
+        "name": "Attachment and joint correctness",
+        "required": true,
+        "qualityCriteria": [
+          "Every visible child appendage, branch, limb, handle, connector, tube, cable, horn, wing, leg, or hinged part has an attachment contract with parent socket, localStart/localEnd, contact type, embed/overlap, and gap tolerance."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "child part root floats away from the parent",
+          "branch/limb/tube is centered in space instead of pivoting from its root",
+          "parent-child transform mixes world and local coordinates"
+        ]
+      },
+      {
+        "id": "surface-material-response",
+        "name": "Surface material response",
+        "required": true,
+        "qualityCriteria": [
+          "Albedo zones, roughness, normal/bump/displacement intent, cavity dirt, edge wear, and local overrides are specified where visible.",
+          "Important materials define independent albedo, roughness, height/normal, and AO responses instead of reusing one texture for unrelated PBR channels.",
+          "Surface response is decomposed into macro, meso, and micro frequency bands with scale and amplitude tied to object scale."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "surface looks like flat plastic",
+          "local material variation is missing or not tied to image evidence"
+        ]
+      },
+      {
+        "id": "reference-lookdev",
+        "name": "Reference color, material, and lighting response",
+        "required": true,
+        "qualityCriteria": [
+          "Material-pass names the reference-derived albedo palette, roughness variation, tactile normal/bump/displacement response, and local masks.",
+          "When a source image is available, run reference PBR extraction and require confidence >= 0.7 before treating maps as implementation-ready.",
+          "Lighting-pass names key/fill/rim or environment light, exposure, tone mapping, background, and contact shadow behavior.",
+          "Neutral, grazing-angle, and reference-matched renders prove that surface relief survives relighting and is not painted into albedo."
+        ],
+        "evidenceRefs": [
+          "full-object"
+        ],
+        "failureModes": [
+          "model has acceptable shape but reads as flat shaded or plastic",
+          "colors are a generic average instead of reference-observed local color zones",
+          "lighting is evenly ambient and cannot reproduce the source value range"
+        ]
+      }
+    ],
+    "visualDeltaChecks": [
+      "silhouette and negative-space delta",
+      "component hierarchy depth delta",
+      "repetition density and distribution delta",
+      "material albedo/roughness/normal response delta",
+      "local feature placement and scale delta"
+    ],
+    "antiShallowSpecRules": [
+      "Do not proceed to code if qualityContract.qualityBar is unassessed.",
+      "Do not proceed to code if the spec only contains a root component for a moderate or complex object.",
+      "Do not proceed to code if required featureGroups are not represented by componentTree, materials, or repetitionSystems.",
+      "Do not proceed to code if visible local features are described only in prose and not attached to components/materials/evidenceRefs.",
+      "Do not proceed past structural-pass if attached child parts lack attachment.parentSocket, localStart, localEnd, embedDepth/overlap, and gapTolerance.",
+      "Do not pass material look-dev when albedo is reused as roughness, height, normal, or AO.",
+      "Do not pass material look-dev without macro, meso, and micro surface frequency bands for close-up materials.",
+      "Do not pass reference-fidelity material look-dev from a source image without usable referencePbr maps or an explicit documented limitation.",
+      "Do not patch a spec with extracted PBR maps when extraction confidence is below the target threshold unless the user explicitly accepts lower fidelity.",
+      "Do not place adjacent separate-geometry parts below 0.02 world-unit seam overlap (source: grimoire/build/geometry_patterns.md).",
+      "Do not satisfy raised or recessed relief, fasteners, or grip structure with a map alone when the feature affects form; use geometry or displacement (source: grimoire/build/geometry_patterns.md)."
+    ]
+  },
+  "authoringInstruction": "Fill observed object class, complexity reasoning, featureGroups, visualDeltaChecks, and unknowns before generating or implementing ObjectSculptSpec.",
+  "localSpecSearch": {
+    "collection": "core_3d",
+    "query": "Retro-Future Radio portable cassette radio boombox hard-surface PBR brushed aluminium pearl painted metal roughness clearcoat speaker grille perforation tuning dial antenna dish attachment",
+    "index": {
+      "status": "hit",
+      "reason": "current",
+      "fingerprint": "6857e5ab528b42ac12f4f411f862610a0bffce8e47aee3610a7603c318072fe8"
+    },
+    "matches": [
+      {
+        "record_id": "core.description-pbr-vocabulary-caption-calibration",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.description_conventions[7]",
+        "score": 8.148071679543,
+        "snippets": [
+          "Embedding a technical material-attribute block (Albedo, Metalness, Roughness, Normals) with measured reflectance ranges directly into the structured description, not just prose. Nhúng một khối thuộc tính vật liệu kỹ thuật (Albedo, Metalness, ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.description_conventions[7]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.shader-mapping-meshphysicalmaterial-core-pbr-fields",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.rendering_shader_mapping[0]",
+        "score": 7.63190403156,
+        "snippets": [
+          "The baseline Three.js material exposing direct scalar/map fields for the standard PBR channel set. Vật liệu Three.js cơ bản cung cấp trực tiếp các trường vô hướng/bản đồ cho bộ kênh PBR tiêu chuẩn. Recognition cues: Use whenever a static ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.rendering_shader_mapping[0]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      },
+      {
+        "record_id": "core.pbr-hand-painted-vs-pbr-texture",
+        "file_path": "docs/raw/img2threejs-skill-dataset.json",
+        "heading": null,
+        "key_path": "categories.material_pbr[12]",
+        "score": 7.017646984687,
+        "snippets": [
+          "... baked directly into color (static, stylized) from textures that respond dynamically to scene lighting via separate PBR channels. Phân biệt kết cấu có ánh sáng được nướng trực tiếp vào màu (tĩnh, cách điệu) với kết cấu phản hồi động ..."
+        ],
+        "source_refs": [
+          {
+            "path": "docs/raw/img2threejs-skill-dataset.json",
+            "heading": null,
+            "key_path": "categories.material_pbr[12]"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "kind": "source",
+            "ref": "docs/raw/img2threejs-skill-dataset.json",
+            "note": "img2threejs NotebookLM research distillation"
+          }
+        ]
+      }
+    ]
+  }
+}

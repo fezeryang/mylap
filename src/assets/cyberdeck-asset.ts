@@ -10,8 +10,11 @@ import { createCyberdeckModel } from "../model/create-cyberdeck-model"
 import { explodedPosition } from "../model/part-layout"
 import type { SceneAssetDefinition, StageAsset } from "../runtime/asset-contracts"
 import { assetTypeId } from "../runtime/ids"
+import { normalizeAuthoredAssetRoot } from "./asset-normalization"
 
 export const CYBERDECK_ASSET_TYPE_ID = assetTypeId("cyberdeck")
+
+export const CYBERDECK_TARGET_FOOTPRINT = { x: 4.2, z: 2.2 } as const
 
 const disposeMaterials = (
   material: Material | readonly Material[],
@@ -33,10 +36,18 @@ export const cyberdeckAssetDefinition: SceneAssetDefinition = {
       right: STRUCTURE_ANALYSIS_APP_ID,
     })
     let explosion = 0
-    model.root.userData["assetInstanceId"] = instanceId.value
+    let disposed = false
+    const normalized = normalizeAuthoredAssetRoot({
+      authoredRoot: model.root,
+      authoredRotation: [0, 0, 0],
+      targetFootprint: CYBERDECK_TARGET_FOOTPRINT,
+    })
+    normalized.root.userData["assetInstanceId"] = instanceId.value
 
     return {
       dispose: () => {
+        if (disposed) return
+        disposed = true
         model.keyboard.releaseAll()
         const disposedMaterials = new Set<Material>()
         model.root.traverse((object) => {
@@ -51,7 +62,7 @@ export const cyberdeckAssetDefinition: SceneAssetDefinition = {
       instanceId,
       keyboard: model.keyboard,
       parts: model.parts,
-      root: model.root,
+      root: normalized.root,
       screens: model.screens,
       selectable: model.selectable,
       setExplosion: (factor) => {

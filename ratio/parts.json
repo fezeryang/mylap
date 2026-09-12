@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "unnamedMeshes": 0,
+  "integralMeshes": 0,
+  "parts": [
+    {
+      "id": "chassis-shell",
+      "name": "chassis-shell",
+      "kind": "part",
+      "module": "chassis-shell",
+      "triangles": 2916,
+      "meshNames": [
+        "chassis-primary-shell",
+        "chassis-lower-band",
+        "chassis-top-band"
+      ],
+      "homePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-shell",
+      "name": "rear-shell",
+      "kind": "part",
+      "module": "rear-shell",
+      "triangles": 1068,
+      "meshNames": [
+        "rear-shell-mesh",
+        "rear-vent-0",
+        "rear-vent-1",
+        "rear-vent-2",
+        "rear-vent-3",
+        "rear-vent-4",
+        "rear-vent-5",
+        "rear-vent-6",
+        "rear-vent-7"
+      ],
+      "homePosition": [
+        0,
+        0,
+        -1.56
+      ]
+    },
+    {
+      "id": "front-fascia",
+      "name": "front-fascia",
+      "kind": "part",
+      "module": "front-fascia",
+      "triangles": 1944,
+      "meshNames": [
+        "front-fascia-mesh",
+        "fascia-inner-step"
+      ],
+      "homePosition": [
+        0,
+        0,
+        1.57
+      ]
+    },
+    {
+      "id": "top-deck",
+      "name": "top-deck",
+      "kind": "part",
+      "module": "top-deck",
+      "triangles": 1944,
+      "meshNames": [
+        "top-deck-mesh",
+        "top-inset"
+      ],
+      "homePosition": [
+        0,
+        3.42,
+        0.18
+      ]
+    },
+    {
+      "id": "left-side-module",
+      "name": "left-side-module",
+      "kind": "part",
+      "module": "left-side-module",
+      "triangles": 2964,
+      "meshNames": [
+        "left-side-module-mesh",
+        "left-light-rail",
+        "left-light-rail-magenta",
+        "left-io-slot-0",
+        "left-io-slot-1",
+        "left-io-slot-2",
+        "left-io-slot-3"
+      ],
+      "homePosition": [
+        -5.87,
+        -0.15,
+        0.2
+      ]
+    },
+    {
+      "id": "corner-guards",
+      "name": "corner-guards",
+      "kind": "part",
+      "module": "corner-guards",
+      "triangles": 3888,
+      "meshNames": [
+        "corner-guard-0",
+        "corner-guard-1",
+        "corner-guard-2",
+        "corner-guard-3"
+      ],
+      "homePosition": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rubber-feet",
+      "name": "rubber-feet",
+      "kind": "part",
+      "module": "rubber-feet",
+      "triangles": 320,
+      "meshNames": [
+        "rubber-feet-mesh",
+        "rubber-feet-mesh",
+        "rubber-feet-mesh",
+        "rubber-feet-mesh"
+      ],
+      "homePosition": [
+        0,
+        -3.64,
+        0
+      ]
+    },
+    {
+      "id": "tuner-bezel",
+      "name": "tuner-bezel",
+      "kind": "part",
+      "module": "tuner-bezel",
+      "triangles": 2916,
+      "meshNames": [
+        "tuner-bezel-mesh",
+        "tuner-chrome-step",
+        "tuner-navy-step"
+      ],
+      "homePosition": [
+        0.45,
+        1.55,
+        1.82
+      ]
+    },
+    {
+      "id": "tuner-glass",
+      "name": "tuner-glass",
+      "kind": "part",
+      "module": "tuner-glass",
+      "triangles": 972,
+      "meshNames": [
+        "tuner-glass-mesh"
+      ],
+      "homePosition": [
+        0.45,
+        1.55,
+        2.02
+      ]
+    },
+    {
+      "id": "speaker-surround",
+      "name": "speaker-surround",
+      "kind": "part",
+      "module": "speaker-surround",
+      "triangles": 5184,
+      "meshNames": [
+        "speaker-surround-mesh",
+        "speaker-magenta-ring",
+        "speaker-cyan-ring"
+      ],
+      "homePosition": [
+        -3.25,
+        -1.35,
+        1.9
+      ]
+    },
+    {
+      "id": "speaker-grille",
+      "name": "speaker-grille",
+      "kind": "part",
+      "module": "speaker-grille",
+      "triangles": 328,
+      "meshNames": [
+        "speaker-grille-mesh",
+        "speaker-perforation-grid"
+      ],
+      "homePosition": [
+        -3.25,
+        -1.35,
+        1.91
+      ]
+    },
+    {
+      "id": "speaker-cone",
+      "name": "speaker-cone",
+      "kind": "part",
+      "module": "speaker-cone",
+      "triangles": 962,
+      "meshNames": [
+        "speaker-cone-mesh",
+        "speaker-hub-light",
+        "label-radio"
+      ],
+      "homePosition": [
+        -3.25,
+        -1.35,
+        2.02
+      ]
+    },
+    {
+      "id": "cassette-bezel",
+      "name": "cassette-bezel",
+      "kind": "part",
+      "module": "cassette-bezel",
+      "triangles": 1944,
+      "meshNames": [
+        "cassette-bezel-mesh",
+        "cassette-chrome-step"
+      ],
+      "homePosition": [
+        1.05,
+        -1.15,
+        1.86
+      ]
+    },
+    {
+      "id": "cassette-glass",
+      "name": "cassette-glass",
+      "kind": "part",
+      "module": "cassette-glass",
+      "triangles": 972,
+      "meshNames": [
+        "cassette-glass-mesh"
+      ],
+      "homePosition": [
+        1.05,
+        -1.15,
+        2.08
+      ]
+    },
+    {
+      "id": "cassette-reels",
+      "name": "cassette-reels",
+      "kind": "part",
+      "module": "cassette-reels",
+      "triangles": 1484,
+      "meshNames": [
+        "cassette-reel-ring-0",
+        "cassette-reel-hub-0",
+        "cassette-reel-ring-1",
+        "cassette-reel-hub-1",
+        "cassette-tape"
+      ],
+      "homePosition": [
+        1.05,
+        -1.12,
+        1.99
+      ]
+    },
+    {
+      "id": "tuning-dial",
+      "name": "tuning-dial",
+      "kind": "part",
+      "module": "tuning-dial",
+      "triangles": 4012,
+      "meshNames": [
+        "tuning-dial-mesh",
+        "tuning-knurled-wall",
+        "tuning-dial-mesh",
+        "tuning-dial-knurl-field"
+      ],
+      "homePosition": [
+        4.23,
+        -1.28,
+        1.97
+      ]
+    },
+    {
+      "id": "bass-slider",
+      "name": "bass-slider",
+      "kind": "part",
+      "module": "bass-slider",
+      "triangles": 2918,
+      "meshNames": [
+        "bass-slider-track",
+        "bass-slider-light-track",
+        "bass-slider-knob-mesh",
+        "label-bass"
+      ],
+      "homePosition": [
+        2.85,
+        -1.03,
+        1.94
+      ]
+    },
+    {
+      "id": "treble-slider",
+      "name": "treble-slider",
+      "kind": "part",
+      "module": "treble-slider",
+      "triangles": 2918,
+      "meshNames": [
+        "treble-slider-track",
+        "treble-slider-light-track",
+        "treble-slider-knob-mesh",
+        "label-treble"
+      ],
+      "homePosition": [
+        3.34,
+        -1.03,
+        1.94
+      ]
+    },
+    {
+      "id": "volume-slider",
+      "name": "volume-slider",
+      "kind": "part",
+      "module": "volume-slider",
+      "triangles": 2918,
+      "meshNames": [
+        "volume-slider-track",
+        "volume-slider-light-track",
+        "volume-slider-knob-mesh",
+        "label-volume"
+      ],
+      "homePosition": [
+        3.83,
+        -1.03,
+        1.94
+      ]
+    },
+    {
+      "id": "transport-controls",
+      "name": "transport-controls",
+      "kind": "part",
+      "module": "transport-controls",
+      "triangles": 6228,
+      "meshNames": [
+        "transport-rec",
+        "transport-REC-light",
+        "label-rec",
+        "transport-play",
+        "transport-PLAY-light",
+        "label-play",
+        "transport-stop",
+        "transport-STOP-light",
+        "label-stop",
+        "transport-rew",
+        "transport-REW-light",
+        "label-rew",
+        "transport-ff",
+        "transport-FF-light",
+        "label-ff",
+        "transport-pause",
+        "transport-PAUSE-light",
+        "label-pause"
+      ],
+      "homePosition": [
+        1.34,
+        -2.62,
+        1.88
+      ]
+    },
+    {
+      "id": "top-preset-controls",
+      "name": "top-preset-controls",
+      "kind": "part",
+      "module": "top-preset-controls",
+      "triangles": 4860,
+      "meshNames": [
+        "preset-1",
+        "preset-2",
+        "preset-3",
+        "preset-4",
+        "preset-5"
+      ],
+      "homePosition": [
+        -1.15,
+        3.72,
+        0.42
+      ]
+    },
+    {
+      "id": "carry-handle",
+      "name": "carry-handle",
+      "kind": "part",
+      "module": "carry-handle",
+      "triangles": 1132,
+      "meshNames": [
+        "handle-grip",
+        "handle-left-upright",
+        "handle-right-upright"
+      ],
+      "homePosition": [
+        0,
+        5.15,
+        -0.2
+      ]
+    },
+    {
+      "id": "left-handle-hinge",
+      "name": "left-handle-hinge",
+      "kind": "part",
+      "module": "left-handle-hinge",
+      "triangles": 224,
+      "meshNames": [
+        "left-handle-hinge-mesh",
+        "left-handle-hinge-pin"
+      ],
+      "homePosition": [
+        -3.2,
+        3.65,
+        -0.2
+      ]
+    },
+    {
+      "id": "right-handle-hinge",
+      "name": "right-handle-hinge",
+      "kind": "part",
+      "module": "right-handle-hinge",
+      "triangles": 224,
+      "meshNames": [
+        "right-handle-hinge-mesh",
+        "right-handle-hinge-pin"
+      ],
+      "homePosition": [
+        3.2,
+        3.65,
+        -0.2
+      ]
+    },
+    {
+      "id": "aerial-swivel",
+      "name": "aerial-swivel",
+      "kind": "part",
+      "module": "aerial-swivel",
+      "triangles": 720,
+      "meshNames": [
+        "aerial-swivel-mesh"
+      ],
+      "homePosition": [
+        -3.72,
+        3.82,
+        -0.25
+      ]
+    },
+    {
+      "id": "telescopic-aerial",
+      "name": "telescopic-aerial",
+      "kind": "part",
+      "module": "telescopic-aerial",
+      "triangles": 520,
+      "meshNames": [
+        "telescopic-aerial-rod",
+        "aerial-tip"
+      ],
+      "homePosition": [
+        -3.72,
+        3.9,
+        -0.25
+      ]
+    },
+    {
+      "id": "dish-base",
+      "name": "dish-base",
+      "kind": "part",
+      "module": "dish-base",
+      "triangles": 304,
+      "meshNames": [
+        "dish-base-mesh",
+        "dish-neck"
+      ],
+      "homePosition": [
+        4.27,
+        4.05,
+        0.02
+      ]
+    },
+    {
+      "id": "dish-antenna",
+      "name": "dish-antenna",
+      "kind": "part",
+      "module": "dish-antenna",
+      "triangles": 2304,
+      "meshNames": [
+        "dish-reflector"
+      ],
+      "homePosition": [
+        4.28,
+        5.15,
+        0.04
+      ]
+    },
+    {
+      "id": "dish-feed",
+      "name": "dish-feed",
+      "kind": "part",
+      "module": "dish-feed",
+      "triangles": 176,
+      "meshNames": [
+        "dish-feed-arm",
+        "dish-feed-receiver"
+      ],
+      "homePosition": [
+        4.28,
+        5.15,
+        0.04
+      ]
+    }
+  ]
+}

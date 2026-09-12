@@ -1,0 +1,25 @@
+{
+  "name": "retro-future-radio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5175",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "build": "tsc --noEmit && vite build",
+    "lint": "biome check .",
+    "qa:browser": "node scripts/browser-qa.mjs",
+    "verify": "pnpm run typecheck && bun test ./src/model/*.test.ts ./src/ui/*.test.ts && pnpm run lint && pnpm run build"
+  },
+  "dependencies": {
+    "three": "^0.179.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.2",
+    "@types/bun": "^1.2.22",
+    "@types/three": "^0.179.0",
+    "playwright-core": "^1.62.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.3"
+  }
+}

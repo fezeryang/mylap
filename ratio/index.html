@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#030515" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%2345f4ff'/%3E%3C/svg%3E" />
+    <title>Retro Future Radio · 3D Study</title>
+  </head>
+  <body data-power="on">
+    <main id="stage" aria-label="超写实未来复古收音机三维场景"></main>
+    <header class="masthead">
+      <div><span class="eyebrow">OBJECT / 001</span><h1>RADIO · 未来声场</h1></div>
+      <p>程序化 PBR 复刻 · 可替换媒体界面</p>
+    </header>
+    <nav class="view-nav" aria-label="相机视角">
+      <button type="button" data-view="reference">参考</button><button type="button" data-view="front">正面</button>
+      <button type="button" data-view="right">右侧</button><button type="button" data-view="rear">背面</button><button type="button" data-view="left">左侧</button>
+    </nav>
+    <section class="control-panel" aria-labelledby="control-title">
+      <div class="panel-heading"><span class="eyebrow">SIGNAL CONTROL</span><h2 id="control-title">调谐台</h2></div>
+      <button id="power" class="power" type="button">屏幕电源</button>
+      <fieldset class="band-row"><legend>波段选择</legend><button type="button" data-band="FM" aria-pressed="true">FM</button><button type="button" data-band="AM" aria-pressed="false">AM</button><button type="button" data-band="SW" aria-pressed="false">SW</button></fieldset>
+      <label for="frequency">频率 <output id="frequency-value">98.7 MHz</output></label>
+      <input id="frequency" type="range" min="87.5" max="108" step="0.1" value="98.7" />
+      <fieldset class="transport"><legend>音乐播放控制</legend>
+        <button id="rew" type="button" aria-label="后退十秒">−10</button><button id="play" type="button" aria-pressed="false">播放 / 暂停</button>
+        <button id="stop" type="button">停止</button><button id="ff" type="button" aria-label="前进十秒">+10</button>
+      </fieldset>
+      <label for="volume">音量</label><input id="volume" type="range" min="0" max="1" step="0.01" value="0.72" />
+      <label for="explode">结构展开</label><input id="explode" type="range" min="0" max="1" step="0.01" value="0" />
+      <button id="reset" class="reset" type="button">重置视图</button>
+    </section>
+    <aside class="telemetry" aria-label="模型状态">
+      <span class="eyebrow">LIVE MANIFEST</span><dl><div><dt>部件</dt><dd>29</dd></div><div><dt>材质层</dt><dd>08</dd></div><div><dt>选中</dt><dd id="selected-part">none</dd></div></dl>
+      <p id="status" role="status" aria-live="polite">模型就绪，拖拽旋转，滚轮缩放</p>
+    </aside>
+
+    <section id="tuner-screen" class="device-screen tuner-screen" aria-label="实时收音机频谱显示">
+      <div class="meter"><span>FM</span><b>87</b><b>90</b><b>94</b><b>98</b><b>102</b><b>106</b><b>108</b><i></i></div>
+      <div id="spectrum" class="spectrum" aria-hidden="true"></div><div class="orb" aria-hidden="true"></div>
+      <strong>● ON AIR</strong><small>STEREO · LIVE SIGNAL</small>
+    </section>
+    <section id="cassette-screen" class="device-screen cassette-screen" aria-label="实时音乐播放显示">
+      <div class="screen-title"><span id="track-title">Sunshine FM</span><small id="track-artist">Neon Coast</small></div>
+      <div class="reels" aria-hidden="true"><i></i><span></span><i></i></div>
+      <div class="screen-meta"><span id="playback-state">PAUSED</span><time id="time">0:00</time></div>
+    </section>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

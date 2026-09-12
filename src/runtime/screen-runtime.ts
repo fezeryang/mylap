@@ -28,6 +28,40 @@ type MountedScreen = {
   readonly surface: ScreenSurface
 }
 
+export type ScreenEscapeEvent = {
+  readonly key: string
+  preventDefault(): void
+  stopImmediatePropagation(): void
+}
+
+export type ScreenEscapeEventSource = {
+  addEventListener(
+    type: "keydown",
+    listener: (event: ScreenEscapeEvent) => void,
+    capture: boolean,
+  ): void
+  removeEventListener(
+    type: "keydown",
+    listener: (event: ScreenEscapeEvent) => void,
+    capture: boolean,
+  ): void
+}
+
+export const connectScreenEscapeRelease = (
+  source: ScreenEscapeEventSource,
+  isScreenFocused: () => boolean,
+  releaseScreenFocus: () => void,
+): (() => void) => {
+  const releaseWithEscape = (event: ScreenEscapeEvent): void => {
+    if (event.key !== "Escape" || !isScreenFocused()) return
+    event.preventDefault()
+    event.stopImmediatePropagation()
+    releaseScreenFocus()
+  }
+  source.addEventListener("keydown", releaseWithEscape, true)
+  return () => source.removeEventListener("keydown", releaseWithEscape, true)
+}
+
 class DomScreenHost implements ScreenAppHost {
   constructor(private readonly element: HTMLElement) {}
 
@@ -50,6 +84,7 @@ export class ScreenRuntime {
   private readonly screenPosition = new Vector3()
   private readonly cameraPosition = new Vector3()
   private readonly unsubscribeStage: () => void
+  private readonly disconnectEscape: () => void
 
   constructor(private readonly options: ScreenRuntimeOptions) {
     this.renderer.domElement.className = "css3d-layer"
@@ -57,7 +92,11 @@ export class ScreenRuntime {
     for (const asset of options.stage.assets) this.attach(asset)
     this.unsubscribeStage = options.stage.subscribe(this.handleStageEvent)
     options.container.ownerDocument.addEventListener("pointerdown", this.releaseFromOutside, true)
-    options.container.ownerDocument.addEventListener("keydown", this.releaseWithEscape)
+    this.disconnectEscape = connectScreenEscapeRelease(
+      options.container.ownerDocument,
+      () => this.focused !== null,
+      () => this.releaseFocus(),
+    )
   }
 
   render(): void {
@@ -96,12 +135,24 @@ export class ScreenRuntime {
     return this.forAsset(assetId)[0]?.session.isPowered ?? false
   }
 
+  get focusedScreen(): { readonly assetId: AssetInstanceId; readonly screenId: ScreenId } | null {
+    if (this.focused === null) return null
+    return {
+      assetId: this.focused.asset.instanceId,
+      screenId: this.focused.surface.screenId,
+    }
+  }
+
+  releaseScreenFocus(): void {
+    this.releaseFocus()
+  }
+
   dispose(): void {
     this.releaseFocus()
     this.unsubscribeStage()
     const document = this.options.container.ownerDocument
     document.removeEventListener("pointerdown", this.releaseFromOutside, true)
-    document.removeEventListener("keydown", this.releaseWithEscape)
+    this.disconnectEscape()
     for (const mounted of this.mounted.values()) this.detach(mounted)
     this.mounted.clear()
     this.renderer.domElement.remove()
@@ -219,10 +270,6 @@ export class ScreenRuntime {
   private readonly releaseFromOutside = (event: PointerEvent): void => {
     if (!(event.target instanceof Node)) return
     if (this.focused !== null && !this.focused.element.contains(event.target)) this.releaseFocus()
-  }
-
-  private readonly releaseWithEscape = (event: KeyboardEvent): void => {
-    if (event.key === "Escape") this.releaseFocus()
   }
 
   private updateVisibility(mounted: MountedScreen): void {
