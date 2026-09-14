@@ -63,6 +63,23 @@ and generated evidence are not runtime assets.
 
 ## Required Fields for Future Assets
 
+## Asset: bulletin-board
+
+- **Type / instance:** `bulletin-board` / `bulletin-board-main`; additional backdrop asset,
+  not a replacement for `radio-main`.
+- **Factory / adapter:** `board/src/model/create-bulletin-board-model.ts` and
+  `src/assets/bulletin-board-asset.ts`; the duplicate root prototype is not mounted.
+- **Screen:** none. Static authored board with host picking, explosion/reset and disposal.
+- **Placement:** elevated beside the left of the desk, with its face centered above tabletop
+  height and a generous side gap. Uniformly enlarged 2.5× from the original desktop accessory;
+  the blank board face, materials and proportions are retained. Existing device transforms
+  are unchanged; landing/overview framing includes both desk and board.
+- **Authoring reference:** `board/theboard.png` and `board/bulletin-board-sculpt-spec.json`.
+- **QA:** root scene preview and `bun test src/assets/bulletin-board-asset.test.ts`.
+  A standalone browser authoring entrypoint is not yet available; `board/` currently has typecheck only.
+
+## Future Asset Checklist
+
 Every new asset record must name its stable type ID, model factory, standalone QA entrypoint,
 adapter status, stable part and screen IDs, design authority, reference inputs, generated
 boundaries, verification command, and next integration gate.
