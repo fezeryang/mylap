@@ -8,7 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "test": "bun test",
-    "lint": "biome check .",
+    "lint": "biome check src index.html package.json tsconfig.json",
     "qa:browser": "node scripts/browser-qa.mjs",
     "verify:root": "pnpm run typecheck && bun test ./src && pnpm run lint && pnpm run build",
     "verify:phone": "pnpm --dir phone run verify",
