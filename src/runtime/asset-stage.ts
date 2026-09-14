@@ -28,6 +28,8 @@ export type AssetStageListener = (event: AssetStageEvent) => void
 export class AssetStage {
   private activeAsset: StageAsset | null = null
   private readonly instances = new Map<string, StageAsset>()
+  private assetList: readonly StageAsset[] = []
+  private readonly owners = new Map<Object3D, StageAsset>()
   private readonly listeners = new Set<AssetStageListener>()
 
   constructor(
@@ -40,7 +42,7 @@ export class AssetStage {
   }
 
   get assets(): readonly StageAsset[] {
-    return [...this.instances.values()]
+    return this.assetList
   }
 
   mount(placement: AssetPlacement): StageAsset {
@@ -52,6 +54,8 @@ export class AssetStage {
     asset.root.rotation.set(...placement.rotation)
     asset.root.scale.setScalar(placement.scale)
     this.instances.set(placement.instanceId.value, asset)
+    this.assetList = [...this.instances.values()]
+    this.owners.set(asset.root, asset)
     this.scene.add(asset.root)
     this.emit({ asset, kind: "asset-added" })
     if (this.activeAsset === null) this.setActive(asset)
@@ -73,7 +77,7 @@ export class AssetStage {
   findOwner(object: Object3D): StageAsset | null {
     let cursor: Object3D | null = object
     while (cursor !== null) {
-      const asset = this.assets.find((candidate) => candidate.root === cursor)
+      const asset = this.owners.get(cursor)
       if (asset !== undefined) return asset
       cursor = cursor.parent
     }
@@ -84,6 +88,8 @@ export class AssetStage {
     const asset = this.instances.get(instanceId.value)
     if (asset === undefined) throw new UnknownAssetInstanceError(instanceId)
     this.instances.delete(instanceId.value)
+    this.assetList = [...this.instances.values()]
+    this.owners.delete(asset.root)
     this.scene.remove(asset.root)
     asset.dispose()
     this.emit({ asset, kind: "asset-removed" })

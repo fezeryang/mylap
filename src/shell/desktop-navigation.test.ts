@@ -40,8 +40,8 @@ describe("desktop navigation state machine", () => {
     navigation.advance(800)
     expect(navigation.read().progress).toBe(0.5)
     expectPose(navigation.read().pose, {
-      position: [-3.4, 8.45, -15.25],
-      target: [0, 0.5, 0],
+      position: [-8, 11, -36],
+      target: [-5, -0.8, 0],
     })
     navigation.advance(1600)
     expect(navigation.read().state).toBe("overview")
@@ -67,8 +67,8 @@ describe("desktop navigation state machine", () => {
       expectPose(
         navigation.read().pose,
         device === "phone"
-          ? { position: [-4.95, 4.055, -6.345], target: [-1.5, 0.325, 0] }
-          : { position: [-3.4, 5.215, -8.185], target: [0, 0.65, 0] },
+          ? { position: [-7.05, 6.35, -15.905], target: [-4, -0.325, 0] }
+          : { position: [-5.5, 7.015, -19.935], target: [-2.5, 0, 0] },
       )
       navigation.advance(2250)
       expect(navigation.read().state).toBe(stable)
@@ -91,8 +91,8 @@ describe("desktop navigation state machine", () => {
       expectPose(
         navigation.read().pose,
         focusState === "phone-focus"
-          ? { position: [-4.95, 4.055, -6.345], target: [-1.5, 0.325, 0] }
-          : { position: [-3.4, 5.215, -8.185], target: [0, 0.65, 0] },
+          ? { position: [-7.05, 6.35, -15.905], target: [-4, -0.325, 0] }
+          : { position: [-5.5, 7.015, -19.935], target: [-2.5, 0, 0] },
       )
       navigation.advance(1300)
       expect(navigation.read().state).toBe("overview")

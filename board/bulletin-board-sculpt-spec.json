@@ -1,0 +1,1506 @@
+{
+  "targetName": "LED Bulletin Board",
+  "targetId": "led-bulletin-board",
+  "schemaVersion": "2.1",
+  "terminologyProfile": {
+    "domain": "real-time procedural Three.js asset",
+    "geometryTerms": [
+      "silhouette",
+      "topology",
+      "primitive",
+      "bevel",
+      "chamfer",
+      "taper",
+      "bend",
+      "boolean cut",
+      "edge loop",
+      "surface normal",
+      "displacement"
+    ],
+    "materialTerms": [
+      "albedo",
+      "baseColor",
+      "roughness",
+      "metalness",
+      "normal map",
+      "bump map",
+      "ambient occlusion",
+      "cavity dirt",
+      "edge wear",
+      "clearcoat"
+    ],
+    "lightingTerms": [
+      "key light",
+      "fill light",
+      "rim light",
+      "HDRI/environment reflection",
+      "contact shadow"
+    ],
+    "descriptionRule": "Use measurable 3D graphics terms. Avoid vague words unless they are paired with concrete geometry/material/shader parameters."
+  },
+  "sourceImage": "theboard.png",
+  "referenceCamera": {
+    "solved": false,
+    "fovDegrees": 40.0,
+    "aspect": 1.0,
+    "orientation": {
+      "yaw": 0.0,
+      "pitch": 0.0,
+      "roll": 0.0
+    },
+    "positionHint": [
+      0.0,
+      0.0,
+      3.0
+    ],
+    "note": "For likeness work, solve the reference camera (forge/stage1_intake/solve_camera_pose.py) so the review render aligns with the photo and the reference can be projected. Confirm by overlay review."
+  },
+  "suitability": "conditional",
+  "scores": {
+    "object_isolation": 0,
+    "silhouette_readability": 0,
+    "depth_inference": 0,
+    "primitive_decomposition": 0,
+    "material_procedurality": 0,
+    "occlusion_risk": 0,
+    "interaction_fit": 0
+  },
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "desk-accessory",
+      "primaryDomain": "object",
+      "formLanguage": [
+        "geometric",
+        "industrial"
+      ],
+      "structureKind": [
+        "multi-assembly",
+        "articulated"
+      ],
+      "motionPotential": [
+        "pivot-tilt"
+      ],
+      "materialFamilies": [
+        "fabric",
+        "metal",
+        "emissive",
+        "plastic"
+      ],
+      "notes": "Gaming-aesthetic bulletin board with felt surface, silver frame, RGB LED accent lighting, and freestanding A-frame easel stands with pivot mechanism"
+    },
+    "complexity": {
+      "tier": "moderate",
+      "scores": {
+        "silhouetteComplexity": 1,
+        "componentCount": 2,
+        "hierarchyDepth": 2,
+        "repetitionDensity": 1,
+        "materialLayerCount": 2,
+        "localDetailDensity": 2,
+        "occlusionRisk": 3,
+        "actionReadinessNeed": 2
+      },
+      "estimatedCounts": {
+        "macroComponents": 5,
+        "mesoComponents": 13,
+        "microFeatureGroups": 8,
+        "materialLayers": 4,
+        "repetitionSystems": 2
+      },
+      "reasoning": [
+        "18+ named components across board, frame, LEDs, pivots, and stands",
+        "4 distinct material systems (felt, polished metal, emissive, matte plastic)",
+        "Pivot mechanism with articulation potential",
+        "Mirrored stand assemblies (repetition system)",
+        "LED strips as continuous emissive bands (8 total instances)",
+        "Moderate detail density: felt texture, frame fillets, pivot hardware, endcaps"
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "moderate",
+      "minimumComponentLevels": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Moderate complexity with distinct assemblies, articulation hardware, repetition (mirrored stands, LED strips), and material variation. Single view sufficient given bilateral symmetry but multi-angle review required to verify non-planar stand geometry."
+    },
+    "unknownsToResolveBeforeImplementation": [
+      "Board back panel material (felt vs. plastic) - assume flat plastic backing",
+      "Pivot mechanism internals (friction vs. indexed) - model as decorative cap with socket",
+      "LED power routing (no visible cables) - omit cable management",
+      "Absolute scale - design for desktop size, ~50cm board width",
+      "Tilt angle range - assume 0-30\u00b0 recline capability"
+    ],
+    "detailInventory": {
+      "scanMethod": "component-zones",
+      "targetMinDetails": 12,
+      "note": "Identity-defining features extracted from image analysis",
+      "details": [
+        {
+          "zone": "board-surface",
+          "feature": "felt-fiber-texture",
+          "mapping": "board-surface.localFeatures",
+          "implementation": "normal map with fine fabric grain",
+          "realization": "unreported",
+          "kind": "surface-detail"
+        },
+        {
+          "zone": "frame-border",
+          "feature": "rounded-rectangle-corners",
+          "mapping": "frame-border.geometryDescriptor",
+          "implementation": "fillet radius = 1.5-2\u00d7 frame width",
+          "realization": "unreported",
+          "kind": "geometric-form"
+        },
+        {
+          "zone": "frame-border",
+          "feature": "edge-chamfers",
+          "mapping": "frame-border.localFeatures",
+          "implementation": "small chamfer producing specular highlights",
+          "realization": "unreported",
+          "kind": "edge-treatment"
+        },
+        {
+          "zone": "frame-seam",
+          "feature": "led-inset-channel",
+          "mapping": "frame-border.geometryDescriptor",
+          "implementation": "recessed half-round groove for LED strips",
+          "realization": "unreported",
+          "kind": "emissive-accent"
+        },
+        {
+          "zone": "led-strips",
+          "feature": "two-tone-color-zoning",
+          "mapping": "led materials with color variation",
+          "implementation": "cyan horizontal (#35B6FF), magenta vertical (#F070E8)",
+          "realization": "unreported",
+          "kind": "material-variation"
+        },
+        {
+          "zone": "pivot-knobs",
+          "feature": "emissive-ring-accent",
+          "mapping": "pivot-knob.localFeatures",
+          "implementation": "concentric emissive torus + center dot",
+          "realization": "unreported",
+          "kind": "emissive-accent"
+        },
+        {
+          "zone": "stand-struts",
+          "feature": "square-filleted-profile",
+          "mapping": "strut geometryDescriptor",
+          "implementation": "square cross-section with edge fillets",
+          "realization": "unreported",
+          "kind": "edge-treatment"
+        },
+        {
+          "zone": "stand-struts",
+          "feature": "pink-led-continuation",
+          "mapping": "strut-rear.localFeatures",
+          "implementation": "magenta emissive strip down rear struts",
+          "realization": "unreported",
+          "kind": "emissive-accent"
+        },
+        {
+          "zone": "strut-endcaps",
+          "feature": "dark-matte-caps",
+          "mapping": "endcap material",
+          "implementation": "charcoal plastic (#3B3B40), roughness 0.72",
+          "realization": "unreported",
+          "kind": "termination-cap"
+        },
+        {
+          "zone": "stand-geometry",
+          "feature": "triangular-truss-topology",
+          "mapping": "stand assembly structure",
+          "implementation": "closed triangle: apex \u2192 two struts \u2192 base rail",
+          "realization": "unreported",
+          "kind": "geometric-form"
+        },
+        {
+          "zone": "stand-geometry",
+          "feature": "fore-aft-splay",
+          "mapping": "stand positioning",
+          "implementation": "splay depth = 0.25\u00d7 board width",
+          "realization": "unreported",
+          "kind": "geometric-form"
+        },
+        {
+          "zone": "overall",
+          "feature": "landscape-aspect-ratio",
+          "mapping": "board dimensions",
+          "implementation": "W:H = 1.55:1 (landscape)",
+          "realization": "unreported",
+          "kind": "termination-cap"
+        }
+      ]
+    },
+    "localSpecSearch": {
+      "executed": true,
+      "queries": [
+        "bulletin board cork felt surface",
+        "display board frame LED lighting",
+        "easel stand support pivot"
+      ],
+      "collection": "core_3d",
+      "snippets": [],
+      "note": "Generic object - no domain-specific specs needed. Using standard PBR materials and geometric primitives."
+    },
+    "anatomy": {
+      "applies": false
+    },
+    "qualityContract": {
+      "targetMinDetails": 12,
+      "actualDetails": 12,
+      "featureReviewTargets": [
+        {
+          "pass": "blockout",
+          "critical": [
+            "landscape-aspect-ratio",
+            "triangular-truss-topology",
+            "fore-aft-splay"
+          ],
+          "important": [
+            "led-inset-channel",
+            "pivot-position"
+          ]
+        },
+        {
+          "pass": "structural-pass",
+          "critical": [
+            "rounded-rectangle-corners",
+            "two-tone-color-zoning",
+            "dark-matte-caps"
+          ],
+          "important": [
+            "square-filleted-profile",
+            "emissive-ring-accent"
+          ]
+        },
+        {
+          "pass": "form-refinement",
+          "critical": [
+            "edge-chamfers",
+            "felt-fiber-texture",
+            "pink-led-continuation"
+          ],
+          "important": []
+        }
+      ]
+    }
+  },
+  "qualityContract": {
+    "qualityBar": "moderate",
+    "minimumPassesBeforeShippable": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass"
+    ],
+    "criticalFeatureSystems": [
+      "board-felt-texture",
+      "frame-rounded-corners",
+      "led-color-zoning",
+      "pivot-mechanism",
+      "stand-triangular-topology"
+    ]
+  },
+  "qualityTargets": {
+    "targetFidelity": 0.7,
+    "mustMatch": [
+      "macro silhouette and proportions",
+      "primary material albedo/roughness response",
+      "reference-derived PBR material response at or above 0.7 confidence when source pixels are usable",
+      "most recognizable local features"
+    ],
+    "niceToHave": [
+      "micro scratches, stains, chips, and dirt masks",
+      "secondary lighting match"
+    ],
+    "fpsTarget": 60,
+    "reviewViewpoints": [
+      "front",
+      "three-quarter",
+      "side",
+      "thickness-axis",
+      "long-axis"
+    ]
+  },
+  "selfCorrectLoop": {
+    "enabled": true,
+    "visualAcceptance": {
+      "reviewer": "ai-vision",
+      "threshold": 0.7,
+      "comparisonArtifactRequired": true,
+      "layerScoresRequired": true,
+      "codePixelDiffIsAcceptanceAuthority": false,
+      "scoringRule": "AI vision must inspect a side-by-side reference/render sheet and score the current pass from 0 to 1. Pixel-diff code may assist diagnostics but cannot approve a pass.",
+      "requiredLayerScores": [
+        "silhouetteProportion",
+        "componentStructure",
+        "formDetail",
+        "materialSurface",
+        "lightingCamera"
+      ],
+      "featureReviewPolicy": {
+        "enabled": true,
+        "reviewUnit": "semantic-subsystem",
+        "maxCriticalFeaturesPerPass": 5,
+        "maxImportantFeaturesPerPass": 3,
+        "criticalDefaultThreshold": 0.8,
+        "importantAverageThreshold": 0.65,
+        "adaptiveEscalation": true,
+        "singleImagePairOnly": true,
+        "selectionRule": "Choose only the most visually salient, identity-defining, user-prioritized, or high-risk semantic systems. Group repeated parts instead of reviewing every mesh. AI vision scores every selected feature from the same full reference/render pair."
+      }
+    },
+    "reviewAfterPasses": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass",
+      "surface-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "allowedActions": [
+      "continue",
+      "refine-spec",
+      "refine-code",
+      "request-input",
+      "stop"
+    ],
+    "specRefineTriggers": [
+      "missing component",
+      "wrong primitive family",
+      "wrong proportions",
+      "material layer under-specified",
+      "local feature not traceable to viewEvidence",
+      "reference ambiguity discovered during implementation"
+    ],
+    "codeRefineTriggers": [
+      "spec is adequate but generated geometry/material does not match",
+      "browser render differs from reference",
+      "performance budget exceeded",
+      "lighting hides geometry or material response"
+    ],
+    "stopCriteria": [
+      "target fidelity reached or user accepts current approximation",
+      "remaining gaps require new reference images or manual art"
+    ],
+    "screenshotPolicy": {
+      "requiredForPasses": [
+        "blockout",
+        "structural-pass",
+        "form-refinement",
+        "material-pass",
+        "surface-pass",
+        "lighting-pass",
+        "interaction-pass"
+      ],
+      "preferredCapture": "in-app-browser-screenshot",
+      "fallbackCapture": "user-supplied-screenshot-path",
+      "minimumEvidence": "Each visual pass needs a reference image, rendered screenshot, side-by-side comparison sheet, AI vision score, layer scores, and critique before choosing continue.",
+      "reviewPairRule": "Compare the same camera/viewpoint whenever possible; do not judge a front reference against a random render angle.",
+      "acceptanceAuthority": "AI vision review of the comparison sheet. Code-generated pixel similarity is not sufficient evidence."
+    }
+  },
+  "featureReviewTargets": [
+    {
+      "id": "overall-silhouette",
+      "name": "Overall silhouette and proportion system",
+      "tier": "critical",
+      "passIds": [
+        "blockout"
+      ],
+      "minimumScore": 0.8,
+      "mustPass": true,
+      "componentRefs": [
+        "root"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "primary-structure",
+      "name": "Primary identity-defining structure",
+      "tier": "critical",
+      "passIds": [
+        "structural-pass",
+        "form-refinement"
+      ],
+      "minimumScore": 0.8,
+      "mustPass": true,
+      "componentRefs": [
+        "root"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    },
+    {
+      "id": "reference-material-system",
+      "name": "Primary reference material and surface response",
+      "tier": "critical",
+      "passIds": [
+        "material-pass",
+        "surface-pass"
+      ],
+      "minimumScore": 0.75,
+      "mustPass": true,
+      "componentRefs": [
+        "root"
+      ],
+      "evidenceRefs": [
+        "full-object"
+      ]
+    }
+  ],
+  "sculptPipeline": {
+    "passGateMode": "locked-sequential",
+    "passOrder": [
+      "blockout",
+      "structural-pass",
+      "form-refinement",
+      "material-pass",
+      "surface-pass",
+      "lighting-pass",
+      "interaction-pass",
+      "optimization-pass"
+    ],
+    "currentPass": "blockout",
+    "completedPasses": [],
+    "lastCompletedPass": "",
+    "blockedReason": "blockout requires a browser screenshot and self-correction review before structural-pass unlocks",
+    "nextRequiredEvidence": [
+      "blockout browser render screenshot from your agent's browser/screenshot tool",
+      "side-by-side reference/render comparison sheet",
+      "AI vision score >= 0.7 with layer scores and mismatch critique",
+      "critical semantic feature scores from the same image pair meeting their individual thresholds",
+      "reviewHistory entry for blockout with action=continue"
+    ]
+  },
+  "lookDevTargets": {
+    "qualityPriority": "reference-fidelity",
+    "materialPass": {
+      "albedoPaletteRequired": true,
+      "roughnessVariationRequired": true,
+      "normalOrBumpRequired": true,
+      "localOverridesRequired": true,
+      "minimumTextureResolution": 1024,
+      "preferredTextureResolution": 2048,
+      "independentMapChannels": [
+        "albedo",
+        "roughness",
+        "height",
+        "normal",
+        "ambient-occlusion"
+      ],
+      "requiredSurfaceFrequencyBands": [
+        "macro",
+        "meso",
+        "micro"
+      ],
+      "geometryReliefRequiredWhenSilhouetteAffected": true,
+      "referencePbrExtraction": {
+        "requiredWhenSourceImagePresent": true,
+        "targetThreshold": 0.7,
+        "stopOnLowConfidence": true,
+        "script": "forge/stage1_intake/extract_pbr_evidence.py",
+        "acceptedLimitation": "single-image extraction is reference-derived inference, not exact photogrammetry"
+      },
+      "mustAvoid": [
+        "single flat albedo per material",
+        "uniform roughness",
+        "albedo texture reused as roughness/height/normal/AO",
+        "single-frequency random noise",
+        "plastic-looking smooth bark, stone, cloth, foliage, or aged material",
+        "local color/detail described only in prose without material masks",
+        "claiming exact PBR recovery when confidence is below the target threshold"
+      ]
+    },
+    "lightingPass": {
+      "requiredTerms": [
+        "key light",
+        "fill light",
+        "rim or environment light",
+        "exposure",
+        "tone mapping",
+        "background",
+        "contact shadow"
+      ],
+      "mustAvoid": [
+        "ambient-only lighting",
+        "flat value range",
+        "missing contact shadow",
+        "reference lighting copied without separating material readability"
+      ]
+    },
+    "screenshotReview": [
+      "Compare albedo palette and local color zones.",
+      "Compare roughness/normal/bump response under light.",
+      "Compare cavity dirt, edge wear, stains, moss, scratches, or other local masks.",
+      "Compare key/fill/rim structure, exposure, tone mapping, background, and contact shadows.",
+      "Capture a neutral-light render to verify material readability without reference lighting.",
+      "Capture a grazing-light close-up to expose flat normals, uniform roughness, tiling, and plastic highlights.",
+      "Capture a reference-matched render from the same camera framing as the source."
+    ]
+  },
+  "actionReadiness": {
+    "contract": "Every macro/meso component should be generated as a stable named Object3D pivot node with a mesh child, action metadata, optional sockets, collider proxy, and destruction metadata.",
+    "defaultRigType": "action-ready-static-rig",
+    "rootMotionNode": "root",
+    "requiredComponentFields": [
+      "id",
+      "parent",
+      "transform",
+      "attachment for child appendages, connectors, limbs, tubes, handles, legs, horns, wings, branches, or cables",
+      "actionProfile.animationRole",
+      "actionProfile.pivot",
+      "actionProfile.collider",
+      "actionProfile.destruction"
+    ],
+    "transformChannels": [
+      "translate",
+      "rotate",
+      "scale",
+      "bend",
+      "twist",
+      "detach",
+      "visibility",
+      "material-state"
+    ],
+    "authoringRules": [
+      "Do not collapse independently movable parts into one mesh.",
+      "Put transforms on component pivot groups, not only on raw meshes.",
+      "For attached child parts, put the pivot at the semantic root/socket and build visible geometry from localStart to localEnd.",
+      "Represent hinge, socket, detachable, and breakable intent even when no animation is implemented yet.",
+      "Use simplified collider proxies for runtime physics instead of visual mesh colliders by default."
+    ],
+    "destructionPolicy": {
+      "defaultBreakable": false,
+      "fractureGroupNaming": "Use stable semantic names such as body-shell, left-hinge, glass-panel, branch-segment.",
+      "debrisStrategy": "Prefer detachable component groups and a small number of procedural fragments over random mesh explosion."
+    }
+  },
+  "assumptions": [],
+  "coordinateFrame": {
+    "front": "camera-facing side in the reference image",
+    "up": "image up direction",
+    "scaleReference": "unit scale; adjust after first browser render"
+  },
+  "silhouette": {
+    "boundingShape": "",
+    "aspectRatios": [],
+    "symmetry": "",
+    "dominantCurves": [],
+    "negativeSpaces": [],
+    "landmarks": []
+  },
+  "viewEvidence": [
+    {
+      "id": "full-object",
+      "view": "primary",
+      "imageRegion": {
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1.0,
+        "height": 1.0,
+        "units": "normalized"
+      },
+      "observations": [],
+      "confidence": 0.5
+    }
+  ],
+  "componentTree": [
+    {
+      "id": "root",
+      "name": "LED Bulletin Board",
+      "level": "macro",
+      "role": "body",
+      "importance": 1.0,
+      "confidence": 0.5,
+      "primitive": "box",
+      "topologyClass": "assembled-solid",
+      "topologyRationale": "Placeholder root blockout; reclassify per Workstream A's decision tree (grimoire/intake/surface_topology.md) once real geometry is authored.",
+      "geometryDescriptor": {
+        "topologyIntent": "low-poly blockout with bevel-ready edges",
+        "edgeTreatment": {
+          "type": "none",
+          "bevelRadius": 0.0,
+          "segments": 1
+        },
+        "deformationStack": [],
+        "uvStrategy": "generated procedural coordinates",
+        "normalStrategy": "vertex normals from generated geometry"
+      },
+      "parent": null,
+      "attachment": null,
+      "dimensions": {
+        "width": 1.0,
+        "height": 1.0,
+        "depth": 1.0,
+        "units": "relative",
+        "confidence": 0.5
+      },
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "actionProfile": {
+        "animationRole": "root",
+        "pivot": {
+          "mode": "center",
+          "localPosition": [
+            0,
+            0,
+            0
+          ],
+          "axis": [
+            0,
+            1,
+            0
+          ],
+          "confidence": 0.5
+        },
+        "transformChannels": {
+          "translate": true,
+          "rotate": true,
+          "scale": true,
+          "bend": false,
+          "twist": false,
+          "detach": false,
+          "visibility": true,
+          "materialState": true
+        },
+        "sockets": [],
+        "collider": {
+          "type": "box",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "isTrigger": false,
+          "notes": "Replace with sphere/capsule/compound proxy when the object shape demands it."
+        },
+        "constraints": [],
+        "destruction": {
+          "breakable": false,
+          "fractureGroup": "root",
+          "seamRefs": [],
+          "detachableFragments": [],
+          "breakImpulse": 0.0,
+          "debrisMaterial": "base"
+        }
+      },
+      "material": "base",
+      "materialLayers": [
+        "base"
+      ],
+      "deformations": [],
+      "joints": [],
+      "seams": [],
+      "localFeatures": [],
+      "surfaceDetail": {
+        "macroRoughness": 0.0,
+        "microRoughness": 0.0,
+        "bumpAmplitude": 0.0,
+        "normalPattern": "",
+        "displacementPattern": "",
+        "occlusionPattern": "",
+        "edgeWearPattern": "",
+        "notes": ""
+      },
+      "evidenceRefs": [
+        "full-object"
+      ],
+      "details": [],
+      "fidelityTier": "blockout"
+    }
+  ],
+  "materials": [
+    {
+      "id": "felt-surface",
+      "name": "Light Gray Felt",
+      "baseColor": "#C9C9CD",
+      "roughness": 0.92,
+      "metalness": 0.0,
+      "referencePbr": {
+        "extracted": true,
+        "source": "visual analysis",
+        "confidence": 0.85
+      },
+      "localOverrides": []
+    },
+    {
+      "id": "silver-metal",
+      "name": "Silver-White Metal",
+      "baseColor": "#DADCDF",
+      "roughness": 0.3,
+      "metalness": 0.9,
+      "referencePbr": {
+        "extracted": true,
+        "source": "visual analysis",
+        "confidence": 0.88
+      },
+      "localOverrides": []
+    },
+    {
+      "id": "led-cyan",
+      "name": "Cyan LED Emissive",
+      "baseColor": "#35B6FF",
+      "emissive": "#35B6FF",
+      "emissiveIntensity": 2.5,
+      "roughness": 0.1,
+      "metalness": 0.0,
+      "referencePbr": {
+        "extracted": true,
+        "source": "visual analysis",
+        "confidence": 0.95
+      },
+      "localOverrides": []
+    },
+    {
+      "id": "led-magenta",
+      "name": "Magenta LED Emissive",
+      "baseColor": "#F070E8",
+      "emissive": "#F070E8",
+      "emissiveIntensity": 2.5,
+      "roughness": 0.1,
+      "metalness": 0.0,
+      "referencePbr": {
+        "extracted": true,
+        "source": "visual analysis",
+        "confidence": 0.95
+      },
+      "localOverrides": []
+    },
+    {
+      "id": "endcap-plastic",
+      "name": "Charcoal Plastic Endcaps",
+      "baseColor": "#3B3B40",
+      "roughness": 0.72,
+      "metalness": 0.0,
+      "referencePbr": {
+        "extracted": true,
+        "source": "visual analysis",
+        "confidence": 0.82
+      },
+      "localOverrides": []
+    }
+  ],
+  "repetitionSystems": [],
+  "buildPasses": [
+    {
+      "id": "blockout",
+      "goal": "Match macro silhouette and proportions.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Silhouette reads correctly without materials.",
+        "Quality contract has named all required macro feature groups before code generation.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "structural-pass",
+      "goal": "Build the component hierarchy implied by the pre-spec complexity assessment.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Macro, meso, and repeated structures meet qualityContract.minimumSpecDepth.",
+        "Parent-child relations, joints, seams, sockets, and contact points are explicit.",
+        "Every attached child appendage/connector has parentSocket, localStart/localEnd, contactType, embedDepth or overlap, and gapTolerance.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "form-refinement",
+      "goal": "Refine shape, deformation, bevels, tapers, curves, asymmetry, and visible local geometry.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Important visible forms are represented in component geometryDescriptor, deformations, localFeatures, or repetitionSystems.",
+        "Endpoint-based child parts are rooted at their attachment sockets and do not visibly float away from parents.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "material-pass",
+      "goal": "Match material color, roughness, bump, and local variation.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Reference-derived albedo palette records dominant, secondary, and accent colors per visible material.",
+        "Each important material defines roughness variation and at least one normal/bump/displacement response.",
+        "Local material overrides, dirt/wear/stains/moss/chips/scratches or equivalent masks are tied to evidenceRefs.",
+        "Thin, transparent, reflective, wet, or fibrous materials document alpha/transmission/clearcoat/metalness/fiber response when relevant.",
+        "Generated preview uses procedural albedo/roughness/bump texture or vertex color variation instead of one flat color.",
+        "Generated preview uses independent PBR maps at 1024px or higher for the quality-first tier.",
+        "If source pixels are available, referencePbr extraction passed at confidence >= 0.7 or the pass is stopped/requesting better references.",
+        "Macro, meso, and micro surface frequency bands are visible at the intended review distance without obvious tiling.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "surface-pass",
+      "goal": "Add procedural surface locality such as normal/bump/displacement, AO, dirt, stains, chips, grain, moss, scratches, and wear.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Every required material feature group has local overrides or surfaceDetail tied to evidenceRefs.",
+        "A grazing-angle close-up proves that normal/height detail breaks highlights naturally and does not read as smooth plastic.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "lighting-pass",
+      "goal": "Make material and form readable under neutral turntable lighting plus optional reference lighting.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "lightingFromPhoto identifies key light direction/color/intensity, fill light, rim or environment light, and ambient color.",
+        "Exposure, tone mapping, background color/gradient, shadow softness, and contact shadow behavior are specified.",
+        "Lighting does not hide geometry/material gaps and screenshots can be compared fairly to the reference.",
+        "Neutral, grazing, and reference-matched lighting checks distinguish material errors from lighting errors.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "interaction-pass",
+      "goal": "Make the model ready for future animation, transformation, physics, or destruction.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Macro and movable meso components have stable pivot nodes.",
+        "Sockets, collider proxies, and destruction metadata are present for future runtime actions.",
+        "AI vision comparison score meets selfCorrectLoop.visualAcceptance.threshold."
+      ]
+    },
+    {
+      "id": "optimization-pass",
+      "goal": "Protect runtime performance after visual fidelity is accepted.",
+      "componentRefs": [
+        "root"
+      ],
+      "acceptance": [
+        "Triangle count, draw calls, instancing, LOD strategy, and FPS target are documented or verified.",
+        "Repeated detail is instanced or simplified where possible without breaking silhouette/material believability."
+      ]
+    }
+  ],
+  "visualEvidence": [],
+  "reviewHistory": [],
+  "lodPlan": [
+    {
+      "tier": "near",
+      "distance": 0,
+      "strategy": "full component tree and material layers"
+    },
+    {
+      "tier": "far",
+      "distance": 30,
+      "strategy": "merge static components and reduce local feature geometry"
+    }
+  ],
+  "performanceBudget": {
+    "qualityPriority": "reference-fidelity",
+    "targetTriangles": 250000,
+    "maxDrawCalls": 160,
+    "textureSize": 2048,
+    "fpsTarget": 30,
+    "optimizationPolicy": "Reach accepted visual fidelity first, then optimize without removing reference-critical geometry or surface layers."
+  },
+  "lightingFromPhoto": [],
+  "proceduralStrategy": [
+    "Block out macro silhouette first.",
+    "Add component hierarchy and joints.",
+    "Create stable pivot groups, sockets, collider proxies, and destruction metadata before visual polish.",
+    "Refine forms with bevels, tapers, bends, and procedural noise.",
+    "Run reference PBR extraction for important source-image materials and stop when confidence is below the target threshold.",
+    "Add material variation before adding expensive micro-geometry."
+  ],
+  "animationAnchors": [
+    "root pivot node supports whole-object translation, rotation, scale, and visibility changes",
+    "component pivot groups support later local transforms without rebuilding geometry"
+  ],
+  "destructionAnchors": [
+    "actionProfile.destruction.fractureGroup marks detachable or breakable component sets",
+    "component seams and sockets define plausible break points instead of random explosions"
+  ],
+  "risks": [],
+  "components": [
+    {
+      "id": "root",
+      "name": "LED Bulletin Board Assembly",
+      "parent": null,
+      "topologyClass": "container",
+      "topologyRationale": "Root assembly grouping board, stands, and pivot hardware",
+      "primitiveClass": "group",
+      "geometryDescriptor": {
+        "type": "container"
+      },
+      "materialId": null,
+      "localFeatures": [],
+      "attachment": null,
+      "colorMaterialRecipe": "none - container only"
+    },
+    {
+      "id": "board-assembly",
+      "name": "Board Assembly",
+      "parent": "root",
+      "topologyClass": "container",
+      "topologyRationale": "Groups board surface, frame, and LED strips",
+      "primitiveClass": "group",
+      "geometryDescriptor": {
+        "type": "container"
+      },
+      "materialId": null,
+      "localFeatures": [],
+      "attachment": null,
+      "colorMaterialRecipe": "none - container only"
+    },
+    {
+      "id": "board-surface",
+      "name": "Felt Board Surface",
+      "parent": "board-assembly",
+      "topologyClass": "planar-quad",
+      "topologyRationale": "Flat rectangular felt surface, slightly recessed in frame",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 1.55,
+          "height": 1.0,
+          "depth": 0.035
+        },
+        "centerMode": "geometric-center"
+      },
+      "materialId": "felt-surface",
+      "localFeatures": [
+        {
+          "id": "felt-texture",
+          "kind": "surface-micro-detail",
+          "description": "Fine felt fiber grain texture",
+          "implementation": "normal map with fabric noise"
+        }
+      ],
+      "attachment": {
+        "parentSocket": "board-frame-inner",
+        "contactType": "inset"
+      },
+      "colorMaterialRecipe": "light gray felt (#C9C9CD) with high roughness"
+    },
+    {
+      "id": "board-frame",
+      "name": "Silver Frame Border",
+      "parent": "board-assembly",
+      "topologyClass": "closed-curve-extrusion",
+      "topologyRationale": "Extruded rounded-rectangle perimeter with LED channel",
+      "primitiveClass": "shape-extrude",
+      "geometryDescriptor": {
+        "type": "shape-extrude",
+        "profile": "rounded-rectangle",
+        "dimensions": {
+          "width": 1.65,
+          "height": 1.1,
+          "frameWidth": 0.05
+        },
+        "cornerRadius": 0.08,
+        "depth": 0.04
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [
+        {
+          "id": "edge-chamfers",
+          "kind": "edge-treatment",
+          "description": "Small chamfers on all edges producing specular highlights",
+          "implementation": "edge bevel modifier"
+        },
+        {
+          "id": "led-seam-channel",
+          "kind": "geometric-form",
+          "description": "Recessed half-round groove for LED strips",
+          "implementation": "boolean subtract from inner edge"
+        }
+      ],
+      "attachment": null,
+      "colorMaterialRecipe": "silver-white metal (#DADCDF) with metalness 0.9"
+    },
+    {
+      "id": "led-top",
+      "name": "Top LED Strip (Cyan)",
+      "parent": "board-assembly",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Half-round extruded strip along top edge",
+      "primitiveClass": "cylinder-segment",
+      "geometryDescriptor": {
+        "type": "cylinder",
+        "radius": 0.006,
+        "height": 1.55,
+        "orientation": "horizontal"
+      },
+      "materialId": "led-cyan",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "frame-top-channel",
+        "contactType": "inset"
+      },
+      "colorMaterialRecipe": "emissive cyan (#35B6FF) with high intensity"
+    },
+    {
+      "id": "led-bottom",
+      "name": "Bottom LED Strip (Cyan)",
+      "parent": "board-assembly",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Half-round extruded strip along bottom edge",
+      "primitiveClass": "cylinder-segment",
+      "geometryDescriptor": {
+        "type": "cylinder",
+        "radius": 0.006,
+        "height": 1.55,
+        "orientation": "horizontal"
+      },
+      "materialId": "led-cyan",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "frame-bottom-channel",
+        "contactType": "inset"
+      },
+      "colorMaterialRecipe": "emissive cyan (#35B6FF) with high intensity"
+    },
+    {
+      "id": "led-left",
+      "name": "Left LED Strip (Magenta)",
+      "parent": "board-assembly",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Half-round extruded strip along left edge",
+      "primitiveClass": "cylinder-segment",
+      "geometryDescriptor": {
+        "type": "cylinder",
+        "radius": 0.006,
+        "height": 1.0,
+        "orientation": "vertical"
+      },
+      "materialId": "led-magenta",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "frame-left-channel",
+        "contactType": "inset"
+      },
+      "colorMaterialRecipe": "emissive magenta (#F070E8) with high intensity"
+    },
+    {
+      "id": "led-right",
+      "name": "Right LED Strip (Magenta)",
+      "parent": "board-assembly",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Half-round extruded strip along right edge",
+      "primitiveClass": "cylinder-segment",
+      "geometryDescriptor": {
+        "type": "cylinder",
+        "radius": 0.006,
+        "height": 1.0,
+        "orientation": "vertical"
+      },
+      "materialId": "led-magenta",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "frame-right-channel",
+        "contactType": "inset"
+      },
+      "colorMaterialRecipe": "emissive magenta (#F070E8) with high intensity"
+    },
+    {
+      "id": "pivot-left",
+      "name": "Left Pivot Disc",
+      "parent": "board-assembly",
+      "topologyClass": "surface-of-revolution",
+      "topologyRationale": "Circular disc cap on pivot axis",
+      "primitiveClass": "cylinder",
+      "geometryDescriptor": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "height": 0.01,
+        "orientation": "horizontal"
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [
+        {
+          "id": "emissive-ring",
+          "kind": "emissive-accent",
+          "description": "Concentric emissive torus ring with center dot",
+          "implementation": "emissive material on ring geometry"
+        }
+      ],
+      "attachment": {
+        "parentSocket": "frame-left-mid",
+        "contactType": "mount"
+      },
+      "colorMaterialRecipe": "silver metal with pink emissive ring accent"
+    },
+    {
+      "id": "pivot-right",
+      "name": "Right Pivot Disc",
+      "parent": "board-assembly",
+      "topologyClass": "surface-of-revolution",
+      "topologyRationale": "Circular disc cap on pivot axis",
+      "primitiveClass": "cylinder",
+      "geometryDescriptor": {
+        "type": "cylinder",
+        "radius": 0.03,
+        "height": 0.01,
+        "orientation": "horizontal"
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [
+        {
+          "id": "emissive-ring",
+          "kind": "emissive-accent",
+          "description": "Concentric emissive torus ring with center dot",
+          "implementation": "emissive material on ring geometry"
+        }
+      ],
+      "attachment": {
+        "parentSocket": "frame-right-mid",
+        "contactType": "mount"
+      },
+      "colorMaterialRecipe": "silver metal with cyan emissive ring accent"
+    },
+    {
+      "id": "stand-left",
+      "name": "Left Stand Assembly",
+      "parent": "root",
+      "topologyClass": "container",
+      "topologyRationale": "A-frame truss with struts and base rail",
+      "primitiveClass": "group",
+      "geometryDescriptor": {
+        "type": "container"
+      },
+      "materialId": null,
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "pivot-left",
+        "contactType": "pivot"
+      },
+      "colorMaterialRecipe": "none - container only"
+    },
+    {
+      "id": "stand-left-strut-front",
+      "name": "Left Front Strut",
+      "parent": "stand-left",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Square-filleted profile extruded along strut path",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.015,
+          "height": 0.015,
+          "depth": 0.6
+        },
+        "edgeFilletRadius": 0.003
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "pivot-left",
+        "localStart": [
+          0,
+          0,
+          0
+        ]
+      },
+      "colorMaterialRecipe": "silver metal matching frame"
+    },
+    {
+      "id": "stand-left-strut-rear",
+      "name": "Left Rear Strut",
+      "parent": "stand-left",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Square-filleted profile extruded along strut path with LED strip",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.015,
+          "height": 0.015,
+          "depth": 0.6
+        },
+        "edgeFilletRadius": 0.003
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [
+        {
+          "id": "pink-led-strip",
+          "kind": "emissive-accent",
+          "description": "Magenta LED strip continuation down rear strut",
+          "implementation": "emissive strip texture on strut surface"
+        }
+      ],
+      "attachment": {
+        "parentSocket": "pivot-left",
+        "localStart": [
+          0,
+          0,
+          0
+        ]
+      },
+      "colorMaterialRecipe": "silver metal with magenta LED accent"
+    },
+    {
+      "id": "stand-left-base",
+      "name": "Left Base Rail",
+      "parent": "stand-left",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Horizontal rail connecting strut feet",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.015,
+          "height": 0.015,
+          "depth": 0.4
+        },
+        "edgeFilletRadius": 0.003
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "stand-left-strut-feet",
+        "contactType": "weld"
+      },
+      "colorMaterialRecipe": "silver metal matching frame"
+    },
+    {
+      "id": "stand-left-endcap-front",
+      "name": "Left Front Endcap",
+      "parent": "stand-left",
+      "topologyClass": "surface-of-revolution",
+      "topologyRationale": "Rounded cap terminating strut at floor contact",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.02,
+          "height": 0.02,
+          "depth": 0.015
+        }
+      },
+      "materialId": "endcap-plastic",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "strut-front-foot",
+        "contactType": "cap"
+      },
+      "colorMaterialRecipe": "charcoal matte plastic (#3B3B40)"
+    },
+    {
+      "id": "stand-left-endcap-rear",
+      "name": "Left Rear Endcap",
+      "parent": "stand-left",
+      "topologyClass": "surface-of-revolution",
+      "topologyRationale": "Rounded cap terminating strut at floor contact",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.02,
+          "height": 0.02,
+          "depth": 0.015
+        }
+      },
+      "materialId": "endcap-plastic",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "strut-rear-foot",
+        "contactType": "cap"
+      },
+      "colorMaterialRecipe": "charcoal matte plastic (#3B3B40)"
+    },
+    {
+      "id": "stand-right",
+      "name": "Right Stand Assembly",
+      "parent": "root",
+      "topologyClass": "container",
+      "topologyRationale": "A-frame truss mirrored from left stand",
+      "primitiveClass": "group",
+      "geometryDescriptor": {
+        "type": "container",
+        "mirrorOf": "stand-left"
+      },
+      "materialId": null,
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "pivot-right",
+        "contactType": "pivot"
+      },
+      "colorMaterialRecipe": "none - container only"
+    },
+    {
+      "id": "stand-right-strut-front",
+      "name": "Right Front Strut",
+      "parent": "stand-right",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Square-filleted profile extruded along strut path",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.015,
+          "height": 0.015,
+          "depth": 0.6
+        },
+        "edgeFilletRadius": 0.003
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "pivot-right",
+        "localStart": [
+          0,
+          0,
+          0
+        ]
+      },
+      "colorMaterialRecipe": "silver metal matching frame"
+    },
+    {
+      "id": "stand-right-strut-rear",
+      "name": "Right Rear Strut",
+      "parent": "stand-right",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Square-filleted profile extruded along strut path with LED strip",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.015,
+          "height": 0.015,
+          "depth": 0.6
+        },
+        "edgeFilletRadius": 0.003
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [
+        {
+          "id": "pink-led-strip",
+          "kind": "emissive-accent",
+          "description": "Magenta LED strip continuation down rear strut",
+          "implementation": "emissive strip texture on strut surface"
+        }
+      ],
+      "attachment": {
+        "parentSocket": "pivot-right",
+        "localStart": [
+          0,
+          0,
+          0
+        ]
+      },
+      "colorMaterialRecipe": "silver metal with magenta LED accent"
+    },
+    {
+      "id": "stand-right-base",
+      "name": "Right Base Rail",
+      "parent": "stand-right",
+      "topologyClass": "curve-extrusion",
+      "topologyRationale": "Horizontal rail connecting strut feet",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.015,
+          "height": 0.015,
+          "depth": 0.4
+        },
+        "edgeFilletRadius": 0.003
+      },
+      "materialId": "silver-metal",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "stand-right-strut-feet",
+        "contactType": "weld"
+      },
+      "colorMaterialRecipe": "silver metal matching frame"
+    },
+    {
+      "id": "stand-right-endcap-front",
+      "name": "Right Front Endcap",
+      "parent": "stand-right",
+      "topologyClass": "surface-of-revolution",
+      "topologyRationale": "Rounded cap terminating strut at floor contact",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.02,
+          "height": 0.02,
+          "depth": 0.015
+        }
+      },
+      "materialId": "endcap-plastic",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "strut-front-foot",
+        "contactType": "cap"
+      },
+      "colorMaterialRecipe": "charcoal matte plastic (#3B3B40)"
+    },
+    {
+      "id": "stand-right-endcap-rear",
+      "name": "Right Rear Endcap",
+      "parent": "stand-right",
+      "topologyClass": "surface-of-revolution",
+      "topologyRationale": "Rounded cap terminating strut at floor contact",
+      "primitiveClass": "box",
+      "geometryDescriptor": {
+        "type": "box",
+        "dimensions": {
+          "width": 0.02,
+          "height": 0.02,
+          "depth": 0.015
+        }
+      },
+      "materialId": "endcap-plastic",
+      "localFeatures": [],
+      "attachment": {
+        "parentSocket": "strut-rear-foot",
+        "contactType": "cap"
+      },
+      "colorMaterialRecipe": "charcoal matte plastic (#3B3B40)"
+    }
+  ]
+}

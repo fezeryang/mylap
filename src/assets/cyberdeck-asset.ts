@@ -61,6 +61,9 @@ export const cyberdeckAssetDefinition: SceneAssetDefinition = {
       },
       instanceId,
       keyboard: model.keyboard,
+      get needsAnimation() {
+        return model.keyboard.needsAnimation ?? false
+      },
       parts: model.parts,
       root: normalized.root,
       screens: model.screens,

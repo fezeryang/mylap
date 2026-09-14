@@ -23,7 +23,9 @@ export const createWorkspaceNotesService = (storage?: Storage): WorkspaceNotesSe
     save: (text) => {
       storage?.setItem(STORAGE_KEY, text)
       snapshot = { savedAt: Date.now(), text }
-      listeners.forEach((listener) => listener(snapshot))
+      listeners.forEach((listener) => {
+        listener(snapshot)
+      })
     },
     subscribe: (listener) => {
       listeners.add(listener)

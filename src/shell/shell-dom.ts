@@ -157,8 +157,11 @@ export const bindShellDom = (options: ShellDomBindingOptions): ShellDomBinding =
   const stopNativeActivationPropagation = (event: KeyboardEvent): void => {
     if (event.key === "Enter" || event.key === " ") event.stopPropagation()
   }
+  let renderedState: DesktopNavigationState | null = null
   const sync = (): void => {
     const state = controller.readState()
+    if (renderedState === state) return
+    renderedState = state
     const overview = state === "overview"
     const deviceFocus = isDeviceFocus(state)
     options.dom.app.dataset["navigationState"] = state

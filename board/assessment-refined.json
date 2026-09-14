@@ -1,0 +1,173 @@
+{
+  "targetName": "LED Bulletin Board",
+  "sourceImage": "theboard.png",
+  "preSpecAssessment": {
+    "objectClass": {
+      "primaryType": "desk-accessory",
+      "primaryDomain": "object",
+      "formLanguage": ["geometric", "industrial"],
+      "structureKind": ["multi-assembly", "articulated"],
+      "motionPotential": ["pivot-tilt"],
+      "materialFamilies": ["fabric", "metal", "emissive", "plastic"],
+      "notes": "Gaming-aesthetic bulletin board with felt surface, silver frame, RGB LED accent lighting, and freestanding A-frame easel stands with pivot mechanism"
+    },
+    "complexity": {
+      "tier": "moderate",
+      "scores": {
+        "silhouetteComplexity": 5,
+        "componentCount": 7,
+        "hierarchyDepth": 6,
+        "repetitionDensity": 5,
+        "materialLayerCount": 6,
+        "localDetailDensity": 6,
+        "occlusionRisk": 3,
+        "actionReadinessNeed": 7
+      },
+      "estimatedCounts": {
+        "macroComponents": 5,
+        "mesoComponents": 13,
+        "microFeatureGroups": 8,
+        "materialLayers": 4,
+        "repetitionSystems": 2
+      },
+      "reasoning": [
+        "18+ named components across board, frame, LEDs, pivots, and stands",
+        "4 distinct material systems (felt, polished metal, emissive, matte plastic)",
+        "Pivot mechanism with articulation potential",
+        "Mirrored stand assemblies (repetition system)",
+        "LED strips as continuous emissive bands (8 total instances)",
+        "Moderate detail density: felt texture, frame fillets, pivot hardware, endcaps"
+      ]
+    },
+    "specDepthDecision": {
+      "requiredDepth": "moderate",
+      "minimumComponentLevels": ["macro", "meso", "micro"],
+      "needsRepetitionSystems": true,
+      "needsMaterialLocalOverrides": true,
+      "needsMultipleReviewViews": true,
+      "needsActionReadyHierarchy": true,
+      "rationale": "Moderate complexity with distinct assemblies, articulation hardware, repetition (mirrored stands, LED strips), and material variation. Single view sufficient given bilateral symmetry but multi-angle review required to verify non-planar stand geometry."
+    },
+    "unknownsToResolveBeforeImplementation": [
+      "Board back panel material (felt vs. plastic) - assume flat plastic backing",
+      "Pivot mechanism internals (friction vs. indexed) - model as decorative cap with socket",
+      "LED power routing (no visible cables) - omit cable management",
+      "Absolute scale - design for desktop size, ~50cm board width",
+      "Tilt angle range - assume 0-30° recline capability"
+    ],
+    "detailInventory": {
+      "scanMethod": "component-zones",
+      "targetMinDetails": 12,
+      "note": "Identity-defining features extracted from image analysis",
+      "details": [
+        {
+          "zone": "board-surface",
+          "feature": "felt-fiber-texture",
+          "mapping": "board-surface.localFeatures",
+          "implementation": "normal map with fine fabric grain"
+        },
+        {
+          "zone": "frame-border",
+          "feature": "rounded-rectangle-corners",
+          "mapping": "frame-border.geometryDescriptor",
+          "implementation": "fillet radius = 1.5-2× frame width"
+        },
+        {
+          "zone": "frame-border",
+          "feature": "edge-chamfers",
+          "mapping": "frame-border.localFeatures",
+          "implementation": "small chamfer producing specular highlights"
+        },
+        {
+          "zone": "frame-seam",
+          "feature": "led-inset-channel",
+          "mapping": "frame-border.geometryDescriptor",
+          "implementation": "recessed half-round groove for LED strips"
+        },
+        {
+          "zone": "led-strips",
+          "feature": "two-tone-color-zoning",
+          "mapping": "led materials with color variation",
+          "implementation": "cyan horizontal (#35B6FF), magenta vertical (#F070E8)"
+        },
+        {
+          "zone": "pivot-knobs",
+          "feature": "emissive-ring-accent",
+          "mapping": "pivot-knob.localFeatures",
+          "implementation": "concentric emissive torus + center dot"
+        },
+        {
+          "zone": "stand-struts",
+          "feature": "square-filleted-profile",
+          "mapping": "strut geometryDescriptor",
+          "implementation": "square cross-section with edge fillets"
+        },
+        {
+          "zone": "stand-struts",
+          "feature": "pink-led-continuation",
+          "mapping": "strut-rear.localFeatures",
+          "implementation": "magenta emissive strip down rear struts"
+        },
+        {
+          "zone": "strut-endcaps",
+          "feature": "dark-matte-caps",
+          "mapping": "endcap material",
+          "implementation": "charcoal plastic (#3B3B40), roughness 0.72"
+        },
+        {
+          "zone": "stand-geometry",
+          "feature": "triangular-truss-topology",
+          "mapping": "stand assembly structure",
+          "implementation": "closed triangle: apex → two struts → base rail"
+        },
+        {
+          "zone": "stand-geometry",
+          "feature": "fore-aft-splay",
+          "mapping": "stand positioning",
+          "implementation": "splay depth = 0.25× board width"
+        },
+        {
+          "zone": "overall",
+          "feature": "landscape-aspect-ratio",
+          "mapping": "board dimensions",
+          "implementation": "W:H = 1.55:1 (landscape)"
+        }
+      ]
+    },
+    "localSpecSearch": {
+      "executed": true,
+      "queries": [
+        "bulletin board cork felt surface",
+        "display board frame LED lighting",
+        "easel stand support pivot"
+      ],
+      "collection": "core_3d",
+      "snippets": [],
+      "note": "Generic object - no domain-specific specs needed. Using standard PBR materials and geometric primitives."
+    },
+    "anatomy": {
+      "applies": false
+    },
+    "qualityContract": {
+      "targetMinDetails": 12,
+      "actualDetails": 12,
+      "featureReviewTargets": [
+        {
+          "pass": "blockout",
+          "critical": ["landscape-aspect-ratio", "triangular-truss-topology", "fore-aft-splay"],
+          "important": ["led-inset-channel", "pivot-position"]
+        },
+        {
+          "pass": "structural-pass",
+          "critical": ["rounded-rectangle-corners", "two-tone-color-zoning", "dark-matte-caps"],
+          "important": ["square-filleted-profile", "emissive-ring-accent"]
+        },
+        {
+          "pass": "form-refinement",
+          "critical": ["edge-chamfers", "felt-fiber-texture", "pink-led-continuation"],
+          "important": []
+        }
+      ]
+    }
+  }
+}

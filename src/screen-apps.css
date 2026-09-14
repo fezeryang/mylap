@@ -6,6 +6,38 @@
   pointer-events: none;
 }
 
+.model-screen[data-interactive="false"],
+.model-screen[data-interactive="false"] * {
+  pointer-events: none !important;
+}
+
+.model-screen {
+  touch-action: manipulation;
+}
+
+.device-os :is(button, a, input, select, textarea) {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.device-os :is(button, a):active {
+  filter: brightness(0.9);
+}
+
+.phone-shell .os-icon-button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.device-os :is(textarea, [class$="-content"], [class$="-list"]) {
+  overscroll-behavior: contain;
+}
+
+.phone-os-home-indicator,
+.device-os input[type="range"] {
+  touch-action: none;
+}
+
 .model-screen {
   --screen-type-xs: 12px;
   --screen-type-sm: 13px;

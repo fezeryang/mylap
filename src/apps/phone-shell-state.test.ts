@@ -1,310 +1,95 @@
-import { describe, expect, test } from "bun:test"
+import { afterAll, describe, expect, test } from "bun:test"
+import { closeSoftwareBrowser, softwarePage } from "./software-browser-test-support"
 
-import { assetInstanceId, screenId } from "../runtime/ids"
-import type { ScreenAppHost } from "../runtime/screen-app"
-import type {
-  RadioCommand,
-  RadioMediaService,
-  RadioSnapshot,
-  RadioStation,
-} from "../services/radio-contracts"
-import { createBrowserPolicy } from "./browser-url-policy"
-import { createMainWorkspaceApp } from "./main-workspace-app"
-import { createPhoneShellApp } from "./phone-shell-app"
-
-type TestEvent = {
-  preventDefault(): void
-}
-
-type TestListener = (event: TestEvent) => void
-
-class TestElement {
-  readonly attributes = new Map<string, string>()
-  readonly children: TestElement[] = []
-  readonly dataset: Record<string, string> = {}
-  readonly listeners = new Map<string, TestListener>()
-  className = ""
-  disabled = false
-  hidden = false
-  max = ""
-  min = ""
-  placeholder = ""
-  selected = false
-  step = ""
-  textContent = ""
-  type = ""
-  value = ""
-
-  addEventListener(name: string, listener: TestListener): void {
-    this.listeners.set(name, listener)
-  }
-
-  append(...nodes: TestElement[]): void {
-    this.children.push(...nodes)
-  }
-
-  dispatch(name: string): void {
-    this.listeners.get(name)?.({ preventDefault: () => undefined })
-  }
-
-  findByClass(className: string): TestElement | null {
-    if (this.className.split(" ").includes(className)) return this
-    for (const child of this.children) {
-      const found = child.findByClass(className)
-      if (found !== null) return found
-    }
-    return null
-  }
-
-  findByTestId(testId: string): TestElement | null {
-    if (this.dataset["testid"] === testId) return this
-    for (const child of this.children) {
-      const found = child.findByTestId(testId)
-      if (found !== null) return found
-    }
-    return null
-  }
-
-  findByText(text: string): TestElement | null {
-    if (this.textContent === text) return this
-    for (const child of this.children) {
-      const found = child.findByText(text)
-      if (found !== null) return found
-    }
-    return null
-  }
-
-  removeAttribute(name: string): void {
-    this.attributes.delete(name)
-  }
-
-  removeEventListener(name: string): void {
-    this.listeners.delete(name)
-  }
-
-  replaceChildren(...nodes: TestElement[]): void {
-    this.children.splice(0, this.children.length, ...nodes)
-  }
-
-  setAttribute(name: string, value: string): void {
-    this.attributes.set(name, value)
-  }
-}
-
-const stations = [
-  {
-    bitrate: 128,
-    codec: "MP3",
-    favicon: null,
-    healthy: true,
-    hls: false,
-    homepage: null,
-    name: "Dawn Relay",
-    source: "radio-browser",
-    stationUuid: "dawn-relay",
-    streamUrl: "https://streams.example/dawn.mp3",
-  },
-  {
-    bitrate: 128,
-    codec: "MP3",
-    favicon: null,
-    healthy: true,
-    hls: false,
-    homepage: null,
-    name: "Night Shift",
-    source: "radio-browser",
-    stationUuid: "night-shift",
-    streamUrl: "https://streams.example/night.mp3",
-  },
-] as const satisfies readonly RadioStation[]
-
-class FixtureRadioService implements RadioMediaService {
-  #listeners = new Set<(snapshot: RadioSnapshot) => void>()
-  #snapshot: RadioSnapshot = {
-    error: null,
-    liveElapsedSeconds: 0,
-    powered: false,
-    selectedStation: stations[0],
-    stations,
-    status: "idle",
-    visualization: [],
-    volume: 0.7,
-  }
-
-  get listenerCount(): number {
-    return this.#listeners.size
-  }
-
-  dispatch(command: RadioCommand): Promise<void> {
-    switch (command.kind) {
-      case "set-power":
-        this.#update({
-          ...this.#snapshot,
-          error: null,
-          powered: command.powered,
-          status: command.powered ? this.#snapshot.status : "idle",
-        })
-        return Promise.resolve()
-      case "select-station": {
-        const selectedStation = stations.find(
-          (station) => station.stationUuid === command.stationUuid,
-        )
-        if (selectedStation === undefined) {
-          this.#update({
-            ...this.#snapshot,
-            error: { code: "station-unavailable", message: "Selected station is unavailable" },
-            status: "error",
-          })
-          return Promise.resolve()
-        }
-        this.#update({ ...this.#snapshot, error: null, selectedStation, status: "idle" })
-        return Promise.resolve()
-      }
-      case "play":
-        this.#update({
-          ...this.#snapshot,
-          error: this.#snapshot.powered
-            ? null
-            : { code: "power-off", message: "Radio power is off" },
-          status: this.#snapshot.powered ? "playing" : "error",
-        })
-        return Promise.resolve()
-      case "pause":
-        this.#update({ ...this.#snapshot, error: null, status: "paused" })
-        return Promise.resolve()
-      case "stop":
-        this.#update({ ...this.#snapshot, error: null, status: "idle" })
-        return Promise.resolve()
-      case "set-volume":
-        if (!Number.isFinite(command.volume) || command.volume < 0 || command.volume > 1) {
-          return Promise.reject(new TypeError("Volume must be between 0 and 1"))
-        }
-        this.#update({ ...this.#snapshot, volume: command.volume })
-        return Promise.resolve()
-    }
-  }
-
-  dispose(): void {}
-
-  loadStations(): Promise<void> {
-    return Promise.resolve()
-  }
-
-  read(): RadioSnapshot {
-    return this.#snapshot
-  }
-
-  subscribe(listener: (snapshot: RadioSnapshot) => void): () => void {
-    this.#listeners.add(listener)
-    return () => this.#listeners.delete(listener)
-  }
-
-  #update(snapshot: RadioSnapshot): void {
-    this.#snapshot = snapshot
-    for (const listener of this.#listeners) listener(snapshot)
-  }
-}
-
-const testHost = (): { readonly host: ScreenAppHost; readonly root: () => TestElement | null } => {
-  let mounted: TestElement | null = null
-  return {
-    host: {
-      append: (node) => {
-        if (node instanceof TestElement) mounted = node
-      },
-      clear: () => undefined,
-    },
-    root: () => mounted,
-  }
-}
-
-const requiredControl = (root: TestElement, testId: string): TestElement => {
-  const control = root.findByTestId(testId)
-  if (control === null) throw new Error(`Missing ${testId} control`)
-  return control
-}
-
-const requiredElementByClass = (root: TestElement, className: string): TestElement => {
-  const item = root.findByClass(className)
-  if (item === null) throw new Error(`Missing ${className} element`)
-  return item
-}
-
-const requiredElementByText = (root: TestElement, text: string): TestElement => {
-  const item = root.findByText(text)
-  if (item === null) throw new Error(`Missing ${text} element`)
-  return item
-}
+afterAll(closeSoftwareBrowser)
 
 describe("phone shell state", () => {
-  test("Given mounted phone and computer clients, when the phone controls shared radio then focus changes and disposal preserve the subscription boundary", async () => {
-    const originalDocument = Object.getOwnPropertyDescriptor(globalThis, "document")
-    Object.defineProperty(globalThis, "document", {
-      configurable: true,
-      value: {
-        createElement: () => new TestElement(),
-        createElementNS: () => new TestElement(),
-      },
-    })
-
+  test("Phone and computer control the same live radio and preserve app state across activation and disposal", async () => {
+    const page = await softwarePage()
     try {
-      const radioService = new FixtureRadioService()
-      const phoneHost = testHost()
-      const computerHost = testHost()
-      const phone = createPhoneShellApp({ radioService }).mount(phoneHost.host, {
-        assetInstanceId: assetInstanceId("phone-main"),
-        requestAssetActivation: () => undefined,
-        requestScreenFocus: () => undefined,
-        screenId: screenId("phone-primary"),
-      })
-      createMainWorkspaceApp({
-        browserPolicy: createBrowserPolicy({ currentOrigin: "https://desktop.test" }),
-        radioService,
-      }).mount(computerHost.host, {
-        assetInstanceId: assetInstanceId("computer-main"),
-        requestAssetActivation: () => undefined,
-        requestScreenFocus: () => undefined,
-        screenId: screenId("computer-primary"),
-      })
-      const phoneRoot = phoneHost.root()
-      const computerRoot = computerHost.root()
-      if (phoneRoot === null || computerRoot === null)
-        throw new Error("Expected both shells to mount")
-
-      requiredControl(phoneRoot, "phone-oho").dispatch("click")
-      requiredControl(computerRoot, "launcher-oho").dispatch("click")
-      requiredControl(phoneRoot, "oho-power").dispatch("click")
-      requiredControl(phoneRoot, "oho-station").value = "night-shift"
-      requiredControl(phoneRoot, "oho-station").dispatch("change")
-      requiredControl(phoneRoot, "oho-volume").value = "0.35"
-      requiredControl(phoneRoot, "oho-volume").dispatch("input")
-      requiredElementByText(phoneRoot, "Play").dispatch("click")
-      await Promise.resolve()
-
-      const phoneStatus = requiredElementByClass(phoneRoot, "oho-status").textContent
-      const computerStatus = requiredElementByClass(computerRoot, "oho-status").textContent
-      expect(phoneStatus).toBe("PLAYING · Night Shift · 35%")
-      expect(computerStatus).toBe(phoneStatus)
-      expect(radioService.listenerCount).toBe(2)
-
-      phone.setActive(false)
-      phone.setActive(true)
-      expect(phoneRoot.dataset["route"]).toBe("oho")
-      expect(requiredElementByClass(phoneRoot, "oho-status").textContent).toBe(phoneStatus)
-
-      phone.dispose()
-      await radioService.dispatch({ kind: "set-volume", volume: 0.5 })
-      expect(radioService.listenerCount).toBe(1)
-      expect(requiredElementByClass(phoneRoot, "oho-status").textContent).toBe(phoneStatus)
-      expect(requiredElementByClass(computerRoot, "oho-status").textContent).toBe(
-        "PLAYING · Night Shift · 50%",
+      const phone = page.locator(".phone-shell")
+      const computer = page.locator(".desktop-os")
+      await phone.locator(".phone-os-grid [data-app-id='music']").click()
+      await computer.locator(".desktop-os-dock [data-app-id='music']").click()
+      await phone.getByTestId("music-radio-tab").click()
+      await computer.getByTestId("music-radio-tab").click()
+      await phone.getByTestId("oho-power").click()
+      await phone.getByTestId("oho-station").selectOption("night-shift")
+      await phone.getByTestId("oho-volume").fill("0.35")
+      await phone
+        .locator(".music-radio-actions")
+        .getByRole("button", { name: "Play", exact: true })
+        .click()
+      await page.waitForFunction(
+        () => window.softwareTest.dependencies.radioService.read().status === "playing",
       )
+      expect(await computer.getByTestId("oho-station").inputValue()).toBe("night-shift")
+      expect(await computer.getByTestId("oho-volume").inputValue()).toBe("0.35")
+      expect(
+        await page.evaluate(
+          () => window.softwareTest.dependencies.radioService.read().selectedStation?.name,
+        ),
+      ).toBe("Night Shift")
+      const count = await page.evaluate(() => window.softwareTest.activeRadioListeners())
+      await page.evaluate(() => {
+        window.softwareTest.phone.setActive(false)
+        window.softwareTest.phone.setActive(true)
+      })
+      expect(await phone.getAttribute("data-route")).toBe("music")
+      expect(await phone.getByTestId("music-radio-tab").getAttribute("aria-pressed")).toBe("true")
+      const oldVolume = await phone.getByTestId("oho-volume").inputValue()
+      await page.evaluate(async () => {
+        window.softwareTest.phone.dispose()
+        await window.softwareTest.dependencies.radioService.dispatch({
+          kind: "set-volume",
+          volume: 0.5,
+        })
+      })
+      // Music, the island's player/title, and Control Center all release their subscriptions.
+      expect(await page.evaluate(() => window.softwareTest.activeRadioListeners())).toBe(count - 4)
+      expect(await phone.getByTestId("oho-volume").inputValue()).toBe(oldVolume)
+      expect(await computer.getByTestId("oho-volume").inputValue()).toBe("0.5")
     } finally {
-      if (originalDocument === undefined) {
-        Reflect.deleteProperty(globalThis, "document")
-      } else {
-        Object.defineProperty(globalThis, "document", originalDocument)
-      }
+      await page.close()
     }
-  })
+  }, 30000)
+
+  test("Real notes survive minimizing, phone app switching, and shared edits without losing text", async () => {
+    const page = await softwarePage()
+    try {
+      const computer = page.locator(".desktop-os")
+      const phone = page.locator(".phone-shell")
+      await computer.locator(".desktop-os-dock [data-app-id='notes']").click()
+      await computer.getByRole("button", { name: "New Note", exact: true }).click()
+      await computer.getByRole("textbox", { name: "Note title", exact: true }).fill("Our workspace")
+      await computer
+        .getByRole("textbox", { name: "Note text", exact: true })
+        .fill("A shared idea from the computer.")
+      await computer.getByRole("button", { name: "最小化备忘录", exact: true }).click()
+      await phone.locator(".phone-os-grid [data-app-id='notes']").click()
+      await phone.locator(".productivity-note-row").filter({ hasText: "Our workspace" }).click()
+      expect(
+        await phone.getByRole("textbox", { name: "Note text", exact: true }).inputValue(),
+      ).toBe("A shared idea from the computer.")
+      await phone
+        .getByRole("textbox", { name: "Note text", exact: true })
+        .fill("Edited on Phone — 中文输入")
+      await phone.getByRole("button", { name: "返回手机主屏幕", exact: true }).click()
+      await phone.locator(".phone-os-grid [data-app-id='notes']").click()
+      expect(
+        await phone.getByRole("textbox", { name: "Note text", exact: true }).inputValue(),
+      ).toBe("Edited on Phone — 中文输入")
+      await computer.locator(".desktop-os-dock [data-app-id='notes']").click()
+      expect(
+        await computer.getByRole("textbox", { name: "Note text", exact: true }).inputValue(),
+      ).toBe("Edited on Phone — 中文输入")
+      expect(
+        await page.evaluate(
+          () => JSON.parse(localStorage.getItem("todou.workspace.data") ?? "{}").notes[0].text,
+        ),
+      ).toBe("Edited on Phone — 中文输入")
+    } finally {
+      await page.close()
+    }
+  }, 30000)
 })

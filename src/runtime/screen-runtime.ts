@@ -1,7 +1,11 @@
-import type { Camera, Object3D, Scene } from "three"
-import { Quaternion, Raycaster, Vector3 } from "three"
+import type { Camera, Intersection, Object3D, Scene } from "three"
+import { Matrix4, Quaternion, Raycaster, Vector3 } from "three"
 import type { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
-import { CSS3DObject, CSS3DRenderer } from "three/examples/jsm/renderers/CSS3DRenderer.js"
+import {
+  CSS3DObject,
+  CSS3DRenderer,
+  CSS3DSprite,
+} from "three/examples/jsm/renderers/CSS3DRenderer.js"
 
 import type { ScreenSurface, StageAsset } from "./asset-contracts"
 import type { AssetStage, AssetStageEvent } from "./asset-stage"
@@ -18,6 +22,9 @@ type ScreenRuntimeOptions = {
   readonly registry: ScreenAppRegistry
   readonly scene: Scene
   readonly stage: AssetStage
+  readonly canInteract?: (assetId: AssetInstanceId) => boolean
+  readonly requestDeviceFocus?: (assetId: AssetInstanceId) => void
+  readonly invalidate?: () => void
 }
 
 type MountedScreen = {
@@ -26,10 +33,13 @@ type MountedScreen = {
   readonly object: CSS3DObject
   readonly session: ScreenSession
   readonly surface: ScreenSurface
+  readonly occluders: Object3D[]
+  readonly anchorMatrix: Matrix4
 }
 
 export type ScreenEscapeEvent = {
   readonly key: string
+  readonly defaultPrevented?: boolean
   preventDefault(): void
   stopImmediatePropagation(): void
 }
@@ -53,13 +63,14 @@ export const connectScreenEscapeRelease = (
   releaseScreenFocus: () => void,
 ): (() => void) => {
   const releaseWithEscape = (event: ScreenEscapeEvent): void => {
-    if (event.key !== "Escape" || !isScreenFocused()) return
+    if (event.key !== "Escape" || event.defaultPrevented || !isScreenFocused()) return
     event.preventDefault()
     event.stopImmediatePropagation()
     releaseScreenFocus()
   }
-  source.addEventListener("keydown", releaseWithEscape, true)
-  return () => source.removeEventListener("keydown", releaseWithEscape, true)
+  // Apps consume Escape for their dialogs first; unhandled Escape releases the screen.
+  source.addEventListener("keydown", releaseWithEscape, false)
+  return () => source.removeEventListener("keydown", releaseWithEscape, false)
 }
 
 class DomScreenHost implements ScreenAppHost {
@@ -83,6 +94,12 @@ export class ScreenRuntime {
   private readonly renderer = new CSS3DRenderer()
   private readonly screenPosition = new Vector3()
   private readonly cameraPosition = new Vector3()
+  private readonly direction = new Vector3()
+  private readonly intersections: Intersection[] = []
+  private readonly cameraMatrix = new Matrix4()
+  private readonly assetTransforms = new Map<StageAsset, { matrix: Matrix4; explosion: number }>()
+  private spatialDirty = true
+  private visibilityChecks = 0
   private readonly unsubscribeStage: () => void
   private readonly disconnectEscape: () => void
 
@@ -90,6 +107,7 @@ export class ScreenRuntime {
     this.renderer.domElement.className = "css3d-layer"
     options.container.append(this.renderer.domElement)
     for (const asset of options.stage.assets) this.attach(asset)
+    this.refreshOccluders()
     this.unsubscribeStage = options.stage.subscribe(this.handleStageEvent)
     options.container.ownerDocument.addEventListener("pointerdown", this.releaseFromOutside, true)
     this.disconnectEscape = connectScreenEscapeRelease(
@@ -101,11 +119,35 @@ export class ScreenRuntime {
 
   render(): void {
     const snapshot = this.options.readSnapshot()
+    let changed = this.spatialDirty || !this.cameraMatrix.equals(this.options.camera.matrixWorld)
+    this.cameraMatrix.copy(this.options.camera.matrixWorld)
+    for (const asset of this.options.stage.assets) {
+      const cached = this.assetTransforms.get(asset)
+      if (
+        !cached ||
+        !cached.matrix.equals(asset.root.matrixWorld) ||
+        cached.explosion !== asset.explosion
+      ) {
+        changed = true
+        this.assetTransforms.set(asset, {
+          matrix: asset.root.matrixWorld.clone(),
+          explosion: asset.explosion,
+        })
+      }
+    }
     this.mounted.forEach((mounted) => {
       mounted.session.update(snapshot)
-      this.updateVisibility(mounted)
+      if (changed || !mounted.anchorMatrix.equals(mounted.surface.anchor.matrixWorld)) {
+        this.updateVisibility(mounted)
+        mounted.anchorMatrix.copy(mounted.surface.anchor.matrixWorld)
+      }
     })
+    this.spatialDirty = false
     this.renderer.render(this.options.scene, this.options.camera)
+  }
+
+  get occlusionChecks(): number {
+    return this.visibilityChecks
   }
 
   resize(width: number, height: number): void {
@@ -117,11 +159,13 @@ export class ScreenRuntime {
   }
 
   setPower(assetId: AssetInstanceId, powered: boolean): void {
+    this.spatialDirty = true
     this.forAsset(assetId).forEach((mounted) => {
       mounted.session.setPower(powered)
       mounted.element.dataset["powered"] = String(powered)
       if (!powered && mounted === this.focused) this.releaseFocus()
     })
+    this.options.invalidate?.()
   }
 
   togglePower(assetId: AssetInstanceId): boolean {
@@ -162,9 +206,12 @@ export class ScreenRuntime {
     switch (event.kind) {
       case "asset-added":
         this.attach(event.asset)
+        this.refreshOccluders()
         return
       case "asset-removed":
         for (const mounted of this.forAsset(event.asset.instanceId)) this.removeMounted(mounted)
+        this.assetTransforms.delete(event.asset)
+        this.refreshOccluders()
         return
       case "active-changed":
         this.mounted.forEach((mounted) => {
@@ -183,19 +230,21 @@ export class ScreenRuntime {
       element.dataset["assetInstance"] = asset.instanceId.value
       element.dataset["screenId"] = surface.screenId.value
       element.dataset["powered"] = "true"
+      element.dataset["interactive"] = String(surface.interactive !== false)
       element.dataset["activeAsset"] = String(this.options.stage.active === asset)
       element.style.width = `${surface.pixelSize.width}px`
       element.style.height = `${surface.pixelSize.height}px`
-      element.tabIndex = 0
+      element.tabIndex = surface.interactive === false ? -1 : 0
       element.setAttribute("role", "region")
       element.setAttribute(
         "aria-label",
         `${asset.instanceId.value} ${surface.screenId.value} screen application`,
       )
 
-      const object = new CSS3DObject(element)
+      const object = surface.cssBillboard ? new CSS3DSprite(element) : new CSS3DObject(element)
       object.name = `${asset.instanceId.value}-${surface.screenId.value}-css3d`
-      object.position.z = 0.025
+      object.rotation.y = surface.cssRotationY ?? 0
+      object.position.z = surface.depthOffset ?? 0.025
       object.scale.set(
         surface.worldSize.width / surface.pixelSize.width,
         surface.worldSize.height / surface.pixelSize.height,
@@ -217,7 +266,41 @@ export class ScreenRuntime {
           registry: this.options.registry,
         }),
         surface,
+        occluders: [],
+        anchorMatrix: new Matrix4(),
       }
+      let suppressClick = false
+      element.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (this.options.canInteract?.(asset.instanceId) === false) {
+            suppressClick = true
+            event.preventDefault()
+            event.stopImmediatePropagation()
+            this.options.requestDeviceFocus?.(asset.instanceId)
+            this.options.invalidate?.()
+            return
+          }
+          suppressClick = false
+          this.focusScreen(mounted)
+        },
+        true,
+      )
+      element.addEventListener(
+        "click",
+        (event) => {
+          if (!suppressClick && this.options.canInteract?.(asset.instanceId) !== false) return
+          suppressClick = false
+          event.preventDefault()
+          event.stopImmediatePropagation()
+          this.options.requestDeviceFocus?.(asset.instanceId)
+          this.options.invalidate?.()
+        },
+        true,
+      )
+      element.addEventListener("pointercancel", () => {
+        suppressClick = false
+      })
       element.addEventListener("pointerdown", (event) => {
         event.stopPropagation()
         this.options.stage.activate(asset.instanceId)
@@ -254,6 +337,7 @@ export class ScreenRuntime {
     this.focused = mounted
     mounted.element.dataset["focused"] = "true"
     this.options.controls.enabled = false
+    this.options.container.ownerDocument.documentElement.dataset["controlsEnabled"] = "false"
   }
 
   private releaseFocus(): void {
@@ -265,6 +349,7 @@ export class ScreenRuntime {
     }
     this.focused = null
     this.options.controls.enabled = true
+    this.options.container.ownerDocument.documentElement.dataset["controlsEnabled"] = "true"
   }
 
   private readonly releaseFromOutside = (event: PointerEvent): void => {
@@ -278,30 +363,36 @@ export class ScreenRuntime {
     this.options.camera.getWorldPosition(this.cameraPosition)
     this.normal.set(0, 0, 1).applyQuaternion(this.quaternion)
     const facing =
-      this.normal.dot(this.cameraPosition.clone().sub(this.screenPosition).normalize()) > 0.04
+      this.normal.dot(
+        this.direction.copy(this.cameraPosition).sub(this.screenPosition).normalize(),
+      ) > 0.04
     const visible = mounted.session.isPowered && facing && !this.isOccluded(mounted)
     mounted.object.visible = visible
-    mounted.element.dataset["visible"] = String(visible)
+    if (mounted.element.dataset["visible"] !== String(visible))
+      mounted.element.dataset["visible"] = String(visible)
   }
 
   private isOccluded(mounted: MountedScreen): boolean {
-    const direction = this.screenPosition.clone().sub(this.cameraPosition)
+    const direction = this.direction.copy(this.screenPosition).sub(this.cameraPosition)
     const screenDistance = direction.length()
     this.raycaster.set(this.cameraPosition, direction.normalize())
-    const candidates = this.options.stage.assets.flatMap((asset) => asset.selectable)
-    const blocker = this.raycaster
-      .intersectObjects(candidates, false)
-      .find((hit) => !this.isDescendant(hit.object, mounted.surface.occlusionRoot))
+    this.raycaster.far = Math.max(0, screenDistance - 0.08)
+    this.intersections.length = 0
+    this.visibilityChecks++
+    this.raycaster.intersectObjects(mounted.occluders, false, this.intersections)
+    const blocker = this.intersections[0]
     return blocker !== undefined && blocker.distance < screenDistance - 0.08
   }
 
-  private isDescendant(object: Object3D, ancestor: Object3D): boolean {
-    let cursor: Object3D | null = object
-    while (cursor !== null) {
-      if (cursor === ancestor) return true
-      cursor = cursor.parent
+  private refreshOccluders(): void {
+    for (const mounted of this.mounted.values()) {
+      mounted.occluders.length = 0
+      for (const asset of this.options.stage.assets) {
+        if (asset !== mounted.asset) mounted.occluders.push(...asset.selectable)
+      }
     }
-    return false
+    this.spatialDirty = true
+    this.options.invalidate?.()
   }
 
   private forAsset(assetId: AssetInstanceId): readonly MountedScreen[] {

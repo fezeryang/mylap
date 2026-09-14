@@ -6,6 +6,7 @@ import type { AssetKeyboard, KeyboardBinding } from "./asset-contracts"
 export class KeyboardController implements AssetKeyboard {
   private readonly bindingsByCode = new Map<string, KeyboardBinding>()
   private readonly pressed = new Set<KeyboardCode>()
+  needsAnimation = false
 
   constructor(
     readonly bindings: readonly KeyboardBinding[],
@@ -26,6 +27,7 @@ export class KeyboardController implements AssetKeyboard {
     const binding = this.bindingsByCode.get(code)
     if (binding === undefined || this.pressed.has(binding.code)) return false
     this.pressed.add(binding.code)
+    this.needsAnimation = true
     binding.keycap.userData["pressed"] = true
     return true
   }
@@ -33,11 +35,13 @@ export class KeyboardController implements AssetKeyboard {
   release(code: string): boolean {
     const binding = this.bindingsByCode.get(code)
     if (binding === undefined || !this.pressed.delete(binding.code)) return false
+    this.needsAnimation = true
     binding.keycap.userData["pressed"] = false
     return true
   }
 
   releaseAll(): void {
+    if (this.pressed.size > 0) this.needsAnimation = true
     this.bindings.forEach((binding) => {
       binding.keycap.userData["pressed"] = false
     })
@@ -45,6 +49,7 @@ export class KeyboardController implements AssetKeyboard {
   }
 
   update(deltaSeconds: number): void {
+    this.needsAnimation = false
     this.bindings.forEach((binding) => {
       const pressed = this.pressed.has(binding.code)
       const targetY = binding.restPosition.y - (pressed ? binding.travel : 0)
@@ -55,6 +60,15 @@ export class KeyboardController implements AssetKeyboard {
       binding.material.emissiveIntensity = this.reducedMotion
         ? targetGlow
         : MathUtils.damp(binding.material.emissiveIntensity, targetGlow, 18, deltaSeconds)
+      if (
+        Math.abs(binding.keycap.position.y - targetY) > 0.0001 ||
+        Math.abs(binding.material.emissiveIntensity - targetGlow) > 0.0001
+      ) {
+        this.needsAnimation = true
+      } else {
+        binding.keycap.position.y = targetY
+        binding.material.emissiveIntensity = targetGlow
+      }
     })
   }
 }

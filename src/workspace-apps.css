@@ -15,9 +15,12 @@
   overflow: hidden;
   color: var(--app-ink);
   background:
-    radial-gradient(circle at 82% 4%, rgb(205 221 239 / 62%), transparent 34%),
-    var(--app-bg);
-  font: 14px/1.45 Inter, ui-sans-serif, system-ui, sans-serif;
+    radial-gradient(circle at 82% 4%, rgb(205 221 239 / 62%), transparent 34%), var(--app-bg);
+  font:
+    14px / 1.45 Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
 }
 
 .phone-shell {
@@ -54,7 +57,11 @@
   padding: 8px 12px;
   color: var(--app-muted);
   background: transparent;
-  font: 600 13px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  font:
+    600 13px / 1 Inter,
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
   white-space: nowrap;
   cursor: pointer;
   transition:

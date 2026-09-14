@@ -19,8 +19,10 @@ export class InvalidPhoneModelError extends Error {
 
 type PhoneModelFactory = () => PhoneModel
 
-const PHONE_SCREEN_PIXEL_SIZE = { height: 1280, width: 600 } as const
+const PHONE_SCREEN_PIXEL_SIZE = { height: 2560 / 3, width: 400 } as const
 const PHONE_SCREEN_WORLD_SIZE = { height: 13.7216, width: 6.432 } as const
+// Glass front is at authored z=.67; keep DOM and hit testing together just above it.
+const PHONE_SCREEN_DEPTH_OFFSET = 0.14
 
 const contains = (ancestor: Group, descendant: Group): boolean => {
   let cursor = descendant.parent
@@ -118,7 +120,7 @@ export const createPhoneAssetDefinition = (
         new MeshBasicMaterial({ colorWrite: false, depthWrite: false }),
       )
       hitProxy.name = "phone-primary-hit-plane"
-      hitProxy.position.z = 0.025
+      hitProxy.position.z = PHONE_SCREEN_DEPTH_OFFSET
       hitProxy.userData["explodeWithParent"] = true
       hitProxy.userData["screenHitProxy"] = true
       model.screenAnchor.add(hitProxy)
@@ -152,6 +154,7 @@ export const createPhoneAssetDefinition = (
           {
             anchor: model.screenAnchor,
             defaultAppId: PHONE_SHELL_APP_ID,
+            depthOffset: PHONE_SCREEN_DEPTH_OFFSET,
             hitProxy,
             occlusionRoot: model.root,
             pixelSize: PHONE_SCREEN_PIXEL_SIZE,

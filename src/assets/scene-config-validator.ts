@@ -1,12 +1,18 @@
 import type { AssetPlacement } from "../runtime/asset-contracts"
 import { assetInstanceId, assetTypeId } from "../runtime/ids"
 
-export type DesktopInstanceId = "computer-main" | "desk-main" | "phone-main" | "radio-main"
-export type DesktopAssetType = "cyberdeck" | "cyber-desk" | "phone" | "ratio"
+export type DesktopInstanceId =
+  | "computer-main"
+  | "desk-main"
+  | "phone-main"
+  | "radio-main"
+  | "bulletin-board-main"
+export type DesktopAssetType = "cyberdeck" | "cyber-desk" | "phone" | "ratio" | "bulletin-board"
 export type DesktopSocketLabel =
   | "socket-desktop-asset-1"
   | "socket-desktop-asset-2"
   | "socket-desktop-asset-3"
+  | "socket-desktop-asset-4"
   | "environment"
 export type DesktopVector = readonly [number, number, number]
 export type DesktopTargetFootprint =
@@ -37,6 +43,10 @@ export const DESKTOP_TABLETOP_BOUNDS = {
   minZ: -2.9,
 } as const
 export const DESKTOP_TABLETOP_SIZE = { x: 12, z: 5.8 } as const
+// Bottom of the authored desk's feet after its adapter translation.
+export const DESKTOP_FLOOR_Y = -4.673366053709811
+export const BOARD_FOOTPRINT = { x: 9, z: 4 } as const
+export const BOARD_BASE_Y = -0.8
 
 export type DesktopSceneValidationCode =
   | "invalid-input"
@@ -59,7 +69,13 @@ export class DesktopSceneValidationError extends Error {
   }
 }
 
-const ORDER = ["computer-main", "desk-main", "phone-main", "radio-main"] as const
+const ORDER = [
+  "computer-main",
+  "desk-main",
+  "phone-main",
+  "radio-main",
+  "bulletin-board-main",
+] as const
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null && !Array.isArray(value)
 const field = (record: Record<string, unknown>, key: string): unknown => record[key]
@@ -67,14 +83,20 @@ const isInstanceId = (value: string): value is DesktopInstanceId =>
   value === "computer-main" ||
   value === "desk-main" ||
   value === "phone-main" ||
-  value === "radio-main"
+  value === "radio-main" ||
+  value === "bulletin-board-main"
 const isAssetType = (value: string): value is DesktopAssetType =>
-  value === "cyberdeck" || value === "cyber-desk" || value === "phone" || value === "ratio"
+  value === "cyberdeck" ||
+  value === "cyber-desk" ||
+  value === "phone" ||
+  value === "ratio" ||
+  value === "bulletin-board"
 const isSocket = (value: string): value is DesktopSocketLabel =>
   value === "environment" ||
   value === "socket-desktop-asset-1" ||
   value === "socket-desktop-asset-2" ||
-  value === "socket-desktop-asset-3"
+  value === "socket-desktop-asset-3" ||
+  value === "socket-desktop-asset-4"
 const invalid = (detail: string): DesktopSceneValidationError =>
   new DesktopSceneValidationError("invalid-input", detail)
 
@@ -163,6 +185,8 @@ const expectedType = (id: DesktopInstanceId): DesktopAssetType => {
       return "phone"
     case "radio-main":
       return "ratio"
+    case "bulletin-board-main":
+      return "bulletin-board"
   }
 }
 const expectedSocket = (id: DesktopInstanceId): DesktopSocketLabel => {
@@ -175,6 +199,8 @@ const expectedSocket = (id: DesktopInstanceId): DesktopSocketLabel => {
       return "socket-desktop-asset-1"
     case "radio-main":
       return "socket-desktop-asset-3"
+    case "bulletin-board-main":
+      return "environment"
   }
 }
 const expectedFootprint = (id: DesktopInstanceId): DesktopTargetFootprint => {
@@ -187,6 +213,8 @@ const expectedFootprint = (id: DesktopInstanceId): DesktopTargetFootprint => {
       return { kind: "bounded", x: 0.9, z: 2.2 }
     case "radio-main":
       return { kind: "bounded", x: 1.7, z: 1.2 }
+    case "bulletin-board-main":
+      return { kind: "bounded", ...BOARD_FOOTPRINT }
   }
 }
 const sameFootprint = (left: DesktopTargetFootprint, right: DesktopTargetFootprint): boolean =>
@@ -209,8 +237,31 @@ const bounds = (
 const assertLayout = (placements: readonly DesktopPlacementSpec[]): void => {
   const devices = placements.flatMap((placement) => {
     const footprint = bounds(placement)
-    return footprint === null ? [] : [{ id: placement.instanceId, footprint }]
+    return footprint === null || placement.instanceId === "bulletin-board-main"
+      ? []
+      : [{ id: placement.instanceId, footprint }]
   })
+  const board = placements.find(({ instanceId }) => instanceId === "bulletin-board-main")
+  if (board !== undefined && board.targetFootprint.kind === "bounded") {
+    const yaw = board.outerRotation[1]
+    const halfWidth =
+      (Math.abs(Math.cos(yaw)) * board.targetFootprint.x +
+        Math.abs(Math.sin(yaw)) * board.targetFootprint.z) /
+      2
+    // Keep a generous side gap and elevate the board above the desk's lower structure.
+    if (
+      Math.abs(board.outerPosition[0]) - halfWidth < 8.8 ||
+      board.outerPosition[1] < BOARD_BASE_Y ||
+      board.outerRotation[0] !== 0 ||
+      board.outerRotation[2] !== 0 ||
+      board.role !== "environment"
+    ) {
+      throw new DesktopSceneValidationError(
+        "invalid-placement",
+        "bulletin-board-main must be elevated upright beside the desk, with a generous side gap",
+      )
+    }
+  }
   for (const device of devices) {
     const [minX, maxX, minZ, maxZ] = device.footprint
     if (
@@ -365,6 +416,18 @@ export const desktopSceneSpecification = [
     targetFootprint: { kind: "bounded", x: 1.7, z: 1.2 },
     selectable: true,
     role: "device",
+  },
+  {
+    instanceId: "bulletin-board-main",
+    typeId: "bulletin-board",
+    socketLabel: "environment",
+    outerPosition: [-13.8, BOARD_BASE_Y, 1.1],
+    outerRotation: [0, Math.PI - 0.15, 0],
+    outerScale: 1,
+    innerAuthoredTransform: { appliesOnce: true, position: [0, 0, 0], rotation: [0, 0, 0] },
+    targetFootprint: { kind: "bounded", ...BOARD_FOOTPRINT },
+    selectable: true,
+    role: "environment",
   },
 ] as const satisfies readonly DesktopPlacementSpec[]
 export const DESKTOP_SCENE_SPECIFICATION = desktopSceneSpecification

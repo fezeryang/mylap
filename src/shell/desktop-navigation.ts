@@ -24,9 +24,9 @@ export type DesktopNavigationPose = {
 
 export const DESKTOP_NAVIGATION_POSES = {
   computer: { position: [0, 4.03, -5.87], target: [0, 0.8, 0] },
-  landing: { position: [0, 10.5, -20], target: [0, 0.5, 0] },
-  overview: { position: [-6.8, 6.4, -10.5], target: [0, 0.5, 0] },
-  phone: { position: [-3.1, 1.71, -2.19], target: [-3, 0.15, 0] },
+  landing: { position: [-5, 12, -38], target: [-5, -0.8, 0] },
+  overview: { position: [-11, 10, -34], target: [-5, -0.8, 0] },
+  phone: { position: [-3.1, 2.7, 2.19], target: [-3, 0.15, 0] },
   radio: { position: [3.05, 2.15, -2.85], target: [3, 0.35, 0] },
 } as const satisfies Readonly<Record<string, DesktopNavigationPose>>
 

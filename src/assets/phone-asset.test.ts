@@ -62,8 +62,14 @@ describe("phoneAssetDefinition", () => {
     expect(asset.screens).toHaveLength(1)
     expect(surface.screenId.value).toBe("phone-primary")
     expect(surface.defaultAppId.value).toBe("phone-shell")
-    expect(surface.pixelSize).toEqual({ height: 1280, width: 600 })
+    expect(surface.pixelSize).toEqual({ height: 2560 / 3, width: 400 })
     expect(surface.worldSize).toEqual({ height: 13.7216, width: 6.432 })
+    expect(surface.worldSize.width / surface.pixelSize.width).toBeCloseTo(
+      surface.worldSize.height / surface.pixelSize.height,
+      10,
+    )
+    expect(surface.hitProxy.position.z).toBe(surface.depthOffset ?? 0.025)
+    expect(surface.anchor.position.z + (surface.depthOffset ?? 0)).toBeGreaterThan(0.67)
     expect(surface.anchor.name).toBe("screen-ui")
     expect(surface.hitProxy.parent).toBe(surface.anchor)
     expect(surface.hitProxy).toBeInstanceOf(Mesh)

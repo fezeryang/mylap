@@ -20,6 +20,7 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js"
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js"
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
+import { DESKTOP_FLOOR_Y } from "../assets/scene-config-validator"
 import type { DesktopNavigationController } from "../shell/desktop-navigation"
 import {
   createDesktopNavigationBinding,
@@ -131,7 +132,10 @@ export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRe
   scene.add(cyanFill)
 
   const ground = new Mesh(
-    new CircleGeometry(options.multipleAssets ? 18 : 12, 128),
+    new CircleGeometry(
+      options.navigation !== undefined ? 25 : options.multipleAssets ? 18 : 12,
+      128,
+    ),
     new MeshStandardMaterial({
       color: 0xd9c9b8,
       metalness: 0.05,
@@ -142,7 +146,7 @@ export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRe
   )
   ground.name = "studio-ground"
   ground.rotation.x = -Math.PI / 2
-  ground.position.y = -1.05
+  ground.position.y = options.navigation === undefined ? -1.05 : DESKTOP_FLOOR_Y
   ground.receiveShadow = true
   scene.add(ground)
 
@@ -182,7 +186,7 @@ export const createViewerRendering = (options: ViewerRenderingOptions): ViewerRe
     navigation,
     render: (timestampMilliseconds) => {
       if (timestampMilliseconds !== undefined) navigation?.advance(timestampMilliseconds)
-      controls.update()
+      if (controls.enabled) controls.update()
       composer.render()
     },
     renderer,

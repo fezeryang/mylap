@@ -102,8 +102,11 @@ export function createFrontControlParts(materials: RadioMaterials): FrontControl
     )
     light.rotation.x = Math.PI / 2
     light.position.set((index - 2.5) * 0.76, 0.13, 0.21)
+    light.userData["controlId"] = label.toLowerCase()
     const labelMesh = createLabel(label, 0.45, 0.12, "#17172e")
     labelMesh.position.set((index - 2.5) * 0.76, -0.17, 0.22)
+    labelMesh.userData["controlId"] = label.toLowerCase()
+    labelMesh.name = `transport-${label.toLowerCase()}-label`
     transport.group.add(labelMesh)
   })
 

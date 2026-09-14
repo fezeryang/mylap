@@ -85,9 +85,17 @@ describe("accessible shell controller", () => {
       "keyboard:phone-main",
     ])
 
-    const beforeIgnoredPick = calls.length
     shell.pickDevice(computer)
-    expect(calls).toHaveLength(beforeIgnoredPick)
+    expect(navigation.read().state).toBe("computer-focus")
+    expect(calls.slice(-4)).toEqual([
+      "diagnostic:null",
+      "active:computer-main",
+      "clear-screen",
+      "keyboard:computer-main",
+    ])
+    const beforeRepeatedPick = calls.length
+    shell.pickDevice(computer)
+    expect(calls).toHaveLength(beforeRepeatedPick)
 
     shell.exit()
     shell.pickDevice(computer)

@@ -70,9 +70,7 @@ describe("createBrowserPolicy", () => {
   })
 
   test("exposes exact iframe security attributes and stable application IDs", () => {
-    expect(production.iframeSandbox).toBe(
-      "allow-forms allow-scripts allow-popups allow-popups-to-escape-sandbox",
-    )
+    expect(production.iframeSandbox).toBe("allow-forms allow-scripts")
     expect(production.referrerPolicy).toBe("no-referrer")
     expect([
       PHONE_SHELL_APP_ID.value,
@@ -82,7 +80,21 @@ describe("createBrowserPolicy", () => {
     const dependencyKeys = {
       browserPolicy: production,
       radioService: null,
-    } satisfies Omit<DefaultAppDependencies, "radioService"> & { readonly radioService: null }
+    } satisfies Pick<DefaultAppDependencies, "browserPolicy"> & { readonly radioService: null }
     expect(Object.keys(dependencyKeys).sort()).toEqual(["browserPolicy", "radioService"])
+  })
+
+  test("personal site retains its own origin, but never receives popup or top navigation permission", () => {
+    expect(production.evaluate("https://home.fezern8n.com/blog")).toEqual({
+      kind: "embed",
+      url: "https://home.fezern8n.com/blog",
+    })
+    expect(production.sandboxFor("https://home.fezern8n.com/")).toBe(
+      "allow-forms allow-scripts allow-same-origin",
+    )
+    expect(production.isPersonalSite("https://home.fezern8n.com.attacker.test/")).toBe(false)
+    expect(production.sandboxFor("http://127.0.0.1:4173/qa/iframe-fixture.html")).not.toContain(
+      "allow-same-origin",
+    )
   })
 })

@@ -1,0 +1,311 @@
+/* Software only. No physical model, camera, stage or material styling. */
+.os-personal-site-icon {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(145deg, #f5ece0, #c1a8f6);
+  color: #252034;
+  font:
+    700 28px / 1 Georgia,
+    serif;
+}
+.safari-app {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.safari-tabs {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 6px 10px 0;
+  background: var(--os-glass);
+}
+.safari-tab-list {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+}
+.safari-tab {
+  display: flex;
+  min-width: 105px;
+  max-width: 200px;
+  flex: 1;
+  border-radius: 9px 9px 0 0;
+  background: var(--os-surface);
+}
+.safari-tab-select,
+.safari-tab-close,
+.safari-history-link,
+.safari-card-select {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.safari-tab-select {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex: 1;
+  padding: 10px;
+  font-size: 12px;
+}
+.safari-tab-select[aria-pressed="true"] {
+  color: var(--os-accent);
+  font-weight: 650;
+}
+.safari-tab-close {
+  min-width: 30px;
+}
+.safari-toolbar {
+  flex-shrink: 0;
+  padding: 6px 8px;
+  gap: 2px;
+}
+.safari-toolbar .os-icon-button {
+  min-width: 30px;
+  padding: 6px;
+}
+.safari-start {
+  overflow: auto;
+  min-height: 0;
+}
+.safari-favorite {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.safari-history {
+  display: grid;
+  gap: 8px;
+}
+.safari-history-link {
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--os-surface);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.safari-frame {
+  min-height: 0;
+  flex: 1 1 0;
+  height: 100%;
+}
+.safari-feedback {
+  flex-shrink: 0;
+  line-height: 1.5;
+  margin: 8px 12px !important;
+}
+.safari-tab-overview {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  padding: 18px;
+  overflow: auto;
+  background: var(--os-bg);
+}
+.safari-overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.safari-tab-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 14px;
+}
+.safari-tab-card {
+  position: relative;
+  min-height: 140px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--os-surface);
+  box-shadow: 0 4px 18px #0000000a;
+}
+.safari-card-select {
+  width: 100%;
+  height: 110px;
+  font-size: 16px;
+  font-weight: 600;
+}
+.safari-card-select small {
+  display: block;
+  overflow-wrap: anywhere;
+  font-weight: 400;
+  color: var(--os-muted);
+  margin-top: 14px;
+}
+.safari-tab-card > .os-icon-button {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+.phone-shell .safari-tabs {
+  display: none;
+}
+.phone-shell .safari-toolbar {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+.phone-shell .safari-address {
+  grid-row: 1;
+  grid-column: 1 / 8;
+}
+.phone-shell .safari-toolbar [aria-label="前往网站"] {
+  grid-row: 1;
+  grid-column: 8;
+}
+.phone-shell .safari-toolbar > button {
+  min-height: 40px;
+  min-width: 0;
+}
+.phone-shell .safari-start {
+  padding: 22px;
+}
+.phone-shell .safari-start h2 {
+  font-size: 30px;
+}
+.files-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--os-bg);
+  color: var(--os-ink);
+}
+.files-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px;
+  border-bottom: 1px solid var(--os-line);
+}
+.files-status {
+  padding: 0 16px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.files-downloads,
+.files-preview {
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+}
+.files-list {
+  display: grid;
+  gap: 5px;
+}
+.files-row {
+  display: grid;
+  grid-template-columns: 35px minmax(0, 1fr);
+  gap: 3px 10px;
+  align-items: center;
+  border: 0;
+  text-align: left;
+  border-radius: 12px;
+  padding: 14px;
+  color: inherit;
+  background: var(--os-surface);
+  cursor: pointer;
+}
+.files-row strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.files-row .files-metadata {
+  grid-column: 2;
+}
+.files-glyph {
+  grid-row: 1 / 3;
+  font-size: 28px;
+  color: var(--os-accent);
+}
+.files-metadata,
+.files-empty {
+  font-size: 13px;
+  color: var(--os-muted);
+  overflow-wrap: anywhere;
+}
+.files-empty {
+  padding: 40px 15px;
+  line-height: 1.7;
+  text-align: center;
+}
+.files-transfer {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  background: var(--os-surface);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.files-transfer progress {
+  width: 100%;
+}
+.files-preview-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.files-rename {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  gap: 8px;
+}
+.files-rename input {
+  min-width: 0;
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--os-line);
+  border-radius: 9px;
+  background: var(--os-surface);
+  color: inherit;
+}
+.files-preview-content {
+  margin-bottom: 12px;
+}
+.files-image-preview {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+  margin: auto;
+}
+.files-text-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 15px;
+  border-radius: 12px;
+  background: var(--os-surface);
+  font-size: 13px;
+}
+.files-pdf-preview {
+  width: 100%;
+  height: 380px;
+  border: 0;
+}
+.files-preview audio {
+  max-width: 100%;
+}
+.files-confirm {
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 12px;
+  background: var(--os-surface);
+}
+.files-app > .productivity-app {
+  flex: 1;
+  min-height: 0;
+}

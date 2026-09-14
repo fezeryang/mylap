@@ -1,12 +1,22 @@
-import { Clock } from "three"
-
 import "./style.css"
 import "./screen-apps.css"
-import "./workspace-theme.css"
+import "./workspace-tokens.css"
 import "./workspace-production.css"
 import "./workspace-apps.css"
+import "./device-os.css"
+import "./phone-os.css"
+import "./productivity-apps.css"
+import "./music-app.css"
+import "./library-apps.css"
+import "./companion-os.css"
+import "./system-controls.css"
+import "./workspace-browser-files.css"
+import { DEVICE_APPS } from "./apps/device-applications"
+import "./design-tokens.css"
+import "./animations.css"
 import { createBrowserPolicy } from "./apps/browser-url-policy"
 import { registerDefaultApps } from "./apps/register-default-apps"
+import { createBulletinBoardAssetDefinition } from "./assets/bulletin-board-asset"
 import { cyberDeskAssetDefinition } from "./assets/cyber-desk-asset"
 import { cyberdeckAssetDefinition } from "./assets/cyberdeck-asset"
 import { phoneAssetDefinition } from "./assets/phone-asset"
@@ -21,14 +31,25 @@ import { AssetRegistry } from "./runtime/asset-registry"
 import { AssetStage, type AssetStageEvent } from "./runtime/asset-stage"
 import type { AssetInstanceId } from "./runtime/ids"
 import { type KeyboardRouteDiagnostic, KeyboardRouter } from "./runtime/keyboard-router"
+import { createRenderScheduler } from "./runtime/render-scheduler"
 import type { StageSnapshot } from "./runtime/screen-app"
 import { ScreenAppRegistry } from "./runtime/screen-app-registry"
 import { ScreenRuntime } from "./runtime/screen-runtime"
 import { createRadioMediaService } from "./services/radio-media-service"
 import { handleRadioPartPick } from "./services/radio-physical-controls"
-import { createWorkspaceNotesService } from "./services/workspace-notes-service"
+import {
+  createWorkspaceBrowserService,
+  PERSONAL_SITE_URL,
+} from "./services/workspace-browser-service"
+import { createWorkspaceClockService } from "./services/workspace-clock-service"
+import { createWorkspaceDataService } from "./services/workspace-data-service"
+import { createWorkspaceFilesService } from "./services/workspace-files-service"
+import { createWorkspaceLibraryService } from "./services/workspace-library-service"
+import { createWorkspaceMusicService } from "./services/workspace-music-service"
 import { queryShellDom } from "./shell/dom-contract"
 import { bindShellDom, createKeyboardTargetClassifier } from "./shell/shell-dom"
+import { createSpotlightSearch } from "./spotlight-search"
+import { createSpotlightSearchRegistry } from "./spotlight-search-registry"
 import { createTodouQaController } from "./types/todou-qa-host"
 import { selectRootRadioConfiguration, startInitialRadioLoad } from "./types/todou-qa-query"
 import { attachPartManifest } from "./viewer/part-manifest"
@@ -75,11 +96,24 @@ const radioService = createRadioMediaService({
   directory: radioConfiguration.directory,
   mediaElement,
 })
-const notesService = createWorkspaceNotesService(window.localStorage)
+const dataService = createWorkspaceDataService()
+const musicService = createWorkspaceMusicService(radioService)
+const libraryService = createWorkspaceLibraryService()
+const clockService = createWorkspaceClockService()
+// Local-only dual-site preview; production always uses the real personal domain.
+const localSite = query.get("personal-site") ?? ""
+const personalSiteUrl =
+  ["127.0.0.1", "localhost"].includes(location.hostname) &&
+  /^http:\/\/(127\.0\.0\.1|localhost):[0-9]+\/$/.test(localSite)
+    ? localSite
+    : PERSONAL_SITE_URL
+const browserService = createWorkspaceBrowserService(localStorage, personalSiteUrl)
+const filesService = createWorkspaceFilesService()
 startInitialRadioLoad(radioService)
 
 const navigationInput = { enabled: true }
 let syncShell = (): void => undefined
+let invalidateScene = (): void => undefined
 const rendering = createViewerRendering({
   canvas,
   multipleAssets: true,
@@ -98,8 +132,15 @@ registerDefaultApps(appRegistry, {
   browserPolicy: createBrowserPolicy({
     allowRelativeQa: radioConfiguration.qaEnabled,
     currentOrigin: window.location.origin,
+    personalSiteUrl,
+    ...(personalSiteUrl !== PERSONAL_SITE_URL ? { allowRelativeQa: true } : {}),
   }),
-  notesService,
+  dataService,
+  musicService,
+  libraryService,
+  clockService,
+  browserService,
+  filesService,
   radioService,
 })
 
@@ -108,6 +149,7 @@ assetRegistry.register(cyberdeckAssetDefinition)
 assetRegistry.register(cyberDeskAssetDefinition)
 assetRegistry.register(phoneAssetDefinition)
 assetRegistry.register(createRatioAssetDefinition({ readRadioSnapshot: radioService.read }))
+assetRegistry.register(createBulletinBoardAssetDefinition())
 const stage = new AssetStage(rendering.scene, assetRegistry)
 const sceneConfiguration = validateDesktopScene(desktopSceneSpec)
 for (const placement of sceneConfiguration.map(compileDesktopPlacement)) {
@@ -132,6 +174,17 @@ const screens = new ScreenRuntime({
   registry: appRegistry,
   scene: rendering.scene,
   stage,
+  invalidate: () => invalidateScene(),
+  canInteract: (id) =>
+    navigation.read().state ===
+    (id.value === "phone-main"
+      ? "phone-focus"
+      : id.value === "radio-main"
+        ? "radio-focus"
+        : "computer-focus"),
+  requestDeviceFocus: (id) => {
+    shell.focusDevice(id)
+  },
 })
 
 const keyboardRouter = new KeyboardRouter()
@@ -143,6 +196,7 @@ const routeKeyboardTo = (assetId: AssetInstanceId): void => {
 }
 const clearDiagnostic = (): void => {
   lastKeyboardRoute = null
+  invalidateScene()
 }
 const shell = bindShellDom({
   activateAsset: (assetId) => stage.activate(assetId),
@@ -159,10 +213,72 @@ const shell = bindShellDom({
 syncShell = shell.sync
 shell.enter()
 shell.sync()
+
+// Setup Spotlight Search
+const spotlightRegistry = createSpotlightSearchRegistry()
+spotlightRegistry.registerApp("workspace", "Workspace", "💼", () => {
+  shell.focusDevice({ kind: "asset-instance-id", value: "computer-main" })
+})
+spotlightRegistry.registerApp("phone", "Phone", "📱", () => {
+  shell.focusDevice({ kind: "asset-instance-id", value: "phone-main" })
+})
+spotlightRegistry.registerApp("radio", "Radio", "📻", () => {
+  shell.focusDevice({ kind: "asset-instance-id", value: "radio-main" })
+})
+spotlightRegistry.registerTool("reset-view", "Reset View", "🔄", () => {
+  navigation.request("return-overview")
+})
+spotlightRegistry.registerTool("auto-rotate", "Toggle Auto Rotate", "🔁", () => {
+  autoRotate.click()
+})
+spotlightRegistry.registerTool("screen-power", "Toggle Screen Power", "⚡", () => {
+  screenPower.click()
+})
+spotlightRegistry.registerSetting("explode-view", "Explode View", "💥", () => {
+  explode.focus()
+})
+
+for (const application of DEVICE_APPS) {
+  spotlightRegistry.registerApp(
+    `software-${application.id}`,
+    `${application.title} ${application.id}`,
+    "▧",
+    () => {
+      setExpandedScreen(null)
+      shell.focusDevice({ kind: "asset-instance-id", value: "computer-main" })
+      app
+        .querySelector<HTMLButtonElement>(`.desktop-os-dock [data-app-id="${application.id}"]`)
+        ?.click()
+    },
+  )
+}
+
+const spotlight = createSpotlightSearch({
+  container: app,
+  items: spotlightRegistry.getAll(),
+  maxResults: 8,
+})
+
+const handleGlobalKeydown = (event: KeyboardEvent): void => {
+  // Cmd+K or Ctrl+K to open spotlight
+  if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+    event.preventDefault()
+    const state = spotlight.read()
+    if (state.visible) {
+      spotlight.hide()
+    } else {
+      spotlight.show()
+    }
+    return
+  }
+}
+document.addEventListener("keydown", handleGlobalKeydown)
+
 const disconnectKeyboard = keyboardRouter.connect(window, document, {
   classifyTarget: createKeyboardTargetClassifier(shell.readState),
   onDiagnostic: (diagnostic) => {
     lastKeyboardRoute = diagnostic
+    if (diagnostic?.screenId === null) invalidateScene()
   },
 })
 
@@ -178,6 +294,7 @@ const qaController = createTodouQaController({
   stage,
 })
 const unsubscribeStage = stage.subscribe((event: AssetStageEvent) => {
+  invalidateScene()
   switch (event.kind) {
     case "active-changed":
       keyboardRouter.setActive(event.asset?.keyboard ?? null)
@@ -202,9 +319,18 @@ const controller = new ModelController({
     resetView,
     screenPower,
   },
-  onAssetPick: ({ instanceId, partId }) => {
+  onAssetPick: ({ instanceId, partId, controlId }) => {
     shell.pickDevice(instanceId)
-    if (instanceId.value === "radio-main") handleRadioPartPick(radioService, partId)
+    if (instanceId.value !== "radio-main") return
+    if (partId === "transport-controls" && controlId === "rec") {
+      setExpandedScreen(null)
+      shell.focusDevice({ kind: "asset-instance-id", value: "computer-main" })
+      document
+        .querySelector<HTMLButtonElement>('.desktop-os-dock [data-app-id="recorder"]')
+        ?.click()
+      return
+    }
+    handleRadioPartPick(radioService, partId, controlId)
   },
   onSelection: (partId) => {
     selectedPart = partId
@@ -223,6 +349,7 @@ const setExpandedScreen = (screen: HTMLElement | null): void => {
   closeExpandedScreen.hidden = expandedScreen === null
   document.documentElement.dataset["expandedScreen"] =
     expandedScreen?.dataset["assetInstance"] ?? ""
+  scheduler.setPaused(expandedScreen !== null || document.hidden)
 }
 const handleWorkspaceClick = (event: MouseEvent): void => {
   if (!(event.target instanceof Element)) return
@@ -254,16 +381,16 @@ if (radioConfiguration.qaEnabled) window.__todouQa = qaController.api
 const resize = (): void => {
   rendering.resize(window.innerWidth, window.innerHeight)
   screens.resize(window.innerWidth, window.innerHeight)
+  invalidateScene()
 }
 window.addEventListener("resize", resize)
 resize()
 
-const clock = new Clock()
 let sampleFrames = 0
 let sampleSeconds = 0
-const renderFrame = (timestampMilliseconds: number): void => {
-  if (document.documentElement.dataset["captureFrozen"] === "true") return
-  const deltaSeconds = Math.min(clock.getDelta(), 0.1)
+let drawnFrames = 0
+const renderFrame = (timestampMilliseconds: number, deltaSeconds: number): boolean => {
+  if (document.documentElement.dataset["captureFrozen"] === "true") return false
   stage.update(deltaSeconds)
   rendering.render(timestampMilliseconds)
   screens.render()
@@ -279,18 +406,65 @@ const renderFrame = (timestampMilliseconds: number): void => {
   const pressed = active?.keyboard?.pressedCodes.join("+") ?? ""
   const activeName = active?.instanceId.value.toUpperCase() ?? "NO ASSET"
   const inputLabel = pressed.length === 0 ? "INPUT READY" : `KEY ${pressed}`
-  statusText.textContent = `${activeName} · ${stage.assets.length} ASSETS · ${inputLabel}`
-  document.documentElement.dataset["activeAsset"] = active?.instanceId.value ?? ""
-  document.documentElement.dataset["pressedKeys"] = pressed
-  document.documentElement.dataset["controlsEnabled"] = String(rendering.controls.enabled)
+  const status = `${activeName} · ${stage.assets.length} ASSETS · ${inputLabel}`
+  if (statusText.textContent !== status) statusText.textContent = status
+  const values = {
+    activeAsset: active?.instanceId.value ?? "",
+    pressedKeys: pressed,
+    controlsEnabled: String(rendering.controls.enabled),
+  }
+  for (const [key, value] of Object.entries(values)) {
+    if (document.documentElement.dataset[key] !== value)
+      document.documentElement.dataset[key] = value
+  }
+  if (radioConfiguration.qaEnabled) {
+    document.documentElement.dataset["renderedFrames"] = String(++drawnFrames)
+    document.documentElement.dataset["occlusionChecks"] = String(screens.occlusionChecks)
+  }
+  return (
+    navigation.read().interactionLocked ||
+    (rendering.controls.enabled && rendering.controls.autoRotate) ||
+    stage.assets.some((asset) => asset.needsAnimation)
+  )
 }
-rendering.renderer.setAnimationLoop(renderFrame)
+const scheduler = createRenderScheduler(renderFrame)
+invalidateScene = scheduler.invalidate
+rendering.controls.addEventListener("change", invalidateScene)
+// Native UI, keyboard release and model controls request one frame, not a permanent loop.
+const sceneInputEvents = [
+  "click",
+  "input",
+  "keydown",
+  "keyup",
+  "pointerup",
+  "pointercancel",
+] as const
+const sceneInput = (event: Event): void => {
+  if (event.target instanceof Element && event.target.closest(".model-screen")) return
+  invalidateScene()
+}
+for (const event of sceneInputEvents) document.addEventListener(event, sceneInput, true)
+const resumeScene = (): void => {
+  scheduler.setPaused(document.hidden || expandedScreen !== null)
+  invalidateScene()
+}
+document.addEventListener("visibilitychange", resumeScene)
+window.addEventListener("blur", invalidateScene)
+const unsubscribeRadioRender = radioService.subscribe(() => invalidateScene())
+invalidateScene()
 
 let disposed = false
 const dispose = (): void => {
   if (disposed) return
   disposed = true
-  rendering.renderer.setAnimationLoop(null)
+  scheduler.dispose()
+  unsubscribeRadioRender()
+  rendering.controls.removeEventListener("change", invalidateScene)
+  for (const event of sceneInputEvents) document.removeEventListener(event, sceneInput, true)
+  document.removeEventListener("visibilitychange", resumeScene)
+  window.removeEventListener("blur", invalidateScene)
+  spotlight.dispose()
+  document.removeEventListener("keydown", handleGlobalKeydown)
   window.removeEventListener("resize", resize)
   controller.dispose()
   app.removeEventListener("click", handleWorkspaceClick)
@@ -300,6 +474,12 @@ const dispose = (): void => {
   unsubscribeStage()
   disconnectKeyboard()
   stage.dispose()
+  musicService.dispose()
+  libraryService.dispose()
+  clockService.dispose()
+  browserService.dispose()
+  filesService.dispose()
+  dataService.dispose()
   radioService.dispose()
   rendering.dispose()
   Reflect.deleteProperty(window, "__todouQa")

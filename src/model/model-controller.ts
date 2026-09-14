@@ -10,6 +10,7 @@ import type { ScreenRuntime } from "../runtime/screen-runtime"
 export type AssetPick = {
   readonly instanceId: AssetInstanceId
   readonly partId: string
+  readonly controlId?: string
 }
 
 type ButtonControl = {
@@ -79,6 +80,7 @@ export type ModelControllerOptions = {
 type PickTarget = {
   readonly asset: StageAsset
   readonly part: AssetPart
+  readonly object?: Object3D
 }
 
 export class ModelController {
@@ -167,7 +169,7 @@ export class ModelController {
     const asset = this.options.stage.findOwner(object)
     if (asset === null) return null
     const part = this.findPart(asset, object)
-    return part === null ? null : { asset, part }
+    return part === null ? null : { asset, part, object }
   }
 
   private findPart(asset: StageAsset, object: Object3D): AssetPart | null {
@@ -190,7 +192,12 @@ export class ModelController {
     const childMeshes = target.part.node.children.filter((child) => child.type === "Mesh").length
     this.options.elements.partMeta.textContent = `${childMeshes} DIRECT VISUAL MESH${childMeshes === 1 ? "" : "ES"} · NAMED RUNTIME NODE`
     this.options.onSelection(target.part.id)
-    this.options.onAssetPick?.({ instanceId: target.asset.instanceId, partId: target.part.id })
+    const controlId: unknown = target.object?.userData["controlId"]
+    this.options.onAssetPick?.({
+      instanceId: target.asset.instanceId,
+      partId: target.part.id,
+      ...(typeof controlId === "string" ? { controlId } : {}),
+    })
   }
 
   private clearSelection(): void {

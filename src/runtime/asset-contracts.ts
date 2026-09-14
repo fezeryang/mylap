@@ -16,8 +16,15 @@ export type ScreenSize = {
 }
 
 export type ScreenSurface = {
+  /** Read-only displays let physical controls below them receive native pointer input. */
+  readonly interactive?: boolean
   readonly anchor: Object3D
+  /** Optional DOM-plane correction when an authored asset is mounted back-to-front. */
+  readonly cssRotationY?: number
+  /** Use a camera-facing DOM plane for authored displays that are not normal to the camera. */
+  readonly cssBillboard?: boolean
   readonly defaultAppId: ScreenAppId
+  readonly depthOffset?: number
   readonly hitProxy: Object3D
   readonly occlusionRoot: Object3D
   readonly pixelSize: ScreenSize
@@ -35,6 +42,7 @@ export type KeyboardBinding = {
 }
 
 export interface AssetKeyboard {
+  readonly needsAnimation?: boolean
   readonly bindings: readonly KeyboardBinding[]
   readonly pressedCodes: readonly KeyboardCode[]
   press(code: string): boolean
@@ -44,6 +52,8 @@ export interface AssetKeyboard {
 }
 
 export interface StageAsset {
+  /** True only while instance-local visual animation needs another host frame. */
+  readonly needsAnimation?: boolean
   readonly explosion: number
   readonly instanceId: AssetInstanceId
   readonly keyboard?: AssetKeyboard

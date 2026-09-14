@@ -1,166 +1,52 @@
-import { describe, expect, test } from "bun:test"
+import { afterAll, describe, expect, test } from "bun:test"
+import { closeSoftwareBrowser, softwarePage } from "./software-browser-test-support"
 
-import { assetInstanceId, screenId } from "../runtime/ids"
-import { ScreenAppRegistry } from "../runtime/screen-app-registry"
-import type { RadioMediaService, RadioSnapshot } from "../services/radio-contracts"
-import {
-  MAIN_WORKSPACE_APP_ID,
-  PHONE_SHELL_APP_ID,
-  RATIO_CASSETTE_DISPLAY_APP_ID,
-  RATIO_TUNER_DISPLAY_APP_ID,
-  STRUCTURE_ANALYSIS_APP_ID,
-  SYSTEM_TELEMETRY_APP_ID,
-} from "./app-ids"
-import { createBrowserPolicy } from "./browser-url-policy"
-import { createMainWorkspaceApp } from "./main-workspace-app"
-import { registerDefaultApps } from "./register-default-apps"
-
-type TestListener = (event: { preventDefault(): void }) => void
-
-class TestElement {
-  readonly children: TestElement[] = []
-  readonly dataset: Record<string, string> = {}
-  readonly listeners = new Map<string, TestListener>()
-  readonly attributes = new Map<string, string>()
-  className = ""
-  disabled = false
-  hidden = false
-  max = ""
-  min = ""
-  placeholder = ""
-  referrerPolicy = ""
-  selected = false
-  step = ""
-  textContent = ""
-  type = ""
-  value = ""
-
-  append(...nodes: TestElement[]): void {
-    this.children.push(...nodes)
-  }
-
-  addEventListener(name: string, listener: TestListener): void {
-    this.listeners.set(name, listener)
-  }
-
-  removeEventListener(name: string): void {
-    this.listeners.delete(name)
-  }
-
-  removeAttribute(name: string): void {
-    this.attributes.delete(name)
-  }
-
-  replaceChildren(...nodes: TestElement[]): void {
-    this.children.splice(0, this.children.length, ...nodes)
-  }
-
-  setAttribute(name: string, value: string): void {
-    this.attributes.set(name, value)
-  }
-
-  dispatch(name: string): void {
-    this.listeners.get(name)?.({ preventDefault: () => undefined })
-  }
-
-  findByClass(className: string): TestElement | null {
-    if (this.className.split(" ").includes(className)) return this
-    for (const child of this.children) {
-      const found = child.findByClass(className)
-      if (found !== null) return found
-    }
-    return null
-  }
-}
+afterAll(closeSoftwareBrowser)
 
 describe("main workspace app factory", () => {
-  test("Given host dependencies, when defaults register, then all six exact applications resolve", () => {
-    const snapshot = createSnapshot()
-    const radioService = createRadioService(snapshot)
-    const registry = new ScreenAppRegistry()
-
-    registerDefaultApps(registry, {
-      browserPolicy: createBrowserPolicy({ currentOrigin: "https://launcher.test" }),
-      radioService,
-    })
-
-    for (const appId of [
-      MAIN_WORKSPACE_APP_ID,
-      SYSTEM_TELEMETRY_APP_ID,
-      STRUCTURE_ANALYSIS_APP_ID,
-      PHONE_SHELL_APP_ID,
-      RATIO_TUNER_DISPLAY_APP_ID,
-      RATIO_CASSETTE_DISPLAY_APP_ID,
-    ]) {
-      expect(registry.resolve(appId).appId).toBe(appId)
-    }
-  })
-
-  test("Given one launcher subscription, when its handle is disposed twice, then cleanup runs once", () => {
-    const originalDocument = Object.getOwnPropertyDescriptor(globalThis, "document")
-    Object.defineProperty(globalThis, "document", {
-      configurable: true,
-      value: {
-        createElement: () => new TestElement(),
-        createElementNS: () => new TestElement(),
-      },
-    })
-    const snapshot = createSnapshot()
-    let unsubscribeCalls = 0
-    const radioService: RadioMediaService = {
-      dispatch: () => Promise.resolve(),
-      dispose: () => undefined,
-      loadStations: () => Promise.resolve(),
-      read: () => snapshot,
-      subscribe: () => () => {
-        unsubscribeCalls += 1
-      },
-    }
-
+  test("Given host dependencies, when defaults register, then all six exact applications resolve", async () => {
+    const page = await softwarePage()
     try {
-      const app = createMainWorkspaceApp({
-        browserPolicy: createBrowserPolicy({ currentOrigin: "https://launcher.test" }),
-        radioService,
-      })
-      const handle = app.mount(
-        { append: () => undefined, clear: () => undefined },
-        {
-          assetInstanceId: assetInstanceId("computer-main"),
-          requestAssetActivation: () => undefined,
-          requestScreenFocus: () => undefined,
-          screenId: screenId("computer-primary"),
-        },
-      )
-
-      handle.dispose()
-      handle.dispose()
-
-      expect(unsubscribeCalls).toBe(1)
+      expect(await page.evaluate(() => window.softwareTest.mountedApps)).toEqual([
+        "main-workspace",
+        "system-telemetry",
+        "structure-analysis",
+        "phone-shell",
+        "ratio-tuner-display",
+        "ratio-cassette-display",
+      ])
     } finally {
-      if (originalDocument === undefined) {
-        Reflect.deleteProperty(globalThis, "document")
-      } else {
-        Object.defineProperty(globalThis, "document", originalDocument)
-      }
+      await page.close()
     }
-  })
-})
+  }, 30000)
 
-const createSnapshot = (): RadioSnapshot => ({
-  error: null,
-  liveElapsedSeconds: 0,
-  powered: false,
-  selectedStation: null,
-  stations: [],
-  status: "idle",
-  visualization: [],
-  volume: 0.7,
-})
-
-const createRadioService = (snapshot: RadioSnapshot): RadioMediaService => ({
-  dispatch: () => Promise.resolve(),
-  dispose: () => undefined,
-  loadStations: () => Promise.resolve(),
-  read: () => snapshot,
-  subscribe: () => () => undefined,
+  test("Given mounted applications, when a handle is disposed twice, subscriptions are released once", async () => {
+    const page = await softwarePage()
+    try {
+      await page.locator(".desktop-os-dock [data-app-id='music']").click()
+      const before = await page.evaluate(() => window.softwareTest.activeRadioListeners())
+      expect(before).toBeGreaterThan(1)
+      const after = await page.evaluate(() => {
+        window.softwareTest.computer.dispose()
+        const once = window.softwareTest.activeRadioListeners()
+        window.softwareTest.computer.dispose()
+        return [once, window.softwareTest.activeRadioListeners()]
+      })
+      // Both the open Music window and the system control center own a subscription.
+      expect(after).toEqual([before - 2, before - 2])
+      await page.evaluate(() => {
+        window.softwareTest.phone.dispose()
+        window.softwareTest.dependencies.musicService.dispose()
+        window.softwareTest.dependencies.radioService.dispose()
+        window.softwareTest.dependencies.dataService.dispose()
+        window.softwareTest.dependencies.libraryService.dispose()
+        window.softwareTest.dependencies.clockService.dispose()
+        window.softwareTest.dependencies.browserService.dispose()
+        window.softwareTest.dependencies.filesService.dispose()
+      })
+      expect(await page.evaluate(() => window.softwareTest.activeRadioListeners())).toBe(0)
+    } finally {
+      await page.close()
+    }
+  }, 30000)
 })

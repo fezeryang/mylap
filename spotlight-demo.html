@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotlight Search Demo</title>
+  <style>
+    :root {
+      --surface-0: #05070C;
+      --surface-1: #0A0D12;
+      --surface-2: #0F131C;
+      --surface-3: #161D2B;
+      --surface-4: #1E2636;
+      --accent-primary: #38BDF8;
+      --accent-secondary: #6EE7B7;
+      --text-primary: rgba(255, 255, 255, 0.95);
+      --text-secondary: rgba(255, 255, 255, 0.65);
+      --text-tertiary: rgba(255, 255, 255, 0.40);
+      --overlay-hover: rgba(255, 255, 255, 0.08);
+      --glass-bg: rgba(15, 19, 28, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-blur: blur(40px) saturate(180%);
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --radius-md: 12px;
+      --radius-xl: 24px;
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.32);
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--surface-0);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl);
+    }
+
+    .demo-container {
+      text-align: center;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: clamp(24px, 4vw, 32px);
+      margin-bottom: var(--space-md);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-xl);
+      line-height: 1.6;
+    }
+
+    .kbd {
+      display: inline-block;
+      padding: 4px 8px;
+      background: var(--surface-3);
+      border: 1px solid var(--glass-border);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 14px;
+      color: var(--text-primary);
+      margin: 0 4px;
+    }
+
+    .demo-button {
+      background: var(--accent-primary);
+      color: var(--surface-0);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+    }
+
+    .demo-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(56, 189, 248, 0.3);
+    }
+
+    .demo-button:active {
+      transform: scale(0.96);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+      text-align: left;
+    }
+
+    .feature-card {
+      background: var(--surface-2);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--text-primary);
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      margin: 0;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <h1>🔍 Spotlight Search</h1>
+    <p>
+      Press <span class="kbd">⌘K</span> or <span class="kbd">Ctrl+K</span> to open the command palette.
+      Use <span class="kbd">↑</span> <span class="kbd">↓</span> to navigate and <span class="kbd">Enter</span> to select.
+    </p>
+    <button class="demo-button" onclick="spotlight.show()">Open Spotlight</button>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>⌨️ Keyboard First</h3>
+        <p>Navigate entirely with keyboard shortcuts. No mouse needed.</p>
+      </div>
+      <div class="feature-card">
+        <h3>🔎 Fuzzy Search</h3>
+        <p>Type abbreviations and partial matches to find what you need.</p>
+      </div>
+      <div class="feature-card">
+        <h3>✨ Glassmorphism</h3>
+        <p>Beautiful frosted glass design with smooth animations.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { createSpotlightSearch } from './src/spotlight-search.js'
+    import { createSpotlightSearchRegistry } from './src/spotlight-search-registry.js'
+    import { Z_INDEX } from './src/constants.js'
+
+    const registry = createSpotlightSearchRegistry()
+
+    registry.registerApp("workspace", "Workspace", "💼", () => {
+      alert("Opening Workspace...")
+    })
+    registry.registerApp("phone", "Phone", "📱", () => {
+      alert("Opening Phone...")
+    })
+    registry.registerApp("radio", "Radio", "📻", () => {
+      alert("Opening Radio...")
+    })
+    registry.registerApp("music", "Music Player", "🎵", () => {
+      alert("Opening Music Player...")
+    })
+    registry.registerApp("calculator", "Calculator", "🧮", () => {
+      alert("Opening Calculator...")
+    })
+
+    registry.registerTool("reset-view", "Reset View", "🔄", () => {
+      alert("View reset!")
+    })
+    registry.registerTool("auto-rotate", "Toggle Auto Rotate", "🔁", () => {
+      alert("Auto rotate toggled!")
+    })
+    registry.registerTool("screen-power", "Toggle Screen Power", "⚡", () => {
+      alert("Screen power toggled!")
+    })
+
+    registry.registerSetting("theme", "Theme Settings", "🎨", () => {
+      alert("Opening theme settings...")
+    })
+    registry.registerSetting("keyboard", "Keyboard Shortcuts", "⌨️", () => {
+      alert("Opening keyboard shortcuts...")
+    })
+    registry.registerSetting("accessibility", "Accessibility", "♿", () => {
+      alert("Opening accessibility settings...")
+    })
+
+    window.spotlight = createSpotlightSearch({
+      container: document.body,
+      items: registry.getAll(),
+      maxResults: 8,
+    })
+
+    document.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+        event.preventDefault()
+        const state = spotlight.read()
+        if (state.visible) {
+          spotlight.hide()
+        } else {
+          spotlight.show()
+        }
+      }
+    })
+  </script>
+</body>
+</html>

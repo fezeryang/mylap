@@ -66,7 +66,7 @@ describe("ScreenRuntime baseline", () => {
     expect(source.listener).toBeNull()
   })
 
-  test("Given a focused screen, when Escape reaches document capture, then only screen focus releases", () => {
+  test("Given a focused screen, when unhandled Escape reaches the document, then only screen focus releases", () => {
     const source = new EscapeSource()
     let focused = true
     let releaseCount = 0
@@ -82,13 +82,13 @@ describe("ScreenRuntime baseline", () => {
 
     source.emit(event)
 
-    expect(source.flags[0]).toBe(true)
+    expect(source.flags[0]).toBe(false)
     expect(releaseCount).toBe(1)
     expect(event.defaultPrevented).toBe(true)
     expect(event.immediatePropagationStopped).toBe(true)
   })
 
-  test("Given no focused screen, when Escape reaches document capture, then shell propagation remains available", () => {
+  test("Given no focused screen, when Escape reaches the document, then shell propagation remains available", () => {
     const source = new EscapeSource()
     let releaseCount = 0
     connectScreenEscapeRelease(
@@ -104,6 +104,23 @@ describe("ScreenRuntime baseline", () => {
 
     expect(releaseCount).toBe(0)
     expect(event.defaultPrevented).toBe(false)
+    expect(event.immediatePropagationStopped).toBe(false)
+  })
+
+  test("Given an application consumes Escape, screen ownership remains with its restored focus", () => {
+    const source = new EscapeSource()
+    let releases = 0
+    connectScreenEscapeRelease(
+      source,
+      () => true,
+      () => {
+        releases += 1
+      },
+    )
+    const event = new EscapeEvent("Escape")
+    event.preventDefault()
+    source.emit(event)
+    expect(releases).toBe(0)
     expect(event.immediatePropagationStopped).toBe(false)
   })
 })

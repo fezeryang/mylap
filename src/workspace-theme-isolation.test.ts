@@ -11,11 +11,12 @@ describe("workspace theme production isolation", () => {
 
     expect(documentSource).not.toContain("workspace-theme")
     expect(mainSource).not.toContain("workspace-theme")
+    expect(mainSource).toContain('import "./workspace-tokens.css"')
     expect(documentSource).not.toContain("workspace-showcase")
   })
 
   test("Given every workspace root token, when the design authority is read, then every token is documented", () => {
-    const themeSource = readFileSync(join(projectRoot, "src/workspace-theme.css"), "utf8")
+    const themeSource = readFileSync(join(projectRoot, "src/workspace-tokens.css"), "utf8")
     const designSource = readFileSync(join(projectRoot, "DESIGN.md"), "utf8")
     const rootBlock = themeSource.match(/:root\s*\{([\s\S]*?)\n\}/u)?.[1]
     if (rootBlock === undefined) throw new Error("Workspace root token block is missing")

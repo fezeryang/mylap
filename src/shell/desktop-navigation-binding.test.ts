@@ -31,8 +31,8 @@ describe("desktop navigation camera binding", () => {
     expect(input.enabled).toBe(false)
     navigation.advance(800)
 
-    expect(camera.position.toArray()).toEqual([-3.4, 8.45, -15.25])
-    expect(controls.target.toArray()).toEqual([0, 0.5, 0])
+    expect(camera.position.toArray()).toEqual([-8, 11, -36])
+    expect(controls.target.toArray()).toEqual([-5, -0.8, 0])
     navigation.advance(1600)
     expect(controls.enabled).toBe(true)
     expect(input.enabled).toBe(true)

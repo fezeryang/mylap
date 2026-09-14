@@ -213,11 +213,16 @@ export const createRatioAssetDefinition = (options: RatioAssetOptions): SceneAss
           return explosion
         },
         instanceId,
+        get needsAnimation() {
+          return options.readRadioSnapshot().status === "playing"
+        },
         parts,
         root: normalized.root,
         screens: [
           {
             anchor: model.screens.tuner,
+            cssBillboard: true,
+            interactive: false,
             defaultAppId: RATIO_TUNER_DISPLAY_APP_ID,
             hitProxy: tunerProxy,
             occlusionRoot: model.root,
@@ -227,6 +232,8 @@ export const createRatioAssetDefinition = (options: RatioAssetOptions): SceneAss
           },
           {
             anchor: model.screens.cassette,
+            cssBillboard: true,
+            interactive: false,
             defaultAppId: RATIO_CASSETTE_DISPLAY_APP_ID,
             hitProxy: cassetteProxy,
             occlusionRoot: model.root,

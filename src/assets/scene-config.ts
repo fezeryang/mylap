@@ -1,5 +1,6 @@
 import type { AssetPlacement } from "../runtime/asset-contracts"
 import { assetInstanceId } from "../runtime/ids"
+import { BULLETIN_BOARD_ASSET_TYPE_ID } from "./bulletin-board-asset"
 import { CYBERDECK_ASSET_TYPE_ID } from "./cyberdeck-asset"
 
 export type {
@@ -36,6 +37,13 @@ const primary: AssetPlacement = {
 export const sceneConfiguration = (multipleAssets: boolean): readonly AssetPlacement[] =>
   multipleAssets
     ? [
+        {
+          instanceId: assetInstanceId("bulletin-board-main"),
+          position: [-12, -3.17, 2],
+          rotation: [0, Math.PI / 6, 0],
+          scale: 0.6,
+          typeId: BULLETIN_BOARD_ASSET_TYPE_ID,
+        },
         {
           instanceId: assetInstanceId("cyberdeck-alpha"),
           position: [-5.3, 0, 0.25],
