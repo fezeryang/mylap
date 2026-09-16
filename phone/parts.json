@@ -273,7 +273,7 @@
       "name": "usb-port",
       "kind": "part",
       "module": "usb-port",
-      "triangles": 2916,
+      "triangles": 4504,
       "id": "usb-port",
       "meshNames": [
         "usb-port-mesh",
@@ -282,8 +282,8 @@
       ],
       "homePosition": [
         0,
-        -7.5,
-        0.46
+        -7.48,
+        0.68
       ]
     },
     {

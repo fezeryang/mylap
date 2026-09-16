@@ -7,10 +7,10 @@
     "dev:phone": "pnpm --dir phone run dev --port 5174",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
-    "test": "bun test",
+    "test": "bun test --max-concurrency 1",
     "lint": "biome check src index.html package.json tsconfig.json",
     "qa:browser": "node scripts/browser-qa.mjs",
-    "verify:root": "pnpm run typecheck && bun test ./src && pnpm run lint && pnpm run build",
+    "verify:root": "pnpm run typecheck && bun test --max-concurrency 1 ./src && pnpm run lint && pnpm run build",
     "verify:phone": "pnpm --dir phone run verify",
     "verify:all": "pnpm run verify:root && pnpm run verify:phone"
   },

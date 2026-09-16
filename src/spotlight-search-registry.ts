@@ -21,9 +21,9 @@ export const createSpotlightSearchRegistry = (): SpotlightSearchRegistry => {
   }
 
   return {
-    registerApp: (id, name, icon, action) => register(id, name, "Application", icon, action),
-    registerTool: (id, name, icon, action) => register(id, name, "Workspace Tool", icon, action),
-    registerSetting: (id, name, icon, action) => register(id, name, "Setting", icon, action),
+    registerApp: (id, name, icon, action) => register(id, name, "应用程序", icon, action),
+    registerTool: (id, name, icon, action) => register(id, name, "工具", icon, action),
+    registerSetting: (id, name, icon, action) => register(id, name, "设置", icon, action),
     getAll: () => Array.from(items.values()),
   }
 }

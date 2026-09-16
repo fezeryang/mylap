@@ -36,10 +36,10 @@
   transform: translateX(-50%);
   width: 140px;
   height: 44px;
-  border-radius: var(--radius-pill);
-  background: var(--surface-0);
-  backdrop-filter: var(--glass-blur);
-  color: var(--text-primary);
+  border-radius: var(--os-radius-pill);
+  background: var(--os-island-bg);
+  backdrop-filter: var(--os-glass-blur);
+  color: var(--os-island-ink);
   font-size: 13px !important;
   font-weight: 600;
   display: flex;
@@ -48,186 +48,33 @@
   padding: 0 16px;
   cursor: pointer;
   overflow: hidden;
-  transition: all 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 400ms var(--os-spring);
   z-index: 100;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--glass-border);
+  box-shadow: var(--os-shadow-sheet);
+  border: 1px solid var(--os-island-border);
 }
 
 .phone-os-island[data-expanded="true"] {
   width: calc(100% - 32px);
   height: 240px;
   top: 9px;
-  border-radius: var(--radius-xl);
+  border-radius: var(--os-radius-sheet);
   flex-direction: column;
   align-items: stretch;
   padding: 20px 18px;
-  animation: spring 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.phone-os-island-compact {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-  gap: var(--space-sm);
-}
-
-.phone-os-island[data-expanded="true"] .phone-os-island-compact {
-  display: none;
-}
-
-.phone-os-island-time {
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
-  font-size: 13px;
-  color: var(--text-primary);
-}
-
-.phone-os-island-battery {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
-.phone-os-island-battery-icon {
-  width: 22px;
-  height: 11px;
-  border: 1.5px solid currentColor;
-  border-radius: 3px;
-  position: relative;
-  opacity: 0.85;
-}
-
-.phone-os-island-battery-icon::after {
-  content: "";
-  position: absolute;
-  right: -3px;
-  top: 3px;
-  width: 2px;
-  height: 3px;
-  background: currentColor;
-  border-radius: 0 2px 2px 0;
-}
-
-.phone-os-island-battery-fill {
-  position: absolute;
-  left: 1.5px;
-  top: 1.5px;
-  bottom: 1.5px;
-  width: 0;
-  background: var(--accent-primary);
-  border-radius: 1.5px;
-  transition: width 300ms ease-out;
+  animation: spring 400ms var(--os-spring);
 }
 
 .phone-os-island-expanded {
   display: none;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--os-space-4);
   height: 100%;
 }
 
 .phone-os-island[data-expanded="true"] .phone-os-island-expanded {
   display: flex;
   animation: fadeIn 300ms ease-out 100ms both;
-}
-
-.phone-os-island-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding-bottom: var(--space-sm);
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.phone-os-island-app-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  background: var(--accent-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.phone-os-island-header-text {
-  flex: 1;
-  min-width: 0;
-}
-
-.phone-os-island-app-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.phone-os-island-subtitle {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin: 2px 0 0;
-}
-
-.phone-os-island-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  overflow: hidden;
-}
-
-.phone-os-island-notification {
-  padding: var(--space-sm);
-  background: var(--surface-1);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--glass-border);
-}
-
-.phone-os-island-notification-title {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 4px;
-}
-
-.phone-os-island-notification-body {
-  font-size: 12px;
-  color: var(--text-secondary);
-  line-height: 1.4;
-  margin: 0;
-}
-
-.phone-os-island-actions {
-  display: flex;
-  gap: var(--space-sm);
-  margin-top: auto;
-}
-
-.phone-os-island-action {
-  flex: 1;
-  padding: var(--space-sm);
-  border: 0;
-  border-radius: var(--radius-md);
-  background: var(--surface-2);
-  color: var(--accent-primary);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 140ms cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.phone-os-island-action:hover {
-  background: var(--surface-3);
-}
-
-.phone-os-island-action:active {
-  transform: scale(0.96);
 }
 
 .phone-os-island-backdrop {
@@ -246,12 +93,13 @@
   pointer-events: auto;
 }
 .phone-os-expand {
-  border: 0;
-  background: #ffffff22;
+  border: 9px solid transparent;
+  margin: -9px;
+  background: #ffffff22 padding-box;
   border-radius: 50%;
   color: inherit;
-  width: 27px;
-  height: 27px;
+  width: 45px;
+  height: 45px;
   font-size: 20px !important;
 }
 .phone-os-home {
@@ -314,11 +162,11 @@
   line-height: 1.1;
 }
 .phone-os-calendar .os-eyebrow {
-  color: #d04b4a;
+  color: #9e2327;
 }
 .phone-os-reminders .os-eyebrow,
 .phone-os-reminders .phone-os-widget-day {
-  color: #147bd8;
+  color: var(--os-accent-text);
 }
 .phone-os-grid {
   display: grid;
@@ -419,7 +267,7 @@
   border-bottom: 1px solid var(--os-line);
 }
 .phone-os-app-header .os-icon-button:first-child {
-  color: var(--os-accent);
+  color: var(--os-accent-text);
 }
 .phone-os-app-header > strong {
   font-weight: 600;
@@ -512,7 +360,7 @@
   border: 0;
   border-top: 1px solid var(--os-line);
   background: transparent;
-  color: #e44950;
+  color: #9e2327;
   font-size: 12px !important;
 }
 .phone-shell .safari-start {
@@ -530,6 +378,181 @@
 }
 .phone-shell .safari-toolbar .os-icon-button {
   padding-inline: 7px;
+}
+.phone-os-status-time {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 8px;
+  margin: 0 -8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 650;
+}
+.phone-os-status-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 3px;
+}
+.phone-os-status-icons svg {
+  display: block;
+}
+.phone-shell .os-battery-fill {
+  fill: var(--os-green);
+}
+.phone-os-lock {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 88px 32px 30px;
+  color: #fff8f9;
+  background: var(--os-wallpaper);
+  transition:
+    opacity 240ms var(--os-ease-standard),
+    translate 240ms var(--os-ease-standard);
+}
+.phone-os-lock[data-leaving="true"] {
+  opacity: 0;
+  translate: 0 -28px;
+  pointer-events: none;
+}
+.phone-os-lock-date {
+  font-size: 15px;
+  font-weight: 550;
+  text-shadow: 0 1px 5px #48334430;
+}
+.phone-os-lock-time {
+  margin-top: 4px;
+  font-size: clamp(64px, 21cqw, 92px);
+  font-weight: 300;
+  letter-spacing: -0.06em;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 12px #48334418;
+}
+.phone-os-unlock {
+  margin-top: auto;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--os-island-border);
+  border-radius: 50%;
+  color: #fff8f9;
+  background: rgb(255 255 255 / 15%);
+  backdrop-filter: blur(20px);
+  transition: transform var(--os-duration-micro) var(--os-ease-standard);
+}
+.phone-os-unlock:active {
+  transform: scale(0.94);
+}
+.phone-os-unlock svg {
+  width: 24px;
+  height: 24px;
+}
+.phone-os-lock-hint {
+  margin-top: 18px;
+  font-size: 13px;
+  font-weight: 550;
+  text-shadow: 0 1px 4px #34213955;
+}
+.phone-os-notifications {
+  position: absolute;
+  z-index: 45;
+  inset: 48px 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  overflow: auto;
+  border-radius: 24px;
+  background: var(--glass-bg, rgba(15, 19, 28, 0.75));
+  backdrop-filter: var(--glass-blur, blur(40px) saturate(180%));
+  animation: os-open 220ms ease;
+}
+.phone-os-notifications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.phone-os-notifications-header h2 {
+  font-size: 24px;
+  letter-spacing: -0.04em;
+}
+.phone-os-notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.phone-os-notification {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 12px;
+  border-radius: var(--os-radius-card);
+  background: var(--os-surface);
+  color: var(--os-ink);
+  box-shadow: 0 5px 15px #0000000c;
+}
+.phone-os-notification-open {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+}
+.phone-os-notification-open .os-app-icon {
+  width: 38px;
+  height: 38px;
+}
+.phone-os-notification-text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.phone-os-notification-text strong {
+  font-size: 14px;
+}
+.phone-os-notification-text span {
+  font-size: 13px;
+  color: var(--os-muted);
+}
+.phone-os-notification-text time {
+  font-size: 11px;
+  color: var(--os-muted);
+}
+.phone-os-notification-clear {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--os-fill);
+  color: var(--os-muted);
+  font-size: 15px !important;
+  line-height: 1;
+}
+.phone-os-notifications-empty {
+  margin-top: 40px;
+  color: var(--os-muted);
+  text-align: center;
+}
+.phone-os-search-button {
+  min-height: 44px;
 }
 @container device (max-height: 650px) {
   .phone-os-big-clock {

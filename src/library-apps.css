@@ -32,7 +32,7 @@
   border-radius: 9px;
   padding: 8px 12px;
   background: var(--os-surface);
-  color: var(--os-accent);
+  color: var(--os-accent-text);
   white-space: nowrap;
 }
 .library-primary {

@@ -40,11 +40,7 @@ const createHeader = (kind: "player" | "today"): HTMLElement => {
   mark.append(icon)
   const heading = element("div", "companion-heading")
   heading.append(
-    element(
-      "span",
-      "companion-eyebrow",
-      kind === "player" ? "PLAYBACK STATION" : "YOUR DAILY SPACE",
-    ),
+    element("span", "companion-eyebrow", kind === "player" ? "播放中" : "每日一览"),
     element("h1", "companion-title", kind === "player" ? "播放台" : "今日"),
   )
   brand.append(mark, heading)

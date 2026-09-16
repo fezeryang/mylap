@@ -71,7 +71,7 @@
 .clock-muted,
 .clock-city-details,
 .clock-duration-hint {
-  color: var(--os-muted, #74747f);
+  color: var(--os-muted, #555560);
   font-size: 13px;
 }
 
@@ -92,7 +92,7 @@
   padding: 8px 17px;
   border: 0;
   border-radius: 10px;
-  color: var(--os-muted, #74747f);
+  color: var(--os-muted, #555560);
   background: transparent;
   font-weight: 600;
   white-space: nowrap;
@@ -126,7 +126,7 @@
 }
 
 .clock-eyebrow {
-  color: var(--os-muted, #74747f);
+  color: var(--os-muted, #555560);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -254,7 +254,7 @@
 
 .clock-empty {
   padding: 24px 0;
-  color: var(--os-muted, #74747f);
+  color: var(--os-muted, #555560);
   line-height: 1.7;
 }
 
@@ -282,7 +282,7 @@
 }
 
 .clock-laps thead {
-  color: var(--os-muted, #74747f);
+  color: var(--os-muted, #555560);
 }
 
 .clock-timer {
@@ -378,7 +378,7 @@
   padding: 8px 13px;
   border: 1px solid var(--os-line, #e4e4e9);
   border-radius: 12px;
-  color: var(--os-muted, #74747f);
+  color: var(--os-muted, #555560);
   background: var(--os-surface, #fff);
   font-size: 13px;
 }

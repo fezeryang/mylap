@@ -64,7 +64,7 @@ const rootAuthoredName = (name) =>
   /^biome\.json.*$/.test(name)
 
 export const authoredFiles = (root) => {
-  const directoryRoots = ["src", "scripts", "public", "docs", "phone", "desk", "ratio"]
+  const directoryRoots = ["src", "scripts", "public", "docs", "phone", "desk", "ratio", "board"]
   const candidates = [
     ...readdirSync(root)
       .filter(rootAuthoredName)

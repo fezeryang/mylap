@@ -11,12 +11,31 @@ import {
 } from "./device-applications"
 import { element, listen } from "./dom"
 import { createMediaControls } from "./media-controls"
+import {
+  createBatteryGlyph,
+  createCellularGlyph,
+  createLockGlyph,
+  createWifiGlyph,
+} from "./status-glyphs"
 
 const button = (label: string, css: string): HTMLButtonElement => {
   const node = element("button", css, label)
   node.type = "button"
   return node
 }
+
+type SeededNotification = {
+  readonly app: DeviceAppId
+  readonly title: string
+  readonly body: string
+  readonly at: string
+}
+
+const SEEDED_NOTIFICATIONS: readonly SeededNotification[] = [
+  { app: "calendar", title: "团队周会", body: "14:00 · 3D 桌面评审", at: "5 分钟后" },
+  { app: "reminders", title: "给植物浇水", body: "今天 18:00", at: "1 小时前" },
+  { app: "music", title: "新电台已就绪", body: "Night Shift 正在直播", at: "2 小时前" },
+]
 
 export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenAppDefinition => ({
   appId: PHONE_SHELL_APP_ID,
@@ -26,6 +45,9 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
     root.dataset["assetInstance"] = context.assetInstanceId.value
     const status = element("header", "phone-os-status")
     const time = element("time", "phone-os-time")
+    const timeButton = button("", "phone-os-status-time")
+    timeButton.setAttribute("aria-label", "打开通知中心")
+    timeButton.append(time)
 
     const island = element("div", "phone-os-island")
     island.dataset["expanded"] = "false"
@@ -49,8 +71,11 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
     expand.dataset["expandScreen"] = "true"
     expand.setAttribute("aria-label", "展开手机窗口")
     const statusActions = element("div", "phone-os-status-actions")
-    statusActions.append(controlTrigger, expand)
-    status.append(time, island, statusActions)
+    const statusIcons = element("span", "phone-os-status-icons")
+    statusIcons.setAttribute("aria-hidden", "true")
+    statusIcons.append(createCellularGlyph(), createWifiGlyph(), createBatteryGlyph())
+    statusActions.append(statusIcons, controlTrigger, expand)
+    status.append(timeButton, island, statusActions)
     const home = element("section", "phone-os-home")
     const date = element("p", "phone-os-date")
     const clock = element("div", "phone-os-big-clock")
@@ -100,6 +125,25 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
     switcherHeader.append(element("h2", "", "最近使用"), done)
     const recentList = element("div", "phone-os-recent-list")
     switcher.append(switcherHeader, recentList)
+    const notifications = element("section", "phone-os-notifications")
+    notifications.hidden = true
+    notifications.setAttribute("role", "dialog")
+    notifications.setAttribute("aria-label", "通知中心")
+    const notificationsHeader = element("header", "phone-os-notifications-header")
+    const clearAll = button("清除全部", "os-icon-button")
+    clearAll.setAttribute("aria-label", "清除全部通知")
+    notificationsHeader.append(element("h2", "", "通知中心"), clearAll)
+    const notificationList = element("div", "phone-os-notification-list")
+    notifications.append(notificationsHeader, notificationList)
+    const lock = element("section", "phone-os-lock")
+    lock.setAttribute("role", "dialog")
+    lock.setAttribute("aria-label", "锁定屏幕")
+    const lockDate = element("p", "phone-os-lock-date")
+    const lockTime = element("div", "phone-os-lock-time")
+    const unlock = button("", "phone-os-unlock")
+    unlock.setAttribute("aria-label", "解锁手机")
+    unlock.append(createLockGlyph())
+    lock.append(lockDate, lockTime, unlock, element("p", "phone-os-lock-hint", "向上轻扫以解锁"))
     const indicator = button("", "phone-os-home-indicator")
     indicator.setAttribute("aria-label", "返回手机主屏幕")
     root.append(
@@ -109,8 +153,10 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
       apps,
       library,
       switcher,
+      notifications,
       indicator,
       controlCenter.element,
+      lock,
     )
     host.append(root)
     const mounted = new Map<DeviceAppId, DeviceApplication>()
@@ -225,19 +271,23 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
         minute: "2-digit",
         hour12: false,
       })
-      time.textContent = displayTime
-      time.dateTime = now.toISOString()
-      clock.textContent = displayTime
-      date.textContent = now.toLocaleDateString("zh-CN", {
+      const displayDate = now.toLocaleDateString("zh-CN", {
         month: "long",
         day: "numeric",
         weekday: "long",
       })
+      time.textContent = displayTime
+      time.dateTime = now.toISOString()
+      clock.textContent = displayTime
+      date.textContent = displayDate
+      lockTime.textContent = displayTime
+      lockDate.textContent = displayDate
       day.textContent = String(now.getDate())
     }
 
     const expandIsland = (): void => {
       controlCenter.close()
+      closeNotifications()
       island.dataset["expanded"] = "true"
       islandBackdrop.dataset["visible"] = "true"
       islandTrigger.setAttribute("aria-expanded", "true")
@@ -249,6 +299,74 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
       islandBackdrop.dataset["visible"] = "false"
       islandTrigger.setAttribute("aria-expanded", "false")
       islandTrigger.focus()
+    }
+    let unlockTimer: number | undefined
+    const setLocked = (value: boolean): void => {
+      status.inert = value
+      home.inert = value
+      indicator.inert = value
+      if (value) {
+        lock.hidden = false
+        unlock.focus()
+        return
+      }
+      lock.dataset["leaving"] = "true"
+      unlockTimer = window.setTimeout(() => {
+        lock.hidden = true
+        delete lock.dataset["leaving"]
+      }, 260)
+    }
+    const unlockPhone = (): void => {
+      if (lock.hidden) return
+      setLocked(false)
+      grid.querySelector<HTMLButtonElement>("button")?.focus()
+    }
+    const seededNotifications = [...SEEDED_NOTIFICATIONS]
+    const renderNotifications = (): void => {
+      notificationList.replaceChildren()
+      if (seededNotifications.length === 0) {
+        notificationList.append(element("p", "phone-os-notifications-empty", "没有更早的通知"))
+        return
+      }
+      seededNotifications.forEach((item, index) => {
+        const appTitle = DEVICE_APPS.find((entry) => entry.id === item.app)?.title ?? item.app
+        const card = element("article", "phone-os-notification")
+        const openButton = button("", "phone-os-notification-open")
+        openButton.dataset["openApp"] = item.app
+        openButton.setAttribute("aria-label", `打开${appTitle}`)
+        const text = element("div", "phone-os-notification-text")
+        text.append(
+          element("strong", "", item.title),
+          element("span", "", item.body),
+          element("time", "", item.at),
+        )
+        openButton.append(createAppIcon(item.app), text)
+        const clear = button("×", "phone-os-notification-clear")
+        clear.dataset["clearNotification"] = String(index)
+        clear.setAttribute("aria-label", `清除${appTitle}通知`)
+        card.append(openButton, clear)
+        notificationList.append(card)
+      })
+    }
+    let notificationFocus: HTMLElement | null = null
+    const closeNotifications = (): void => {
+      if (notifications.hidden) return
+      notifications.hidden = true
+      notificationFocus?.focus()
+      notificationFocus = null
+    }
+    const openNotifications = (): void => {
+      if (!notifications.hidden) {
+        closeNotifications()
+        return
+      }
+      if (island.dataset["expanded"] === "true") collapseIsland()
+      controlCenter.close()
+      notificationFocus =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null
+      renderNotifications()
+      notifications.hidden = false
+      clearAll.focus()
     }
     const syncMedia = (): void => {
       const music = options.musicService.read()
@@ -262,10 +380,80 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
       islandTrigger.title = name ?? "正在播放"
     }
     let gesture: { x: number; y: number } | null = null
+    let lockGesture: { x: number; y: number } | null = null
+    let statusGesture: { x: number; y: number } | null = null
     cleanups.push(
+      listen(unlock, "click", unlockPhone),
+      listen(timeButton, "click", openNotifications),
+      listen(clearAll, "click", () => {
+        seededNotifications.length = 0
+        renderNotifications()
+        clearAll.focus()
+      }),
+      listen(notifications, "keydown", (event) => {
+        if (event.key === "Escape") {
+          event.preventDefault()
+          event.stopPropagation()
+          closeNotifications()
+        }
+      }),
+      listen(notificationList, "click", (event) => {
+        if (!(event.target instanceof Element)) return
+        const clearButton = event.target.closest<HTMLButtonElement>("[data-clear-notification]")
+        if (clearButton) {
+          seededNotifications.splice(Number(clearButton.dataset["clearNotification"]), 1)
+          renderNotifications()
+          return
+        }
+        const openButton = event.target.closest<HTMLButtonElement>("[data-open-app]")
+        const definition = DEVICE_APPS.find((entry) => entry.id === openButton?.dataset["openApp"])
+        if (definition) {
+          closeNotifications()
+          open(definition.id)
+        }
+      }),
+      listen(lock, "pointerdown", (event) => {
+        if (event.target instanceof Element && event.target.closest("button") !== null) return
+        lockGesture = { x: event.clientX, y: event.clientY }
+        lock.setPointerCapture(event.pointerId)
+      }),
+      listen(lock, "pointerup", (event) => {
+        if (
+          lockGesture !== null &&
+          lockGesture.y - event.clientY > 35 &&
+          Math.abs(lockGesture.x - event.clientX) < 80
+        ) {
+          unlockPhone()
+          event.preventDefault()
+        }
+        lockGesture = null
+      }),
+      listen(lock, "pointercancel", () => {
+        lockGesture = null
+      }),
+      listen(status, "pointerdown", (event) => {
+        if (event.target !== status) return
+        statusGesture = { x: event.clientX, y: event.clientY }
+        status.setPointerCapture(event.pointerId)
+      }),
+      listen(status, "pointerup", (event) => {
+        if (
+          statusGesture !== null &&
+          event.clientY - statusGesture.y > 35 &&
+          Math.abs(event.clientX - statusGesture.x) < 80
+        ) {
+          openNotifications()
+          event.preventDefault()
+        }
+        statusGesture = null
+      }),
+      listen(status, "pointercancel", () => {
+        statusGesture = null
+      }),
       listen(islandTrigger, "click", expandIsland),
       listen(controlTrigger, "click", () => {
         if (island.dataset["expanded"] === "true") collapseIsland()
+        closeNotifications()
         controlCenter.toggle()
       }),
       listen(island, "keydown", (event) => {
@@ -363,6 +551,7 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
     tick()
     renderData()
     returnHome()
+    setLocked(true)
     const timer = setInterval(tick, 15000)
     let disposed = false
     return {
@@ -370,6 +559,7 @@ export const createPhoneOsApp = (options: DeviceSoftwareDependencies): ScreenApp
         if (disposed) return
         disposed = true
         clearInterval(timer)
+        if (unlockTimer !== undefined) window.clearTimeout(unlockTimer)
         islandPlayer.dispose()
         controlCenter.dispose()
         for (const cleanup of cleanups) cleanup()

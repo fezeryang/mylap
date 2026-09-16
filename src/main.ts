@@ -11,6 +11,7 @@ import "./library-apps.css"
 import "./companion-os.css"
 import "./system-controls.css"
 import "./workspace-browser-files.css"
+import "./spotlight-search.css"
 import { DEVICE_APPS } from "./apps/device-applications"
 import "./design-tokens.css"
 import "./animations.css"
@@ -216,41 +217,36 @@ shell.sync()
 
 // Setup Spotlight Search
 const spotlightRegistry = createSpotlightSearchRegistry()
-spotlightRegistry.registerApp("workspace", "Workspace", "💼", () => {
+spotlightRegistry.registerApp("workspace", "电脑桌面", "💼", () => {
   shell.focusDevice({ kind: "asset-instance-id", value: "computer-main" })
 })
-spotlightRegistry.registerApp("phone", "Phone", "📱", () => {
+spotlightRegistry.registerApp("phone", "手机", "📱", () => {
   shell.focusDevice({ kind: "asset-instance-id", value: "phone-main" })
 })
-spotlightRegistry.registerApp("radio", "Radio", "📻", () => {
+spotlightRegistry.registerApp("radio", "收音机", "📻", () => {
   shell.focusDevice({ kind: "asset-instance-id", value: "radio-main" })
 })
-spotlightRegistry.registerTool("reset-view", "Reset View", "🔄", () => {
+spotlightRegistry.registerTool("reset-view", "重置视角", "🔄", () => {
   navigation.request("return-overview")
 })
-spotlightRegistry.registerTool("auto-rotate", "Toggle Auto Rotate", "🔁", () => {
+spotlightRegistry.registerTool("auto-rotate", "切换自动旋转", "🔁", () => {
   autoRotate.click()
 })
-spotlightRegistry.registerTool("screen-power", "Toggle Screen Power", "⚡", () => {
+spotlightRegistry.registerTool("screen-power", "切换屏幕电源", "⚡", () => {
   screenPower.click()
 })
-spotlightRegistry.registerSetting("explode-view", "Explode View", "💥", () => {
+spotlightRegistry.registerSetting("explode-view", "爆炸视图", "💥", () => {
   explode.focus()
 })
 
 for (const application of DEVICE_APPS) {
-  spotlightRegistry.registerApp(
-    `software-${application.id}`,
-    `${application.title} ${application.id}`,
-    "▧",
-    () => {
-      setExpandedScreen(null)
-      shell.focusDevice({ kind: "asset-instance-id", value: "computer-main" })
-      app
-        .querySelector<HTMLButtonElement>(`.desktop-os-dock [data-app-id="${application.id}"]`)
-        ?.click()
-    },
-  )
+  spotlightRegistry.registerApp(`software-${application.id}`, application.title, "▧", () => {
+    setExpandedScreen(null)
+    shell.focusDevice({ kind: "asset-instance-id", value: "computer-main" })
+    app
+      .querySelector<HTMLButtonElement>(`.desktop-os-dock [data-app-id="${application.id}"]`)
+      ?.click()
+  })
 }
 
 const spotlight = createSpotlightSearch({

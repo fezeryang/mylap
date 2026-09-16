@@ -76,6 +76,7 @@ export const mount: QaCaseModule["mount"] = ({ root }) => {
         <nav id="device-focus-controls" class="desktop-shell__panel desktop-shell__devices" aria-label="Choose a device" hidden>
           <button id="focus-phone" class="control" type="button">FOCUS PHONE</button>
           <button id="focus-computer" class="control" type="button">FOCUS COMPUTER</button>
+          <button id="focus-radio" class="control" type="button">FOCUS RADIO</button>
         </nav>
         <button id="exit-device" class="control desktop-shell__exit" type="button" hidden>EXIT DEVICE</button>
         <p id="navigation-status" class="desktop-shell__status" aria-live="polite">LANDING</p>

@@ -344,3 +344,61 @@ pre-edit capture/fingerprint set at
 `.omo/evidence/personal-3d-device-desktop-20260827-a1/scope-upgrade-discovery/hardware-pin-clean/`;
 the generated fingerprint is
 `9cad875df56a52779bd595bbf7aaf001d74411f5050a172d5b9079a990c5c59b`.
+
+## 10. Screen UI — Apple HIG Direction
+
+All interactive device screen user interfaces — the root phone shell, computer workspace, wing
+companion screens, and the standalone `phone/` screen UI — are designed to feel at home beside
+Apple platforms. They follow the Apple Human Interface Guidelines: a deliberate type scale,
+semantic color, purposeful motion, generous touch targets, and WCAG AA accessibility. This section
+is the design authority for those screen UIs.
+
+Section 9's statement that software "is not a macOS or iOS imitation" remains scoped to the Todo16
+workspace stage skin only; it never governed the device screens and does not limit this section.
+`phone/DESIGN.md` remains the visual authority for the phone HARDWARE (neon cyberpunk); the phone
+SCREEN UI, both in the root host and in the standalone `phone/` app, is governed by this section.
+That split is intentional and recorded here.
+
+### Type scale and typography
+
+- Screen apps use the system font stack (`-apple-system`, `BlinkMacSystemFont`, `Helvetica Neue`,
+  `PingFang SC`, `Microsoft YaHei`). No custom display faces inside device screens.
+- A tokenized scale (`--os-type-large-title` … `--os-type-caption`) conveys hierarchy through
+  size, weight, and color — not through extra typefaces. Phone-sized screens use the iOS scale
+  (34/28/17/17/16/15/13/12 px); screens at or above 760px container width use the macOS scale
+  (26/20/13 px core) via container query.
+- Avoid Ultralight, Thin, and Light weights below 24px; the big clock's 300 weight is the single
+  deliberate exception because its size keeps it legible.
+
+### Semantic color
+
+- Color conveys meaning through semantic tokens (`--os-accent`, `--os-red`, `--os-green`,
+  `--os-separator`, `--os-fill`), each with light and dark variants — never through hardcoded
+  values in components.
+- `--os-accent` marks interactive and selected state only; status colors pair with an icon or
+  label so meaning never rides on color alone.
+- Glass surfaces stay colorless and adopt the content behind them; tint is reserved for primary
+  actions and is applied to backgrounds, not glyphs or text.
+
+### Motion
+
+- Motion exists to give feedback and preserve context — never for decoration. Durations use
+  `--os-duration-micro/standard/emphasis` (120/200/320 ms) with `--os-ease-standard` or the
+  physical `--os-spring`.
+- Under reduced motion, scoped kill-switches collapse animations and transitions to near-instant:
+  `.device-os[data-reduced-motion="true"]` (driven by the in-app reduced-motion preference) and
+  the `prefers-reduced-motion` media query, with the global kill-switch in `src/style.css` as the
+  backstop. No animation may block interaction.
+
+### Layout and controls
+
+- Interactive controls are at least `--os-touch-target` (44px); bezel-ed controls keep ~12px
+  padding, borderless ones ~24px. Interactive elements never overlap.
+- Corners use the radius scale: `--os-radius-control` 10px, `--os-radius-card` 16px,
+  `--os-radius-sheet` 24px, and the 23% squircle for app icons.
+
+### Accessibility floor
+
+- Body text contrast is at least 4.5:1; large or bold text at least 3:1, in both appearances.
+- Every interactive element is reachable by keyboard with a Chinese accessible name; overlays are
+  `role="dialog"` with a label, close on Escape, and return focus to their trigger.

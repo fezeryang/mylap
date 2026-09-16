@@ -66,7 +66,7 @@ record(
 )
 record(
   "screen-app-surface",
-  (await page.locator("[data-app-surface]").textContent())?.includes("Optical Camera") === true,
+  (await page.locator("[data-app-surface]").textContent())?.includes("相机") === true,
   "camera app content rendered",
 )
 await page.screenshot({ path: new URL("renders/screen-camera-active.png", evidenceDir).pathname })

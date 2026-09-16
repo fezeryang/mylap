@@ -10,6 +10,7 @@ import {
   type DeviceSoftwareDependencies,
 } from "./device-applications"
 import { element, listen } from "./dom"
+import { createBatteryGlyph, createWifiGlyph } from "./status-glyphs"
 
 type DesktopWindow = {
   readonly node: HTMLElement
@@ -17,6 +18,16 @@ type DesktopWindow = {
   readonly cleanups: (() => void)[]
   minimized: boolean
 }
+type SeededBanner = {
+  readonly app: DeviceAppId
+  readonly title: string
+  readonly body: string
+}
+const SEEDED_BANNERS: readonly SeededBanner[] = [
+  { app: "calendar", title: "团队周会", body: "14:00 · 3D 桌面评审" },
+  { app: "reminders", title: "给植物浇水", body: "今天 18:00" },
+  { app: "music", title: "新电台已就绪", body: "Night Shift 正在直播" },
+]
 const button = (label: string, className = "os-icon-button"): HTMLButtonElement => {
   const node = element("button", className, label)
   node.type = "button"
@@ -32,6 +43,7 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
     const menu = element("header", "desktop-os-menubar")
     const system = button("◈", "desktop-os-system")
     system.setAttribute("aria-label", "系统设置")
+    system.setAttribute("aria-expanded", "false")
     const currentTitle = element("strong", "desktop-os-app-title", "访达")
     const showDesktop = button("桌面")
     const search = button("搜索应用 ⌕")
@@ -45,6 +57,10 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
     const controlButton = button("☷")
     controlButton.setAttribute("aria-label", "打开控制中心")
     const controlCenter = createControlCenter(options)
+    const extras = element("span", "desktop-os-menubar-extras")
+    extras.setAttribute("role", "img")
+    extras.setAttribute("aria-label", "无线局域网已连接，电池电量充足")
+    extras.append(createWifiGlyph(), createBatteryGlyph())
     menu.append(
       system,
       currentTitle,
@@ -53,6 +69,7 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
       search,
       expand,
       controlButton,
+      extras,
       clock,
     )
     const desk = element("div", "desktop-os-workarea")
@@ -120,7 +137,65 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
     const contextClose = button("退出应用")
     dockMenu.append(contextOpen, contextMinimize, contextClose)
     let contextId: DeviceAppId | null = null
-    root.append(menu, desk, dock, searchSheet, mission, dockMenu, controlCenter.element)
+    const systemMenu = element("div", "desktop-os-system-menu")
+    systemMenu.hidden = true
+    systemMenu.setAttribute("role", "menu")
+    systemMenu.setAttribute("aria-label", "系统菜单")
+    const menuItem = (label: string): HTMLButtonElement => {
+      const item = button(label, "desktop-os-menu-item")
+      item.setAttribute("role", "menuitem")
+      return item
+    }
+    const aboutItem = menuItem("关于本机")
+    const settingsItem = menuItem("系统设置…")
+    const lockItem = menuItem("锁定屏幕")
+    const sleepItem = menuItem("睡眠")
+    const menuSeparator = element("hr", "desktop-os-menu-separator")
+    menuSeparator.setAttribute("role", "separator")
+    systemMenu.append(aboutItem, settingsItem, menuSeparator, lockItem, sleepItem)
+    const about = element("section", "desktop-os-about")
+    about.hidden = true
+    about.setAttribute("role", "dialog")
+    about.setAttribute("aria-label", "关于本机")
+    const aboutCard = element("div", "desktop-os-about-card")
+    const aboutClose = button("完成")
+    aboutClose.setAttribute("aria-label", "关闭关于本机")
+    aboutCard.append(
+      element("span", "desktop-os-about-logo", "◈"),
+      element("h2", "", "TODŌU 桌面"),
+      element("p", "os-secondary", "版本 1.0 · 3D 设备桌面"),
+      element("p", "desktop-os-about-note", "以 Apple 人机界面指南为设计准则的个人桌面。"),
+      aboutClose,
+    )
+    about.append(aboutCard)
+    const lockOverlay = element("section", "desktop-os-lock")
+    lockOverlay.hidden = true
+    lockOverlay.setAttribute("role", "dialog")
+    lockOverlay.setAttribute("aria-label", "锁定屏幕")
+    lockOverlay.tabIndex = -1
+    const lockClock = element("time", "desktop-os-lock-clock")
+    lockOverlay.append(lockClock, element("p", "desktop-os-lock-hint", "点击任意处或按回车解锁"))
+    const sleepOverlay = element("section", "desktop-os-sleep")
+    sleepOverlay.hidden = true
+    sleepOverlay.setAttribute("role", "dialog")
+    sleepOverlay.setAttribute("aria-label", "睡眠中，按任意键或点击唤醒")
+    sleepOverlay.tabIndex = -1
+    const banners = element("div", "desktop-os-banners")
+    banners.setAttribute("aria-live", "polite")
+    root.append(
+      menu,
+      desk,
+      dock,
+      searchSheet,
+      mission,
+      dockMenu,
+      systemMenu,
+      about,
+      lockOverlay,
+      sleepOverlay,
+      banners,
+      controlCenter.element,
+    )
     host.append(root)
     const markWindows = (): void => {
       for (const [id, item] of dockButtons) {
@@ -272,6 +347,50 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
       closeMission.focus()
     }
     const cleanups: (() => void)[] = []
+    const menuItems = [aboutItem, settingsItem, lockItem, sleepItem]
+    const closeSystemMenu = (refocus = true): void => {
+      if (systemMenu.hidden) return
+      systemMenu.hidden = true
+      system.setAttribute("aria-expanded", "false")
+      if (refocus) system.focus()
+    }
+    const openSystemMenu = (): void => {
+      if (!systemMenu.hidden) {
+        closeSystemMenu()
+        return
+      }
+      dockMenu.hidden = true
+      systemMenu.hidden = false
+      system.setAttribute("aria-expanded", "true")
+      aboutItem.focus()
+    }
+    const bannerTimers: number[] = []
+    const showBanner = (seed: SeededBanner): void => {
+      const banner = element("article", "desktop-os-banner")
+      const openButton = button("", "desktop-os-banner-open")
+      const appTitle = DEVICE_APPS.find((entry) => entry.id === seed.app)?.title ?? seed.app
+      openButton.setAttribute("aria-label", `打开${appTitle}`)
+      const text = element("div", "desktop-os-banner-text")
+      text.append(element("strong", "", seed.title), element("span", "", seed.body))
+      openButton.append(createAppIcon(seed.app), text)
+      const dismiss = button("×", "desktop-os-banner-close")
+      dismiss.setAttribute("aria-label", "关闭通知")
+      banner.append(openButton, dismiss)
+      banners.append(banner)
+      const timer = window.setTimeout(() => banner.remove(), 5000)
+      bannerTimers.push(timer)
+      cleanups.push(
+        listen(openButton, "click", () => {
+          window.clearTimeout(timer)
+          banner.remove()
+          openApp(seed.app)
+        }),
+        listen(dismiss, "click", () => {
+          window.clearTimeout(timer)
+          banner.remove()
+        }),
+      )
+    }
     for (const definition of DEVICE_APPS) {
       const appButton = button("", "desktop-os-dock-item")
       appButton.setAttribute("aria-label", `打开${definition.title}`)
@@ -364,20 +483,43 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
       }),
       listen(root, "pointerdown", (event) => {
         if (event.target instanceof Node && !dockMenu.contains(event.target)) dockMenu.hidden = true
+        if (
+          event.target instanceof Element &&
+          !systemMenu.contains(event.target) &&
+          event.target.closest(".desktop-os-system") === null
+        )
+          closeSystemMenu(false)
       }),
       listen(root, "keydown", (event) => {
         if (event.isComposing) return
-        if (
-          event.key === "Escape" &&
-          (!mission.hidden || !searchSheet.hidden || !dockMenu.hidden)
-        ) {
-          event.preventDefault()
-          event.stopPropagation()
-          mission.hidden = true
-          searchSheet.hidden = true
-          dockMenu.hidden = true
-          search.focus()
-        } else if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.code === "Space") {
+        if (event.key === "Escape") {
+          if (!sleepOverlay.hidden || !lockOverlay.hidden || !about.hidden) {
+            event.preventDefault()
+            event.stopPropagation()
+            sleepOverlay.hidden = true
+            lockOverlay.hidden = true
+            about.hidden = true
+            return
+          }
+          if (!systemMenu.hidden) {
+            event.preventDefault()
+            event.stopPropagation()
+            closeSystemMenu()
+            return
+          }
+          if (!mission.hidden || !searchSheet.hidden || !dockMenu.hidden) {
+            event.preventDefault()
+            event.stopPropagation()
+            mission.hidden = true
+            searchSheet.hidden = true
+            dockMenu.hidden = true
+            search.focus()
+            return
+          }
+          banners.lastElementChild?.remove()
+          return
+        }
+        if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.code === "Space") {
           event.preventDefault()
           searchSheet.hidden = false
           searchInput.focus()
@@ -402,7 +544,65 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
           if (id) bringForward(id)
         }
       }),
-      listen(system, "click", () => openApp("settings")),
+      listen(system, "click", openSystemMenu),
+      listen(systemMenu, "keydown", (event) => {
+        const current = menuItems.findIndex((item) => item === document.activeElement)
+        if (event.key === "ArrowDown") {
+          event.preventDefault()
+          menuItems[(current + 1) % menuItems.length]?.focus()
+        } else if (event.key === "ArrowUp") {
+          event.preventDefault()
+          menuItems[(current - 1 + menuItems.length) % menuItems.length]?.focus()
+        } else if (event.key === "Home") {
+          event.preventDefault()
+          menuItems[0]?.focus()
+        } else if (event.key === "End") {
+          event.preventDefault()
+          menuItems[menuItems.length - 1]?.focus()
+        }
+      }),
+      listen(aboutItem, "click", () => {
+        closeSystemMenu(false)
+        about.hidden = false
+        aboutClose.focus()
+      }),
+      listen(settingsItem, "click", () => {
+        closeSystemMenu(false)
+        openApp("settings")
+      }),
+      listen(lockItem, "click", () => {
+        closeSystemMenu(false)
+        lockClock.textContent = new Date().toLocaleTimeString("zh-CN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+        lockOverlay.hidden = false
+        lockOverlay.focus()
+      }),
+      listen(sleepItem, "click", () => {
+        closeSystemMenu(false)
+        sleepOverlay.hidden = false
+        sleepOverlay.focus()
+      }),
+      listen(aboutClose, "click", () => {
+        about.hidden = true
+      }),
+      listen(lockOverlay, "click", () => {
+        lockOverlay.hidden = true
+      }),
+      listen(lockOverlay, "keydown", (event) => {
+        if (["Escape", "Enter", " "].includes(event.key)) {
+          event.preventDefault()
+          lockOverlay.hidden = true
+        }
+      }),
+      listen(sleepOverlay, "click", () => {
+        sleepOverlay.hidden = true
+      }),
+      listen(sleepOverlay, "keydown", () => {
+        sleepOverlay.hidden = true
+      }),
       listen(showDesktop, "click", () => {
         for (const entry of windows.values()) {
           entry.minimized = true
@@ -445,6 +645,9 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
       }),
       options.dataService.subscribe(renderData),
     )
+    SEEDED_BANNERS.forEach((seed, index) => {
+      bannerTimers.push(window.setTimeout(() => showBanner(seed), 400 + index * 900))
+    })
     renderData()
     updateClock()
     const timer = setInterval(updateClock, 15000)
@@ -454,6 +657,7 @@ export const createDesktopOsApp = (options: DeviceSoftwareDependencies): ScreenA
         if (disposed) return
         disposed = true
         clearInterval(timer)
+        for (const bannerTimer of bannerTimers) window.clearTimeout(bannerTimer)
         controlCenter.dispose()
         for (const cleanup of cleanups) cleanup()
         for (const entry of windows.values()) {

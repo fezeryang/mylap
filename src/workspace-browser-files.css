@@ -55,7 +55,7 @@
   font-size: 12px;
 }
 .safari-tab-select[aria-pressed="true"] {
-  color: var(--os-accent);
+  color: var(--os-accent-text);
   font-weight: 650;
 }
 .safari-tab-close {
@@ -227,7 +227,7 @@
 .files-glyph {
   grid-row: 1 / 3;
   font-size: 28px;
-  color: var(--os-accent);
+  color: var(--os-accent-text);
 }
 .files-metadata,
 .files-empty {

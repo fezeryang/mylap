@@ -9,10 +9,10 @@ import type { ScreenController } from "./screenTypes"
 
 const APP_ID_SET: ReadonlySet<string> = new Set(APP_IDS)
 const APP_CONTENT: Readonly<Record<AppId, readonly [string, string]>> = {
-  call: ["Secure Call", "Encrypted line ready. Select a contact to begin."],
-  message: ["Messages", "Three priority transmissions are waiting."],
-  radio: ["Neon Radio", "Synthwave channel 09 is broadcasting live."],
-  camera: ["Optical Camera", "Cyber-optic capture array is armed."],
+  call: ["电话", "加密线路已就绪，选择联系人即可开始。"],
+  message: ["信息", "三条优先消息正在等待。"],
+  radio: ["音乐电台", "Synthwave 频道 09 正在直播。"],
+  camera: ["相机", "影像系统已就绪，随时可以拍摄。"],
 }
 
 function parseAppId(value: string | undefined): AppId | null {
@@ -62,18 +62,21 @@ export function bindScreen(
     button.addEventListener("click", () => {
       const appId = parseAppId(button.dataset["appId"])
       if (appId === null) return
-      render(reduceScreenState(state, { kind: "launch-app", app: appId }), `${appId} app active`)
+      render(
+        reduceScreenState(state, { kind: "launch-app", app: appId }),
+        `${APP_CONTENT[appId][0]}已激活`,
+      )
     })
   }
 
   const togglePower = (): void => {
     const next = reduceScreenState(state, { kind: "toggle-power" })
-    render(next, next.power === "on" ? "Screen powered on" : "Screen powered off")
+    render(next, next.power === "on" ? "屏幕已开启" : "屏幕已关闭")
   }
   powerButton.addEventListener("click", togglePower)
 
   return {
     togglePower,
-    reset: () => render(reduceScreenState(state, { kind: "reset" }), "Screen reset"),
+    reset: () => render(reduceScreenState(state, { kind: "reset" }), "屏幕已重置"),
   }
 }

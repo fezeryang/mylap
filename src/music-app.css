@@ -885,7 +885,7 @@
   border-radius: 8px;
   padding: 7px 12px;
   background: var(--os-surface);
-  color: var(--os-accent);
+  color: var(--os-accent-text);
 }
 .media-status {
   font-size: 12px;

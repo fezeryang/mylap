@@ -66,7 +66,7 @@
 
 .companion-os .companion-title {
   margin-top: 2px;
-  font-size: 28px;
+  font-size: var(--os-type-title);
   font-weight: 650;
   line-height: 1.25;
   letter-spacing: -0.04em;
@@ -123,8 +123,9 @@
   padding: 19px 18px;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--os-line) 85%, transparent);
-  border-radius: 20px;
-  background: color-mix(in srgb, var(--os-surface) 76%, transparent);
+  border-radius: var(--os-radius-card);
+  background: var(--os-glass);
+  backdrop-filter: var(--os-glass-blur);
   box-shadow: 0 5px 24px color-mix(in srgb, var(--os-ink) 3%, transparent);
 }
 
@@ -169,7 +170,7 @@
 }
 
 .companion-event-time {
-  color: var(--os-accent);
+  color: var(--os-accent-text);
   font-size: 13px;
   font-weight: 650;
   font-variant-numeric: tabular-nums;

@@ -57,79 +57,55 @@
           <button type="button" class="viewer-control" aria-pressed="true">SELECTED</button>
           <button type="button" class="viewer-control" disabled>DISABLED</button>
           <button type="button" class="screen-app" data-app-id="call" aria-pressed="true">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.7 3.3 3.4 5 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.2.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1z" /></svg><span>CALL</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.7 3.3 3.4 5 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.2.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1z" /></svg><span>电话</span>
           </button>
         </div>
       </section>
 
       <div id="screen-seed">
-        <section id="phone-screen" aria-label="Interactive cyberphone home screen" data-power="on">
-          <div class="screen-stars" aria-hidden="true"></div>
+        <section id="phone-screen" aria-label="手机主屏幕" data-power="on">
           <header class="screen-statusbar">
-            <span class="weather-mini">SUNSHINE<br /><b>24°C</b></span>
-            <span class="signal-mini"><i></i><i></i><i></i><i></i> 5G <b aria-hidden="true"></b></span>
+            <time class="statusbar-time" datetime="2025-04-22T09:42:00">09:42</time>
+            <span class="statusbar-icons" aria-hidden="true">
+              <svg viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0.5" width="3" height="11.5" rx="1" fill="currentColor"/></svg>
+              <svg viewBox="0 0 16 12" aria-hidden="true"><path d="M1.5 4.2a9.5 9.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4 6.9a6 6 0 0 1 8 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="10" r="1.4" fill="currentColor"/></svg>
+              <svg viewBox="0 0 25 12" aria-hidden="true"><rect x="0.8" y="0.8" width="20" height="10.4" rx="3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.5"/><rect class="statusbar-battery-fill" x="2.6" y="2.6" width="13" height="6.8" rx="1.6"/><path d="M23 4.2v3.6a2.1 2.1 0 0 0 0-3.6" fill="currentColor" opacity="0.5"/></svg>
+            </span>
           </header>
 
-          <section class="clock-block" aria-label="Time and date">
+          <section class="clock-block" aria-label="时间与日期">
             <time datetime="2025-04-22T09:42:00">09:42</time>
-            <p>TUE, APR 22, 2025</p>
+            <p>4月22日 星期二</p>
           </section>
 
-          <section class="skyline-hero" aria-label="Neon skyline visualization">
-            <div class="moon" aria-hidden="true"></div>
-            <div class="orb" aria-hidden="true"><span></span></div>
-            <div class="buildings" aria-hidden="true">
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-            </div>
-            <div class="water-lines" aria-hidden="true"></div>
-          </section>
-
-          <section class="screen-card-row" aria-label="Weather and media widgets">
-            <article class="screen-panel weather-card">
-              <span class="sun-cloud" aria-hidden="true"></span>
-              <p><small>PARTLY CLOUDY</small><strong>24°C</strong><span>H: 26°　L: 18°</span></p>
-            </article>
-            <article class="screen-panel media-card">
-              <div class="album-art" aria-hidden="true"><span></span></div>
-              <p><strong>Neon Skyline</strong><small>SYNTHWAVE • LIVE</small><span class="waveform"></span></p>
-              <button type="button" aria-label="Pause Neon Skyline">Ⅱ</button>
-            </article>
-          </section>
-
-          <nav class="screen-apps" aria-label="Phone apps">
-            <button type="button" class="screen-app" data-app-id="call" aria-label="Open Call" aria-pressed="false">
+          <nav class="screen-apps" aria-label="手机应用">
+            <button type="button" class="screen-app" data-app-id="call" aria-label="打开电话" aria-pressed="false">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.7 3.3 3.4 5 6.7 6.7l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.2.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1z" /></svg>
-              <span>CALL</span>
+              <span>电话</span>
             </button>
-            <button type="button" class="screen-app" data-app-id="message" aria-label="Open Messages" aria-pressed="false">
+            <button type="button" class="screen-app" data-app-id="message" aria-label="打开信息" aria-pressed="false">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm4 8h2v-2H8zm4 0h2v-2h-2zm4 0h2v-2h-2z" /></svg>
-              <span>MESSAGE</span>
+              <span>信息</span>
             </button>
-            <button type="button" class="screen-app" data-app-id="radio" aria-label="Open Radio" aria-pressed="false">
+            <button type="button" class="screen-app" data-app-id="radio" aria-label="打开音乐" aria-pressed="false">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm-7-3 2 2a7 7 0 0 0 0 10l-2 2A10 10 0 0 1 5 5zm14 0a10 10 0 0 1 0 14l-2-2a7 7 0 0 0 0-10z" /></svg>
-              <span>RADIO</span>
+              <span>音乐</span>
             </button>
-            <button type="button" class="screen-app" data-app-id="camera" aria-label="Open Camera" aria-pressed="false">
+            <button type="button" class="screen-app" data-app-id="camera" aria-label="打开相机" aria-pressed="false">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3 7.2 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3.2L15 3zm3 5a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6z" /></svg>
-              <span>CAMERA</span>
+              <span>相机</span>
             </button>
           </nav>
 
-          <section class="screen-panel signal-card" aria-label="5G signal strength">
-            <p><small>5G SIGNAL STRENGTH</small><span class="bar-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></p>
-            <strong>5G<small>━━<br />━━</small></strong>
-            <div class="globe" aria-hidden="true"><i></i><i></i><i></i></div>
-          </section>
-
           <aside class="app-surface" data-app-surface hidden aria-live="polite">
-            <small>ACTIVE APP</small>
+            <small>当前应用</small>
             <strong data-app-title></strong>
             <p data-app-copy></p>
           </aside>
 
-          <button type="button" class="swipe-control" aria-label="Unlock phone"><span>»</span> SWIPE TO UNLOCK <span>»</span></button>
+          <button type="button" class="swipe-control" aria-label="解锁手机">向上轻扫以解锁</button>
           <span class="home-indicator" aria-hidden="true"></span>
-          <button type="button" class="camera-aperture" aria-label="Front camera"></button>
+          <button type="button" class="camera-aperture" aria-label="前置摄像头"></button>
         </section>
       </div>
     </main>
