@@ -32,6 +32,9 @@ Keep it asset-agnostic: concrete geometry and screen UI enter through typed cont
 - Key screen sessions by `AssetInstanceId` plus `ScreenId`, never by screen ID alone.
 - `ScreenSession.install` disposes the previous handle, clears its host, mounts the replacement,
   and immediately transfers the session's active state to the new handle.
+- CSS3D display objects inherit their physical screen anchor transform. `cssBillboard` is an
+  explicit exception for intentionally camera-facing surfaces; never use it to paper over a wrong
+  model anchor or adapter orientation.
 - Power gates app updates and screen visibility. Powering off a focused asset must release focus.
 - Focusing a screen activates its asset and disables orbit controls; Escape, an outside pointer,
   power-off, removal, and runtime disposal must restore controls and release DOM focus.
@@ -71,3 +74,5 @@ Keep it asset-agnostic: concrete geometry and screen UI enter through typed cont
   disposal. Add focused coverage when changing activation, power, update, or final cleanup.
 - `bun test src/runtime/keyboard-controller.test.ts`: press/release animation, router switching,
   repeat suppression, and held-state clearing. Add `ScreenRuntime` coverage for focus/power changes.
+- Root visual changes also require browser inspection of the assembled desktop at `:5173`; a
+  standalone asset viewer cannot validate CSS3D projection against the shared camera and placement.

@@ -221,7 +221,6 @@ export const createRatioAssetDefinition = (options: RatioAssetOptions): SceneAss
         screens: [
           {
             anchor: model.screens.tuner,
-            cssBillboard: true,
             interactive: false,
             defaultAppId: RATIO_TUNER_DISPLAY_APP_ID,
             hitProxy: tunerProxy,
@@ -232,7 +231,6 @@ export const createRatioAssetDefinition = (options: RatioAssetOptions): SceneAss
           },
           {
             anchor: model.screens.cassette,
-            cssBillboard: true,
             interactive: false,
             defaultAppId: RATIO_CASSETTE_DISPLAY_APP_ID,
             hitProxy: cassetteProxy,

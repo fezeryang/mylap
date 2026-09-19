@@ -6,6 +6,10 @@ This directory owns independently mountable DOM applications displayed on root-r
 surfaces. Apps are replaceable UI modules; physical screens, CSS3D placement, focus ownership,
 power, and asset lifecycle remain in `src/runtime/`.
 
+The root desktop is the canonical consumer of these apps. A screen app that looks correct in a
+local DOM test still needs root browser inspection when its screen is mounted on the cyberdeck,
+phone, or radio.
+
 ## Where to Look
 
 | Concern | Location |
@@ -65,3 +69,5 @@ power, and asset lifecycle remain in `src/runtime/`.
 - Visible or interactive changes also require root browser QA and inspected renders. Verify pointer
   and keyboard operation, focus ownership and Escape release, activation, power gating, app
   replacement, repeated disposal, supported viewports, reduced motion, and console/page errors.
+- When an app is attached to a physical device screen, verify its projection while the root camera
+  orbits the assembled deck; do not validate only an expanded or standalone DOM view.

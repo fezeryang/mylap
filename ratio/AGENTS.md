@@ -1,16 +1,15 @@
 # Ratio Radio Asset Guide
 
-This directory is the isolated authoring and QA surface for the retro-future radio. It inherits the
-repository root `AGENTS.md`; all radio-specific source, design, tests, evidence, and package commands
-remain under `ratio/` unless the user explicitly requests root-host integration.
-
-The radio is not registered with the root asset runtime and has no `SceneAssetDefinition` adapter.
-Treat this app as standalone authoring/QA code, not as an implemented device in the spatial desktop.
+This directory is the local authoring and QA surface for the retro-future radio. It inherits the
+repository root `AGENTS.md`. The radio is integrated into the canonical root 3D desktop as the
+`radio-main` instance through `src/assets/ratio-asset.ts`; its two root displays are mounted by
+`src/runtime/screen-runtime.ts` and read the host radio service. The local app is not the root
+runtime and cannot be the only validation surface.
 
 ## Ownership
 
 - `src/model/` owns procedural geometry, PBR materials, stable part IDs, selectables, animation
-  pivots, explosion transforms, and `root.userData.sculptRuntime`.
+  pivots, explosion transforms, physical screen anchors, and `root.userData.sculptRuntime`.
 - `src/ui/` owns typed media state and reduction plus the deterministic demo `AudioPlayer`
   implementation and boundary.
 - `src/viewer/` owns the standalone renderer, CSS3D projection, camera, lighting, post-processing,
@@ -20,6 +19,11 @@ Treat this app as standalone authoring/QA code, not as an implemented device in 
 - `scripts/` owns browser QA, capture, and manifest evidence.
 - `DESIGN.md` is the visual, interaction, motion, and accessibility authority.
 
+The root adapter owns the translation from this model into `StageAsset`; root screen apps own the
+display DOM and the host radio service owns shared state. Do not import the standalone viewer into
+the root. For physical tuner and cassette surfaces, preserve anchor orientation and do not enable
+`cssBillboard` unless the surface is intentionally camera-facing.
+
 ## Invariants
 
 - Every independently selectable or explodable physical part has a stable kebab-case ID and named
@@ -28,9 +32,9 @@ Treat this app as standalone authoring/QA code, not as an implemented device in 
   a screenshot texture. Physical bezel/glass remain Three.js geometry.
 - `createDemoAudioPlayer()` is deterministic and silent: it advances demo time and synthesizes
   spectrum snapshots but does not load, stream, decode, or play audio.
-- Real/shared media and cross-device access remain future host/service work. Introduce them through
-  narrow typed request, event, and snapshot contracts; do not couple this standalone player or UI
-  directly to another asset or to root-host internals.
+- The local demo player is deterministic and silent. Root shared media is provided through the
+  typed host radio service; do not couple this local player or UI directly to another asset or to
+  root-host internals.
 - Aerial, dish, handle, knobs, sliders, buttons, cassette reels, and speaker perforations remain
   separate geometry when their silhouette, motion, or picking behavior differs.
 - Hidden rear/right/underside geometry is inferred and must not be described as reference-exact.
@@ -42,6 +46,10 @@ Treat this app as standalone authoring/QA code, not as an implemented device in 
   reference, front, right, rear, and left views.
 - QA covers tuner/transport input, power, station and progress updates, animated reels/spectrum,
   explosion, reset, reduced motion, part picking, manifest coverage, and console/page errors.
+- If the change affects the mounted radio, its screens, camera orbit, or desktop composition, also
+  run `pnpm run verify:root` from the repository root and inspect `http://127.0.0.1:5173/` with
+  `radio-main` focused. Verify both fixed views and free orbit; a local `5175` render alone is
+  insufficient.
 
 ## Boundaries
 

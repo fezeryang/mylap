@@ -1,8 +1,9 @@
 # Model Domain Guide
 
-This directory contains the procedural Three.js asset and its runtime interaction
-contract. It inherits the repository root `AGENTS.md`; this file only adds
-constraints specific to model construction.
+This directory contains the cyberdeck's procedural Three.js model and its runtime interaction
+contract. It inherits the repository root `AGENTS.md`; this file only adds constraints specific to
+model construction. The root assembled deck is the visual authority whenever this model is mounted
+with the desk, phone, radio, or decorative assets.
 
 ## Construction Flow
 
@@ -46,6 +47,8 @@ named nodes, and sockets through `root.userData.sculptRuntime`.
   and screen plane/material. Side displays must not become unsupported flat cards.
 - Keep main, left, and right `ScreenSurface` contracts independently addressable. WebGL
   owns shell, bezel, glass, and hit geometry; CSS3D sessions own interactive content.
+- Physical screen anchors must carry the model's orientation through root camera orbit. Do not mark
+  a device display as a camera-facing billboard unless the design explicitly calls for one.
 - Every browser-bindable keycap must retain a unique `KeyboardEvent.code`; unbindable FN
   keys remain explicit and left/right modifiers remain distinct.
 - Keep physical surface materials separate from emissive screen/light materials. Do not
@@ -63,5 +66,7 @@ named nodes, and sockets through `root.userData.sculptRuntime`.
   layout, registration, or transform invariants.
 - Preserve the tested guarantees that explosion factor zero returns authored positions,
   outer parts separate from the center, and keyboard density remains six rows and 74 keys.
-- After visible model changes, inspect all five QA views, narrow layout, screen state,
-  explosion, and part picking. A successful build alone is not visual verification.
+- After visible model changes, inspect the root assembled desktop first: camera orbit, fixed views,
+  screen alignment, device focus, explosion/reset, and part picking. Then inspect the standalone
+  asset views, narrow layout, and screen state. A successful build or isolated render alone is not
+  visual verification.

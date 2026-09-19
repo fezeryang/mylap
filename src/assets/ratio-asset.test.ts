@@ -121,6 +121,8 @@ describe("ratioAssetDefinition", () => {
       { height: 1.36, width: 2.48 },
     ])
     asset.screens.forEach((surface) => {
+      // A physical display must inherit the radio's orientation during camera orbit.
+      expect(surface.cssBillboard).not.toBe(true)
       const normal = new Vector3(0, 0, 1).applyQuaternion(
         surface.anchor.getWorldQuaternion(new Quaternion()),
       )

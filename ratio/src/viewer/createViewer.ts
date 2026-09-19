@@ -67,7 +67,9 @@ export function createViewer(options: ViewerOptions): Viewer {
   cssRenderer.domElement.className = "screen-layer"
   options.host.append(renderer.domElement, cssRenderer.domElement)
 
-  const controls = new OrbitControls(camera, renderer.domElement)
+  // Both render layers belong to the same device; drags starting on a CSS3D
+  // screen must reach the same camera controls as drags starting on its body.
+  const controls = new OrbitControls(camera, options.host)
   controls.enableDamping = !options.reducedMotion
   controls.enablePan = false
   controls.minDistance = 12
@@ -124,7 +126,7 @@ export function createViewer(options: ViewerOptions): Viewer {
     options.model.selectPart(partId)
     options.onPartSelected(partId)
   }
-  renderer.domElement.addEventListener("pointerdown", onPointerDown)
+  options.host.addEventListener("pointerdown", onPointerDown)
 
   const resize = (): void => {
     const width = options.host.clientWidth
@@ -172,7 +174,7 @@ export function createViewer(options: ViewerOptions): Viewer {
     dispose() {
       cancelAnimationFrame(frame)
       observer.disconnect()
-      renderer.domElement.removeEventListener("pointerdown", onPointerDown)
+      options.host.removeEventListener("pointerdown", onPointerDown)
       controls.dispose()
       renderer.dispose()
       renderer.domElement.remove()

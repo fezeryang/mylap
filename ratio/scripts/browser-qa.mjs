@@ -24,6 +24,82 @@ function record(name, pass, detail) {
   if (!pass) throw new Error(`${name}: ${detail}`)
 }
 
+async function checkScreenProjection(page, label) {
+  // Sample a rendered frame, rather than a timeout that can read stale layout
+  // on machines rendering WebGL in software.
+  const screens = await page.evaluate(
+    () =>
+      new Promise((resolve) => {
+        const anchors = window.__radio.model.screens
+        const lastScreen = anchors.cassette.children.find((child) => child.isCSS3DObject)
+        const previous = lastScreen.onAfterRender
+        lastScreen.onAfterRender = function (renderer, scene, camera) {
+          previous.call(this, renderer, scene, camera)
+          lastScreen.onAfterRender = previous
+          resolve(
+            Object.entries(anchors).map(([name, anchor]) => {
+              const object = anchor.children.find((child) => child.isCSS3DObject)
+              const element = object.element
+              const bounds = element.getBoundingClientRect()
+              const viewport = document.querySelector("canvas.webgl-layer").getBoundingClientRect()
+              const corners = [-1, 1].flatMap((x) =>
+                [-1, 1].map((y) => {
+                  const point = object.position
+                    .clone()
+                    .set((x * element.offsetWidth) / 2, (y * element.offsetHeight) / 2, 0)
+                    .applyMatrix4(object.matrixWorld)
+                    .project(camera)
+                  return [
+                    viewport.x + ((point.x + 1) * viewport.width) / 2,
+                    viewport.y + ((1 - point.y) * viewport.height) / 2,
+                  ]
+                }),
+              )
+              const expected = [
+                Math.min(...corners.map(([x]) => x)),
+                Math.min(...corners.map(([, y]) => y)),
+                Math.max(...corners.map(([x]) => x)),
+                Math.max(...corners.map(([, y]) => y)),
+              ]
+              const actual = [bounds.left, bounds.top, bounds.right, bounds.bottom]
+              return {
+                name,
+                actual,
+                expected,
+                error: Math.max(...actual.map((value, index) => Math.abs(value - expected[index]))),
+                camera: camera.matrixWorld.elements.slice(),
+              }
+            }),
+          )
+        }
+      }),
+  )
+  record(
+    label,
+    screens.every((screen) => screen.error < 1),
+    JSON.stringify(screens),
+  )
+  return screens
+}
+
+async function checkScreenDrag(page, name, label) {
+  const before = await checkScreenProjection(page, `${label}-before`)
+  const bounds = await page.locator(`#${name}-screen`).boundingBox()
+  if (bounds === null) throw new Error(`${name} screen is not visible`)
+  const x = bounds.x + bounds.width / 2
+  const y = bounds.y + bounds.height / 2
+  await page.mouse.move(x, y)
+  await page.mouse.down()
+  await page.mouse.move(x + 45, y + 12, { steps: 8 })
+  const during = await checkScreenProjection(page, `${label}-during`)
+  await page.mouse.up()
+  record(
+    label,
+    during[0].camera.some((value, index) => Math.abs(value - before[0].camera[index]) > 0.001),
+    "Dragging the live screen rotates the shared camera and keeps both screens attached",
+  )
+}
+
 await page.goto(baseUrl, { waitUntil: "networkidle" })
 await page.waitForFunction(() => window.__ready === true && window.__interactive === true)
 record(
@@ -35,10 +111,20 @@ record(
 for (const view of ["reference", "front", "right", "rear", "left"]) {
   await page.locator(`[data-view="${view}"]`).click()
   await page.waitForTimeout(220)
+  if (view === "reference" || view === "front") {
+    await checkScreenProjection(page, `screen-projection-${view}`)
+  }
   await page.screenshot({ path: new URL(`renders/${view}.png`, evidenceDir).pathname })
   record(`view-${view}`, true, "camera control completed")
 }
 
+await page.locator('[data-view="reference"]').click()
+await checkScreenDrag(page, "tuner", "tuner-screen-orbit")
+await page.screenshot({ path: new URL("renders/screen-orbit.png", evidenceDir).pathname })
+await page.locator('[data-view="front"]').click()
+await checkScreenDrag(page, "cassette", "cassette-screen-orbit")
+await page.mouse.wheel(0, -180)
+await checkScreenProjection(page, "screen-projection-zoom")
 await page.locator('[data-view="reference"]').click()
 await page.locator("#play").click()
 await page.waitForTimeout(420)
@@ -80,7 +166,9 @@ const exploded = await page.evaluate(
   () => window.__radio.model.partGroups.get("dish-antenna").position.y > 5.5,
 )
 record("explosion", exploded, "authored part transforms separated")
+await checkScreenProjection(page, "screen-projection-exploded")
 await page.locator("#reset").click()
+await checkScreenProjection(page, "screen-projection-reset")
 record(
   "reset",
   (await page.locator("#status").textContent()) === "View reset",
@@ -110,6 +198,7 @@ for (const { width, height } of [
 ]) {
   await page.setViewportSize({ width, height })
   await page.waitForTimeout(160)
+  await checkScreenProjection(page, `screen-projection-${width}`)
   await page.screenshot({ path: new URL(`renders/responsive-${width}.png`, evidenceDir).pathname })
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)
   record(`responsive-${width}`, !overflow, `horizontal overflow=${overflow}`)
@@ -122,6 +211,7 @@ const reduced = await browser.newPage({
 })
 await reduced.goto(baseUrl, { waitUntil: "networkidle" })
 await reduced.waitForFunction(() => window.__ready === true)
+await checkScreenDrag(reduced, "tuner", "reduced-motion-screen-orbit")
 record(
   "reduced-motion",
   await reduced.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches),
@@ -135,6 +225,7 @@ const highDpi = await browser.newPage({
 await highDpi.goto(baseUrl, { waitUntil: "networkidle" })
 await highDpi.waitForFunction(() => window.__ready === true)
 await highDpi.locator('[data-view="front"]').click()
+await checkScreenProjection(highDpi, "high-dpi-screen-apertures")
 const highDpiLayers = await highDpi.evaluate(() => {
   const canvas = document.querySelector("canvas.webgl-layer")
   const screens = document.querySelector(".screen-layer")
@@ -168,19 +259,6 @@ record(
     highDpiLayers.screens[0] === highDpiLayers.viewport[0] &&
     highDpiLayers.screens[1] === highDpiLayers.viewport[1],
   JSON.stringify(highDpiLayers),
-)
-const within = (actual, expected, tolerance) => Math.abs(actual - expected) <= tolerance
-record(
-  "high-dpi-screen-apertures",
-  within(highDpiLayers.tuner[0], 273, 3) &&
-    within(highDpiLayers.tuner[1], 222, 3) &&
-    within(highDpiLayers.tuner[2], 357, 4) &&
-    within(highDpiLayers.tuner[3], 75, 3) &&
-    within(highDpiLayers.cassette[0], 414, 3) &&
-    within(highDpiLayers.cassette[1], 339, 3) &&
-    within(highDpiLayers.cassette[2], 101, 3) &&
-    within(highDpiLayers.cassette[3], 66, 3),
-  JSON.stringify({ tuner: highDpiLayers.tuner, cassette: highDpiLayers.cassette }),
 )
 await highDpi.close()
 const blockout = await browser.newPage({ viewport: { width: 1514, height: 1009 } })

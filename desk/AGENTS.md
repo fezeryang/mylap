@@ -2,9 +2,9 @@
 
 ## Scope
 
-`desk/` is the standalone procedural authoring and visual-QA surface for asset type
-`cyber-desk`. It is not registered with the root `AssetRegistry` and has no root
-`SceneAssetDefinition` adapter yet.
+`desk/` is the procedural authoring and visual-QA surface for asset type `cyber-desk`. The desk is
+integrated into the canonical root desktop as the `desk-main` environment through
+`src/assets/cyber-desk-asset.ts`; this package remains the focused local authoring surface.
 
 ## Where to Look
 
@@ -24,8 +24,9 @@
 - Preserve `root.userData.assetTypeId === "cyber-desk"` and the `sculptRuntime` shape.
 - Part IDs and mesh ownership are public QA/integration data. The current manifest has 19
   selectable/explodable parts; rename or regroup only with matching tests and manifests.
-- Preserve the five `socket-desktop-asset-*` anchors as attachment metadata. They do not imply
-  placement policy, communication, or an implemented multi-device desktop.
+- Preserve the five `socket-desktop-asset-*` anchors as attachment metadata. Root placement policy
+  lives in `src/assets/scene-config.ts`; sockets do not imply communication channels or spatial
+  move/swap behavior.
 - Preserve leg sockets, `collider-tabletop`, leg collider IDs/metadata, and the five destruction
   groups. Visual meshes are not physics colliders.
 - Explosion must clamp to `[0, 1]`, move parts from captured rest transforms, and reset
@@ -66,8 +67,13 @@ Run `preview` and `qa:browser` in separate terminals. Browser QA writes renders 
 `desk/evidence/` plus `desk/parts.json`; inspect the reference/front/side/rear/top, exploded,
 lights-off, selected-part, and responsive captures after visible changes.
 
-## Root Integration Boundary
+When a desk change affects the assembled deck or any attached device, also run `pnpm run verify:root`
+and inspect the root desktop at `http://127.0.0.1:5173/`. The local desk viewer cannot prove that
+the desk, devices, decorations, and CSS3D screens compose correctly in the shared scene.
 
-A future root adapter may import the model factory and translate its stable runtime metadata into
-`StageAsset`. It must not import `desk/src/main.ts`, the standalone viewer DOM, camera, controls,
-scene, or render loop. Keep this authoring surface runnable after integration.
+## Root integration boundary
+
+The existing root adapter may import the model factory and translate its stable runtime metadata
+into `StageAsset`. It must not import `desk/src/main.ts`, the standalone viewer DOM, camera,
+controls, scene, or render loop. Keep this authoring surface runnable after integration, and treat
+the root desktop as the final visual authority for mounted composition.
